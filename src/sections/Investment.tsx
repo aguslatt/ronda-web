@@ -1,22 +1,21 @@
 import { useState, type CSSProperties } from 'react'
 import { investment as inv } from '../content'
 import { SectionHead } from '../components/SectionHead'
-import { useInView } from '../hooks/useInView'
+import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Investment.css'
 
 const number = new Intl.NumberFormat('es-AR')
 const money = (value: number) => `ARS ${number.format(value)}`
 
+/** Presupuesto como bandas proporcionales (en diálogo con las bandas del envase) + tabla exacta. */
 export function Investment() {
   const [hovered, setHovered] = useState<number | null>(null)
-  // Se observa el contenedor (sin transformar) para animar la barra una sola vez.
-  const [distributionRef, stripVisible] = useInView<HTMLDivElement>(0.15)
-  const largest = Math.max(...inv.items.map((item) => item.pct))
+  const bandsRef = useScrollProgress<HTMLDivElement>('enter')
 
   return (
     <section id={inv.id} className="section investment" aria-labelledby={`${inv.id}-title`}>
       <div className="wrap">
-        <div className="investment__top">
+        <div className="investment__head">
           <SectionHead number={inv.number} eyebrow={inv.eyebrow} title={inv.title} titleId={`${inv.id}-title`} />
           <div className="total">
             <p className="total__label">{inv.totalLabel}</p>
@@ -27,23 +26,23 @@ export function Investment() {
           </div>
         </div>
 
-        <div ref={distributionRef} className="distribution">
-          <h3 className="block-title">{inv.distributionTitle}</h3>
-
-          <div
-            className={`strip${stripVisible ? ' is-visible' : ''}`}
-            style={{ gridTemplateColumns: inv.items.map((item) => `${item.pct}fr`).join(' ') }}
-            aria-hidden="true"
-          >
-            {inv.items.map((item, index) => (
-              <div
-                key={item.label}
-                className={`strip__segment tone-${index + 1}${hovered === index ? ' is-hovered' : ''}`}
-                title={`${item.label}: ${item.pct}%`}
-              >
-                {item.pct >= 10 && <span className="strip__label">{item.pct}%</span>}
-              </div>
-            ))}
+        <div className="budget-layout">
+          <div className="bands-block">
+            <h3 className="kicker">{inv.distributionTitle}</h3>
+            <div ref={bandsRef} className="bands" aria-hidden="true">
+              {inv.items.map((item, index) => (
+                <div
+                  key={item.label}
+                  className={`band${hovered === index ? ' is-hovered' : ''}`}
+                  style={{ '--share': item.pct, '--i': index } as CSSProperties}
+                >
+                  <span className={`band__fill tone-${index + 1}`} />
+                  <span className="band__label">
+                    <strong>{item.pct}%</strong> {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="table-scroll">
@@ -76,9 +75,6 @@ export function Investment() {
                         <span className={`budget__swatch tone-${index + 1}`} aria-hidden="true" />
                         {item.label}
                       </span>
-                      <span className="budget__bar" aria-hidden="true">
-                        <span className={`tone-${index + 1}`} style={{ '--w': `${(item.pct / largest) * 100}%` } as CSSProperties} />
-                      </span>
                     </th>
                     <td className="num">{item.pct}%</td>
                     <td className="num">{money(item.amount)}</td>
@@ -97,7 +93,7 @@ export function Investment() {
         </div>
 
         <div className="calendar">
-          <h3 className="block-title">{inv.calendarTitle}</h3>
+          <h3 className="kicker">{inv.calendarTitle}</h3>
           <ol className="timeline">
             {inv.phases.map((phase) => (
               <li key={phase.name} className={`timeline__item${phase.key ? ' is-key' : ''}`}>

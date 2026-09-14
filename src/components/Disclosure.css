@@ -60,6 +60,22 @@
   background: var(--arena-suave);
 }
 
+.on-dark .disclosure {
+  border-color: var(--linea-clara);
+}
+
+.on-dark .disclosure__summary:hover {
+  color: var(--oro);
+}
+
+.on-dark .disclosure__summary:hover .disclosure__icon {
+  background: transparent;
+}
+
+.on-dark .disclosure__body li::marker {
+  color: var(--hoja);
+}
+
 .disclosure__body {
   padding-bottom: 1.5rem;
 }

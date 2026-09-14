@@ -1,8 +1,11 @@
+/* ==========================================================================
+   El público · una secuencia de escenas
+   ========================================================================== */
 .audience {
-  background: var(--crema);
+  background: var(--papel);
 }
 
-.audience__top {
+.audience__head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(2rem, 5vw, 5rem);
@@ -17,177 +20,206 @@
 .audience__text {
   color: var(--tinta-suave);
   font-size: var(--fs-lede);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
-.range__track {
+/* Escala de edades: el foco en rojo, sin depender del color (el texto lo dice) */
+.ages {
   position: relative;
-  height: 0.625rem;
-  border-radius: 999px;
-  background: var(--arena);
+  height: 3.25rem;
 }
 
-.range__focus {
+.ages__track {
   position: absolute;
-  inset: 0 auto 0 0;
-  border-radius: 999px;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--linea-fuerte);
+}
+
+.ages__focus {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  height: 9px;
   background: var(--rojo);
 }
 
-.range__scale {
-  position: relative;
-  height: 1.75rem;
-  margin-top: 0.5rem;
+.ages__num {
+  position: absolute;
+  top: 1rem;
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+}
+
+.ages__num--min {
+  left: 0;
+}
+
+.ages__num--focus {
+  color: var(--rojo);
+  transform: translateX(-50%);
+}
+
+.ages__num--max {
+  right: 0;
+}
+
+.audience__focus {
+  color: var(--rojo);
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+/* Secuencia */
+.scenes {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-top: clamp(4rem, 8vw, 7rem);
+}
+
+.scenes__media {
+  position: sticky;
+  top: calc(var(--header-h) + 4svh);
+  align-self: start;
+  height: calc(100svh - var(--header-h) - 8svh);
+  min-height: 26rem;
+}
+
+.scenes__frame {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--arena);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.95s var(--ease-out);
+}
+
+.scenes__frame:first-child,
+.scenes__frame.is-shown {
+  clip-path: inset(0 0 0 0);
+}
+
+.scenes__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1.12;
+  transition: scale 1.4s var(--ease-out);
+}
+
+.scenes__frame.is-shown img {
+  scale: 1;
+}
+
+.scenes__counter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  padding: 0.6rem 0.9rem;
+  background: var(--papel);
   color: var(--tinta-suave);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
-.range__tick {
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  transform: translateX(-50%);
-}
-
-.range__tick:first-child {
-  transform: none;
-}
-
-.range__tick:last-child {
-  transform: translateX(-100%);
-}
-
-.range__tick--focus {
+.scenes__counter span {
   color: var(--rojo);
+  font-weight: 700;
 }
 
-.audience__focus {
-  margin-top: -0.75rem;
-  color: var(--rojo);
-  font-family: var(--f-display);
-  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.125rem);
-  font-weight: 600;
-  line-height: 1.15;
-}
-
-/* Escenas */
-.scenes {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.5vw, 2.25rem);
-  align-items: start;
-  margin: clamp(3.5rem, 7vw, 6rem) 0 0;
+.scenes__steps {
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.scene--1 {
-  grid-column: 1 / span 5;
+.scene {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80svh;
+  padding-block: 3rem;
+  border-top: 1px solid var(--linea);
 }
 
-.scene--2 {
-  grid-column: 6 / span 3;
-  margin-top: clamp(4rem, 12vw, 11rem);
+.scene:first-child {
+  justify-content: flex-start;
+  min-height: 70svh;
+  border-top: 0;
 }
 
-.scene--3 {
-  grid-column: 9 / span 4;
-  margin-top: clamp(1.5rem, 4vw, 3.5rem);
-}
-
-.scene__media img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: 42% 50%;
-  border-radius: var(--radius);
-}
-
-.scene--3 .scene__media img {
-  aspect-ratio: 3 / 4;
-  object-position: 52% 50%;
+.scene__photo {
+  display: none;
+  margin: 0;
 }
 
 .scene__index {
-  margin-top: 1.25rem;
   color: var(--rojo);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: var(--f-display);
+  font-size: 1.625rem;
+  font-style: italic;
 }
 
 .scene__title {
-  margin-top: 0.4rem;
-  font-size: var(--fs-h3);
+  margin-top: 0.75rem;
+  color: var(--tinta-suave);
+  font-size: clamp(2.5rem, 1.4rem + 3.6vw, 5.25rem);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  transition: color 0.5s var(--ease-out);
+}
+
+.scene.is-active .scene__title {
+  color: var(--verde-900);
 }
 
 .scene__text {
-  max-width: 30ch;
-  margin-top: 0.5rem;
-  color: var(--tinta-suave);
-}
-
-.scene__block {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 3rem;
-  min-height: clamp(18rem, 26vw, 24rem);
-  padding: clamp(1.5rem, 2.5vw, 2rem);
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--verde-selva);
-  color: var(--crema);
-}
-
-.scene__block .scene__index {
-  margin-top: 0;
-  color: var(--crema);
-}
-
-.scene__block .scene__text {
-  color: var(--crema);
-}
-
-.scene__rings {
-  position: absolute;
-  top: -10%;
-  right: -10%;
-  width: 70%;
-  pointer-events: none;
-}
-
-.scene__rings circle {
-  fill: none;
-  stroke: var(--crema);
-  stroke-opacity: 0.3;
-  stroke-width: 0.6;
+  max-width: 24ch;
+  margin-top: 1.25rem;
+  font-size: var(--fs-lede);
+  line-height: 1.4;
 }
 
 @media (max-width: 899px) {
-  .audience__top {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
+  .audience__head,
   .scenes {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .scene--1,
-  .scene--2,
-  .scene--3 {
-    grid-column: auto;
-    margin-top: 0;
+  .scenes__media {
+    display: none;
   }
 
-  .scene__media img,
-  .scene--3 .scene__media img {
-    aspect-ratio: 4 / 3;
+  .scene,
+  .scene:first-child {
+    min-height: 0;
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--linea);
   }
 
-  .scene__block {
-    min-height: 14rem;
+  .scene__photo {
+    display: block;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .scene__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scene__title {
+    color: var(--verde-900);
   }
 }

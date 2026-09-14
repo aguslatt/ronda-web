@@ -1,78 +1,177 @@
+/* ==========================================================================
+   El insight · el gran momento
+   Una pista fija: la lectura marca “que alguien lo ofrezca” y, al final,
+   entra por el borde una mano que ofrece.
+   ========================================================================== */
 .insight {
+  --p: 0;
   position: relative;
-  display: grid;
-  align-items: center;
-  min-height: min(92svh, 60rem);
-  padding-block: clamp(6rem, 14vw, 11rem);
-  overflow: hidden;
+  height: 220svh;
   background: var(--rojo);
   color: var(--crema);
 }
 
-.insight__rings {
+.insight__stage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-content: center;
+  height: 100svh;
+  min-height: 34rem;
+  padding: calc(var(--header-h) + 3rem) var(--edge) 3rem;
+  overflow: hidden;
+}
+
+.insight__folio {
   position: absolute;
-  top: 50%;
-  left: 62%;
-  width: max(110vw, 62rem);
-  max-width: none;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  top: calc(var(--header-h) + 4svh);
+  left: var(--edge);
+  margin: 0;
+  flex-wrap: nowrap;
+  color: var(--crema);
+  white-space: nowrap;
 }
 
-.insight__rings circle {
-  fill: none;
-  stroke: var(--crema);
-  stroke-opacity: 0.22;
-  stroke-width: 0.25;
-}
-
-.insight__inner {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  max-width: var(--max);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-.insight .insight__eyebrow {
+.insight .folio__number {
   color: var(--crema);
 }
 
 .insight__phrase {
-  max-width: 17ch;
-  margin-top: clamp(2rem, 4vw, 3rem);
+  /* Avance de cada tramo marcado */
+  --m1: clamp(0, calc(var(--p) * 2.6 - 0.25), 1);
+  --m2: clamp(0, calc(var(--p) * 2.6 - 1.25), 1);
+  position: relative;
+  z-index: 2;
   font-family: var(--f-display);
-  font-size: min(clamp(2.5rem, 1rem + 5.6vw, 6.5rem), 11vw);
+  font-size: max(min(8.4vw, 13.5svh), 2.5rem);
   font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
-.insight__start {
+.insight__line {
   display: block;
 }
 
-.insight__end {
-  display: block;
+.mark {
+  position: relative;
+  display: inline-block;
+  margin-right: -0.14em;
+  padding: 0 0.14em;
   font-style: italic;
   font-weight: 400;
 }
 
+.mark--1 {
+  --m: var(--m1);
+}
+
+.mark--2 {
+  --m: var(--m2);
+}
+
+.mark::before {
+  content: '';
+  position: absolute;
+  inset: 0.12em 0 -0.02em;
+  background: var(--crema);
+  transform: scaleX(var(--m));
+  transform-origin: left;
+}
+
+.mark__base {
+  position: relative;
+}
+
+.mark__fill {
+  position: absolute;
+  top: 0;
+  left: 0.14em;
+  right: 0.14em;
+  color: var(--rojo);
+  white-space: nowrap;
+  clip-path: inset(0 calc((1 - var(--m)) * 100%) 0 0);
+  user-select: none;
+}
+
 .insight__note {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-top: clamp(2rem, 4vw, 3rem);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
 .insight__note::before {
   content: '';
-  flex: 0 1 3rem;
+  flex: 0 1 3.5rem;
   min-width: 1rem;
   height: 1px;
   background: currentColor;
+}
+
+/* La mano que ofrece entra desde el borde, en la dirección del gesto */
+.insight__hand {
+  --h: clamp(0, calc((var(--p) - 0.58) * 3), 1);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: min(27vw, 30rem);
+  height: 64svh;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 0 calc((1 - var(--h)) * 100%));
+}
+
+.insight__hand img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 44% 50%;
+  scale: calc(1.18 - var(--h) * 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight {
+    height: auto;
+  }
+
+  .insight__stage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+  }
+}
+
+@media (max-width: 899px) {
+  .insight {
+    height: 190svh;
+  }
+
+  .insight__stage {
+    align-content: start;
+    padding-top: calc(var(--header-h) + 5.5rem);
+  }
+
+  .insight__phrase {
+    font-size: 12.2vw;
+  }
+
+  .insight__hand {
+    position: relative;
+    justify-self: end;
+    width: 72%;
+    height: 34svh;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+  .insight {
+    height: auto;
+  }
 }

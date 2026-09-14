@@ -6,16 +6,17 @@ interface SectionHeadProps {
   eyebrow: string
   title: ReactNode
   titleId: string
+  className?: string
 }
 
-/** Encabezado numerado común a todas las secciones. */
-export function SectionHead({ number, eyebrow, title, titleId }: SectionHeadProps) {
+/** Folio del relato (número + capítulo) y titular de sección. */
+export function SectionHead({ number, eyebrow, title, titleId, className = '' }: SectionHeadProps) {
   return (
-    <div className="section-head">
-      <p className="section-head__eyebrow">
-        <span className="section-head__number">{number}</span>
-        <span className="section-head__rule" aria-hidden="true" />
-        {eyebrow}
+    <div className={`section-head ${className}`}>
+      <p className="folio">
+        <span className="folio__number">{number}</span>
+        <span className="folio__rule" aria-hidden="true" />
+        <span>{eyebrow}</span>
       </p>
       <h2 id={titleId} className="section-head__title">
         {title}

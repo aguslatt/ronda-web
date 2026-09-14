@@ -17,19 +17,20 @@ export function Footer() {
             .
           </p>
           <p>
-            Fotografías de contexto vía Pexels, con licencia de uso libre:{' '}
+            Fotografías de contexto con licencias de uso libre:{' '}
             {credits.photos.map((photo, index) => (
               <span key={photo.url}>
                 <a href={photo.url} target="_blank" rel="noopener noreferrer">
                   {photo.author}
                   <span className="sr-only"> (se abre en una pestaña nueva)</span>
-                </a>
+                </a>{' '}
+                ({photo.source})
                 {index < credits.photos.length - 2 ? ', ' : index === credits.photos.length - 2 ? ' y ' : '.'}
               </span>
             ))}
           </p>
         </div>
-        <a className="site-footer__top" href="#inicio">
+        <a className="cta site-footer__top" href="#inicio">
           Volver al inicio
           <ArrowUpIcon />
         </a>

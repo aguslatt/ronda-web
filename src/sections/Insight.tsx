@@ -1,25 +1,50 @@
 import { insight as i } from '../content'
+import { Picture } from '../components/Picture'
+import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Insight.css'
 
-export function Insight() {
+/** Fragmento marcado: la banda crema avanza con la lectura y el texto pasa a rojo. */
+function Mark({ text, order }: { text: string; order: number }) {
   return (
-    <section id={i.id} className="insight on-dark" aria-labelledby={`${i.id}-title`}>
-      <svg className="insight__rings" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <circle cx="100" cy="100" r="99" />
-        <circle cx="100" cy="100" r="74" />
-      </svg>
-      <div className="insight__inner">
-        <h2 id={`${i.id}-title`} className="eyebrow insight__eyebrow">
-          <span className="section-head__number" aria-hidden="true">
+    <span className={`mark mark--${order}`}>
+      <span className="mark__base">{text}</span>
+      <span className="mark__fill" aria-hidden="true">
+        {text}
+      </span>
+    </span>
+  )
+}
+
+export function Insight() {
+  const runway = useScrollProgress<HTMLElement>('runway', 1)
+
+  return (
+    <section ref={runway} id={i.id} className="insight on-dark" aria-labelledby={`${i.id}-title`}>
+      <div className="insight__stage">
+        <h2 id={`${i.id}-title`} className="folio insight__folio">
+          <span className="folio__number" aria-hidden="true">
             {i.number}
           </span>
-          <span className="section-head__rule" aria-hidden="true" />
-          {i.eyebrow}
+          <span className="folio__rule" aria-hidden="true" />
+          <span>{i.eyebrow}</span>
         </h2>
+
         <p className="insight__phrase">
-          <span className="insight__start">{i.phraseStart}</span> <em className="insight__end">{i.phraseEnd}</em>
+          <span className="insight__line">{i.lines[0]}</span>{' '}
+          <span className="insight__line">{i.lines[1]}</span>{' '}
+          <span className="insight__line">
+            {i.lines[2]} <Mark text={i.marked[0]} order={1} />
+          </span>{' '}
+          <span className="insight__line">
+            <Mark text={i.marked[1]} order={2} />
+          </span>
         </p>
+
         <p className="insight__note">{i.clarification}</p>
+
+        <figure className="insight__hand">
+          <Picture name={i.image.name} alt={i.image.alt} sizes="(min-width: 900px) 28vw, 70vw" />
+        </figure>
       </div>
     </section>
   )

@@ -1,116 +1,251 @@
+/* ==========================================================================
+   El hallazgo · tres cifras, tres roles del relato
+   ========================================================================== */
 .findings {
-  background: var(--papel);
+  z-index: 1;
+  background: var(--verde-900);
+  color: var(--crema);
 }
 
-.findings__top,
-.findings__bottom {
+/* El lado derecho queda libre: por ahí cruza el encuadre de la portada */
+.findings__head {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  max-width: min(52rem, 56vw);
+}
+
+.findings__head .section-head__title {
+  max-width: 12ch;
 }
 
 .findings__text {
   max-width: 36ch;
-  color: var(--tinta-suave);
+  color: var(--crema-suave);
   font-size: var(--fs-lede);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
-.stats {
+.figures {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: clamp(3rem, 6vw, 5.5rem) 0 0;
+  gap: clamp(5.5rem, 11vw, 10rem);
+  margin: clamp(5.5rem, 11vw, 10rem) 0 0;
   padding: 0;
-  border-top: 1px solid var(--tinta);
   list-style: none;
 }
 
-.stat {
+.figure {
+  --p: 0;
+  position: relative;
   display: grid;
-  align-content: start;
-  gap: 1rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2.5rem) 0.5rem 0;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2vw, 2rem);
+  align-items: end;
 }
 
-.stat + .stat {
-  padding-left: clamp(1rem, 2.5vw, 2.5rem);
-  border-left: 1px solid var(--linea);
-}
-
-.stat__figure {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
-}
-
-.stat__ring {
-  flex: none;
-  width: clamp(2.75rem, 2rem + 2vw, 4rem);
-}
-
-.stat__value {
-  color: var(--verde-900);
+.figure__role {
+  grid-row: 1;
+  margin-bottom: 1rem;
+  color: var(--hoja);
   font-family: var(--f-display);
-  font-size: var(--fs-stat);
+  font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.2;
+  translate: 0 calc((1 - var(--p)) * 1.25rem);
+}
+
+.figure__value {
+  grid-row: 2;
+  font-family: var(--f-display);
   font-weight: 600;
   font-variant-numeric: lining-nums;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  line-height: 0.8;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
 }
 
-.stat--alert .stat__value {
-  color: var(--rojo);
+.figure__rule {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  height: 1px;
+  margin-block: clamp(1.5rem, 2.5vw, 2.25rem) clamp(1.25rem, 2vw, 1.75rem);
+  background: var(--crema);
+  opacity: 0.5;
+  transform: scaleX(var(--p));
+  transform-origin: left;
 }
 
-.stat__label {
-  max-width: 24ch;
-  font-size: 1.125rem;
-  line-height: 1.4;
+.figure__label {
+  grid-row: 4;
+  max-width: 18ch;
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
 }
 
-.findings__bottom {
-  align-items: center;
-  margin-top: clamp(3rem, 6vw, 5rem);
+/* 59,7% · el hábito individual */
+.figure--1 .figure__role {
+  grid-column: 1 / span 6;
 }
 
-.findings__photo {
+.figure--1 .figure__value {
+  grid-column: 1 / span 9;
+  color: var(--crema);
+  font-size: clamp(5.5rem, 18vw, 16rem);
+}
+
+.figure--1 .figure__label {
+  grid-column: 1 / span 6;
+}
+
+.figure__photo {
+  grid-column: 10 / -1;
+  grid-row: 1 / span 2;
+  align-self: end;
+  aspect-ratio: 3 / 4;
   margin: 0;
+  overflow: hidden;
+  clip-path: inset(calc((1 - var(--p)) * 55%) 0 0 0);
 }
 
-.findings__photo img {
+.figure__photo img {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius);
+  object-position: 45% 50%;
+}
+
+/* 81,6% · el valor del encuentro: la cifra mayor, alineada al otro margen */
+.figure--2 .figure__role {
+  grid-column: 1 / span 4;
+}
+
+.figure--2 .figure__value {
+  grid-column: 3 / -1;
+  justify-self: end;
+  color: var(--crema);
+  font-size: clamp(6.5rem, 23vw, 20.5rem);
+}
+
+.figure--2 .figure__rule {
+  transform-origin: right;
+}
+
+.figure--2 .figure__label {
+  grid-column: 6 / -1;
+  justify-self: end;
+  text-align: right;
+}
+
+/* 69% · la oportunidad de Romance: banda roja a sangre */
+.figure--3 {
+  margin-inline: calc(50% - 50vw);
+  padding: clamp(3.5rem, 7vw, 6rem) calc(50vw - 50%);
+  background: var(--rojo);
+}
+
+.figure--3 .figure__value {
+  grid-column: 1 / span 7;
+  grid-row: 1 / span 3;
+  align-self: center;
+  font-size: clamp(7rem, 25vw, 22rem);
+}
+
+.figure--3 .figure__role {
+  grid-column: 8 / -1;
+  grid-row: 1;
+  align-self: end;
+  color: var(--crema);
+}
+
+.figure--3 .figure__rule {
+  grid-column: 8 / -1;
+  grid-row: 2;
+  opacity: 0.7;
+}
+
+.figure--3 .figure__label {
+  grid-column: 8 / -1;
+  grid-row: 3;
+  align-self: start;
+  max-width: 11ch;
+  font-size: clamp(2rem, 1.2rem + 3vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1;
 }
 
 .findings__source {
   display: grid;
-  gap: 1.25rem;
-}
-
-.findings__tag {
-  color: var(--verde-900);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  margin-top: clamp(4rem, 8vw, 6.5rem);
 }
 
 @media (max-width: 899px) {
-  .findings__top,
-  .findings__bottom {
+  /* Espacio para que el encuadre de la portada termine de cruzar antes del título */
+  .section.findings {
+    padding-top: calc(var(--space-section) + 30svh);
+  }
+
+  .findings__head {
+    max-width: none;
+  }
+
+  .figure {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  }
+
+  .figure .figure__role,
+  .figure .figure__value,
+  .figure .figure__rule,
+  .figure .figure__label {
+    grid-column: 1 / -1;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .figure--1 .figure__role {
+    grid-column: 1 / 2;
+  }
+
+  .figure__photo {
+    grid-column: 2 / 3;
+    grid-row: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .figure--1 .figure__value {
+    font-size: 27vw;
+  }
+
+  .figure--2 .figure__value {
+    font-size: 31vw;
+  }
+
+  .figure--2 .figure__rule {
+    transform-origin: left;
+  }
+
+  .figure--3 .figure__value {
+    grid-row: 1;
+    font-size: 40vw;
+  }
+
+  .figure--3 .figure__role {
+    grid-row: 2;
+    margin-top: 1.5rem;
+  }
+
+  .figure--3 .figure__rule {
+    grid-row: 3;
+  }
+
+  .figure--3 .figure__label {
+    grid-row: 4;
+  }
+
+  .findings__source {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .stats {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .stat,
-  .stat + .stat {
-    padding: 1.5rem 0;
-    border-left: 0;
-  }
-
-  .stat + .stat {
-    border-top: 1px solid var(--linea);
   }
 }

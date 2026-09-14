@@ -16,33 +16,29 @@
 .site-footer__notes {
   display: grid;
   gap: 0.75rem;
-  max-width: 70ch;
+  max-width: 72ch;
 }
 
-.site-footer a {
+.site-footer__notes a {
   color: var(--crema);
   transition: color var(--dur) var(--ease);
 }
 
-.site-footer a:hover {
+.site-footer__notes a:hover {
   color: var(--oro);
 }
 
-.site-footer__top {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 44px;
-  padding: 0.5rem 1.1rem;
-  border: 1px solid var(--linea-clara);
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
+.site-footer .site-footer__top {
+  color: var(--crema);
   white-space: nowrap;
 }
 
-.site-footer__top:hover {
-  border-color: var(--oro);
+.site-footer .site-footer__top:hover {
+  color: var(--oro);
+}
+
+.site-footer .site-footer__top:hover svg {
+  transform: translateY(-4px);
 }
 
 @media (max-width: 640px) {

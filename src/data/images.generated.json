@@ -1,20 +1,19 @@
 {
-  "gesto-ofrecer": {
+  "gesto-rio": {
     "width": 1600,
-    "height": 2240,
+    "height": 2395,
     "widths": [
       640,
       1080,
       1600
     ]
   },
-  "ronda-patio": {
-    "width": 1600,
-    "height": 1066,
+  "mate-solo": {
+    "width": 900,
+    "height": 1350,
     "widths": [
-      640,
-      1080,
-      1600
+      480,
+      900
     ]
   },
   "estudio": {
@@ -26,13 +25,38 @@
       1600
     ]
   },
-  "mate-casa": {
+  "pausa": {
     "width": 1600,
-    "height": 1060,
+    "height": 2845,
     "widths": [
       640,
       1080,
       1600
+    ]
+  },
+  "independencia": {
+    "width": 1600,
+    "height": 901,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "oferta": {
+    "width": 1080,
+    "height": 1920,
+    "widths": [
+      640,
+      1080
+    ]
+  },
+  "gesto-ofrecer": {
+    "width": 2000,
+    "height": 2800,
+    "widths": [
+      1000,
+      2000
     ]
   },
   "dos-mates": {
@@ -42,6 +66,15 @@
       480,
       800,
       1200
+    ]
+  },
+  "encuentro-rio": {
+    "width": 2400,
+    "height": 1603,
+    "widths": [
+      800,
+      1600,
+      2400
     ]
   },
   "romance-tradicional": {
@@ -57,14 +90,6 @@
     "height": 360,
     "widths": [
       360
-    ]
-  },
-  "romance-logo": {
-    "width": 500,
-    "height": 177,
-    "widths": [
-      250,
-      500
     ]
   },
   "romance-cebada": {

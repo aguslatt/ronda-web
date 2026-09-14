@@ -1,134 +1,111 @@
+/* ==========================================================================
+   Cómo se activa · índice de puntos de contacto
+   ========================================================================== */
 .activation {
   background: var(--verde-900);
   color: var(--crema);
 }
 
-.activation__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+.activation .section-head__title {
+  max-width: 14ch;
 }
 
-/* Diagrama de la ronda */
-.orbit {
-  width: 100%;
-  max-width: 520px;
-  height: auto;
-  margin-inline: auto;
-  overflow: visible;
-}
-
-.orbit__inner {
-  fill: var(--verde-700);
-}
-
-.orbit__path {
-  fill: none;
-  stroke: var(--crema);
-  stroke-opacity: 0.4;
-  stroke-width: 1.5;
-}
-
-.orbit__center {
-  fill: var(--crema);
-  font-family: var(--f-display);
-  font-size: 40px;
-  font-style: italic;
-  text-anchor: middle;
-}
-
-.orbit__node circle {
-  fill: var(--verde-900);
-  stroke: var(--crema);
-  stroke-width: 1.5;
-  transition:
-    fill var(--dur) var(--ease),
-    stroke var(--dur) var(--ease);
-}
-
-.orbit__node text {
-  fill: var(--crema);
-  font-family: var(--f-body);
-  font-size: 22px;
-  font-weight: 700;
-  text-anchor: middle;
-  dominant-baseline: central;
-  transition: fill var(--dur) var(--ease);
-}
-
-.orbit__node.is-active circle {
-  fill: var(--oro);
-  stroke: var(--oro);
-}
-
-.orbit__node.is-active text {
-  fill: var(--verde-950);
-}
-
-/* Lista de canales */
 .channels {
-  margin: 0;
+  --p: 0;
+  position: relative;
+  margin: clamp(3.5rem, 7vw, 6rem) 0 0;
   padding: 0;
+  border-top: 1px solid var(--linea-clara);
   list-style: none;
 }
 
+/* Filete del recorrido y su avance */
+.channels::before,
+.channels::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.375rem;
+  width: 1px;
+  background: var(--linea-clara);
+}
+
+.channels::after {
+  width: 3px;
+  margin-left: -1px;
+  background: var(--oro);
+  transform: scaleY(var(--p));
+  transform-origin: top;
+}
+
 .channel {
+  position: relative;
   display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: 1.25rem;
-  padding-block: 1.35rem;
-  border-top: 1px solid var(--linea-clara);
-}
-
-.channel:last-child {
+  grid-template-columns: 2.75rem minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: baseline;
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
   border-bottom: 1px solid var(--linea-clara);
+  transition: background-color 0.4s var(--ease-out);
 }
 
-.channel__num {
+.channel__number {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1.5px solid var(--crema-suave);
-  border-radius: 50%;
-  font-weight: 700;
-  transition:
-    background-color var(--dur) var(--ease),
-    border-color var(--dur) var(--ease),
-    color var(--dur) var(--ease);
-}
-
-.channel.is-active .channel__num {
-  border-color: var(--oro);
-  background: var(--oro);
-  color: var(--verde-950);
-}
-
-.channel__role {
+  background: var(--verde-900);
   color: var(--hoja);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--f-display);
+  font-size: 1.25rem;
+  font-style: italic;
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out);
 }
 
 .channel__name {
-  margin-top: 0.3rem;
-  font-size: var(--fs-h3);
-  line-height: 1.12;
+  font-size: clamp(2.25rem, 1rem + 4.2vw, 5.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  transition: translate 0.5s var(--ease-out);
+}
+
+.channel__role {
+  color: var(--oro);
+  font-family: var(--f-display);
+  font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem);
+  font-style: italic;
+  line-height: 1.1;
 }
 
 .channel__detail {
-  margin-top: 0.3rem;
-  font-weight: 600;
+  margin-top: 0.4rem;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
 .channel__text {
-  max-width: 46ch;
-  margin-top: 0.4rem;
+  max-width: 34ch;
+  margin-top: 0.5rem;
   color: var(--crema-suave);
+  font-size: 1.125rem;
+}
+
+.channel:hover {
+  background: var(--verde-800);
+}
+
+.channel:hover .channel__name {
+  translate: 0.75rem 0;
+}
+
+.channel:hover .channel__number {
+  background: var(--oro);
+  color: var(--verde-950);
 }
 
 .activation__note {
@@ -136,7 +113,6 @@
   align-items: center;
   gap: 0.75rem;
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
-  color: var(--crema);
   font-weight: 600;
 }
 
@@ -150,11 +126,12 @@
 }
 
 @media (max-width: 899px) {
-  .activation__grid {
-    grid-template-columns: minmax(0, 1fr);
+  .channel {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    row-gap: 0.75rem;
   }
 
-  .orbit {
-    max-width: 340px;
+  .channel__body {
+    grid-column: 2;
   }
 }

@@ -25,10 +25,11 @@ export const hero = {
   lede: 'Una propuesta para convertir una invitación cotidiana en reconocimiento, prueba y elección de marca.',
   campaign: 'Campaña: abril–junio de 2027',
   cta: { label: 'Explorar la propuesta', href: '#hallazgo' },
-  logo: { name: 'romance-logo', alt: 'Yerba Mate Romance' } satisfies ImageRef,
+  // Frase de la transición entre la portada y El hallazgo (idea que ordena el diseño)
+  passage: ['El mate pasa.', 'La historia avanza.'],
   image: {
-    name: 'gesto-ofrecer',
-    alt: 'Una mano le alcanza un mate con bombilla a otra mano que lo recibe, junto a un termo.',
+    name: 'gesto-rio',
+    alt: 'Dos manos se encuentran alrededor de un mate con bombilla, sobre un río de montaña.',
   } satisfies ImageRef,
   product: {
     name: 'romance-tradicional',
@@ -44,9 +45,9 @@ export const findings = {
   title: 'El hábito cambió. El valor de compartir sigue ahí.',
   text: 'El mate acompaña cada vez más momentos individuales. Compartirlo conserva su significado: cercanía, confianza y una forma simple de estar con alguien.',
   stats: [
-    { value: 59.7, display: '59,7%', label: 'Toma mate más veces solo que acompañado.', alert: false },
-    { value: 81.6, display: '81,6%', label: 'Considera que compartir mate genera cercanía y confianza.', alert: false },
-    { value: 69, display: '69%', label: 'No conoce Romance.', alert: true },
+    { role: 'El hábito individual', display: '59,7%', label: 'Toma mate más veces solo que acompañado.' },
+    { role: 'El valor del encuentro', display: '81,6%', label: 'Considera que compartir mate genera cercanía y confianza.' },
+    { role: 'La oportunidad de Romance', display: '69%', label: 'No conoce Romance.' },
   ],
   source:
     'Fuente: investigación propia para la tesis de Publicidad. Muestra no probabilística de 403 personas. Los resultados describen a las personas encuestadas y no son representativos de toda la población.',
@@ -60,8 +61,8 @@ export const findings = {
     ],
   },
   image: {
-    name: 'ronda-patio',
-    alt: 'Un hombre le alcanza un mate a una mujer sentada frente a él, en una mesa pequeña de un patio con plantas.',
+    name: 'mate-solo',
+    alt: 'Una persona sola sostiene un mate y un termo junto a un río.',
   } satisfies ImageRef,
 }
 
@@ -78,11 +79,18 @@ export const brand = {
     { label: 'En su packaging', text: 'Dos manos, dos mates y una hoja.' },
   ],
   product: hero.product,
+  signLabel: 'En el envase',
   medallion: {
     name: 'romance-medallon',
     alt: 'Detalle del medallón del envase: dos manos distintas sostienen dos mates sobre una hoja de yerba.',
   } satisfies ImageRef,
-  medallionCaption: 'Medallón original del envase: dos mates sostenidos por dos manos distintas, sobre una hoja de yerba.',
+  medallionCaption: 'Medallón original: dos mates sostenidos por dos manos distintas, sobre una hoja de yerba.',
+  gestureLabel: 'En la vida cotidiana',
+  gesture: {
+    name: 'dos-mates',
+    alt: 'Dos manos acercan dos mates de madera con bombilla, uno junto al otro.',
+  } satisfies ImageRef,
+  gestureCaption: 'Dos manos y dos mates: el mismo signo, fuera del envase.',
 }
 
 /* 4 · El público --------------------------------------------------------- */
@@ -105,15 +113,18 @@ export const audience = {
     },
     {
       title: 'Primeros trabajos',
-      text: 'Una pausa frente a la pantalla, en la oficina o en casa.',
-      image: null,
+      text: 'Una pausa en la jornada, entre tareas y pantallas.',
+      image: {
+        name: 'pausa',
+        alt: 'Primer plano de unas manos que ceban agua desde un termo en un mate.',
+      } satisfies ImageRef,
     },
     {
       title: 'Independencia reciente',
       text: 'La primera yerba que elige y paga por su cuenta.',
       image: {
-        name: 'mate-casa',
-        alt: 'Primer plano de una mano que sostiene un mate de calabaza con bombilla, en un interior luminoso.',
+        name: 'independencia',
+        alt: 'Una joven se ceba un mate con su propio termo, sentada sola junto a un lago en un parque.',
       } satisfies ImageRef,
     },
   ],
@@ -124,9 +135,14 @@ export const insight = {
   id: 'insight',
   number: '04',
   eyebrow: 'El insight',
-  phraseStart: 'Lo que me falta no son ganas:',
-  phraseEnd: 'es que alguien lo ofrezca.',
+  // Se lee: “Lo que me falta no son ganas: es que alguien lo ofrezca.”
+  lines: ['Lo que me falta', 'no son ganas:', 'es'],
+  marked: ['que alguien', 'lo ofrezca.'],
   clarification: 'Síntesis del insight estratégico.',
+  image: {
+    name: 'oferta',
+    alt: 'Un joven extiende un mate hacia quien mira, mientras una mano se acerca a recibirlo.',
+  } satisfies ImageRef,
 }
 
 /* 6 · La respuesta estratégica ------------------------------------------ */
@@ -137,7 +153,11 @@ export const strategy = {
   title: 'Hacer de Romance la yerba que se ofrece.',
   titleAccent: 'la yerba que se ofrece.',
   text: 'Construir reconocimiento y significado en cada contacto, y facilitar que esa asociación se convierta en una prueba compartida.',
-  progressionTitle: 'Cómo avanza la propuesta',
+  progressionTitle: 'El mate pasa. La historia avanza.',
+  passage: {
+    name: 'gesto-ofrecer',
+    alt: 'Una misma fotografía dividida en tres ventanas: una mano le pasa un mate a otra.',
+  } satisfies ImageRef,
   progression: [
     { title: 'Reconocimiento', text: 'Que Romance se registre en cada contacto.' },
     { title: 'Significado', text: 'Que la marca se asocie con el gesto de ofrecer.' },
@@ -188,9 +208,9 @@ export const change = {
   ],
   goalsTitle: 'Metas propuestas',
   goals: [
-    { value: 40, display: '40%', label: 'Asociación con compartir o encuentro.' },
-    { value: 30, display: '30%', label: 'Reconocimiento de marca.' },
-    { value: 6, display: '6%', label: 'Consumo declarado.' },
+    { display: '40%', label: 'Asociación con compartir o encuentro.' },
+    { display: '30%', label: 'Reconocimiento de marca.' },
+    { display: '6%', label: 'Consumo declarado.' },
   ],
   deadlines: 'Plazos por indicador pendientes de definición.',
   legend: {
@@ -214,7 +234,6 @@ export const activation = {
   number: '07',
   eyebrow: 'Cómo se activa',
   title: 'Una misma idea. Distintas ocasiones para ofrecer.',
-  center: ['Ofrecer', 'un mate'],
   channels: [
     {
       name: 'Streaming',
@@ -286,8 +305,8 @@ export const closing = {
     { name: 'Agustina Lattanzi', role: 'Dirección creativa y comunicación digital' },
   ],
   image: {
-    name: 'dos-mates',
-    alt: 'Dos manos acercan dos mates de madera con bombilla, uno junto al otro.',
+    name: 'encuentro-rio',
+    alt: 'Dos personas se pasan un mate con bombilla junto a un río de montaña.',
   } satisfies ImageRef,
   // Cuando exista el brief final, agregar aquí su ruta (por ejemplo './brief-ronda.pdf')
   // y colocar el archivo en /public. El botón de descarga aparece automáticamente.
@@ -302,10 +321,11 @@ export const credits = {
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
   photos: [
-    { author: 'Crisher P.H.', url: 'https://www.pexels.com/photo/couple-eating-breakfast-in-a-mountain-valley-15082054/' },
-    { author: 'Los Muertos Crew', url: 'https://www.pexels.com/photo/8279924/' },
-    { author: 'Eduard Perez', url: 'https://www.pexels.com/photo/university-student-holding-mate-in-classroom-37795319/' },
-    { author: 'Messala Ciulla', url: 'https://www.pexels.com/photo/a-hand-holding-a-yerba-mate-8762533/' },
-    { author: 'Nour Alhoda', url: 'https://www.pexels.com/photo/sharing-traditional-yerba-mate-drinks-33181406/' },
+    { author: 'Camila Seves Espasandin', source: 'Unsplash', url: 'https://unsplash.com/@camilaespasandin' },
+    { author: 'Malen Almonacid Trossi', source: 'Unsplash', url: 'https://unsplash.com/@malentrossi' },
+    { author: 'Eduard Perez', source: 'Pexels', url: 'https://www.pexels.com/photo/university-student-holding-mate-in-classroom-37795319/' },
+    { author: 'Guillermo Berlin', source: 'Pexels', url: 'https://www.pexels.com/photo/33152241/' },
+    { author: 'Crisher P.H.', source: 'Pexels', url: 'https://www.pexels.com/photo/couple-eating-breakfast-in-a-mountain-valley-15082054/' },
+    { author: 'Nour Alhoda', source: 'Pexels', url: 'https://www.pexels.com/photo/sharing-traditional-yerba-mate-drinks-33181406/' },
   ],
 }
