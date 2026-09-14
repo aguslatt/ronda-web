@@ -1,0 +1,135 @@
+.brand {
+  overflow: hidden;
+  background: var(--verde-900);
+  color: var(--crema);
+}
+
+.brand__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+}
+
+.brand__text {
+  max-width: 40ch;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--crema-suave);
+  font-size: var(--fs-lede);
+  line-height: 1.5;
+}
+
+.brand__anchors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: clamp(2.5rem, 5vw, 3.75rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand__anchor {
+  padding-top: 1rem;
+  border-top: 1px solid var(--linea-clara);
+}
+
+.brand__anchor-label {
+  color: var(--hoja);
+  font-family: var(--f-display);
+  font-size: 1.375rem;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.brand__anchor-text {
+  margin-top: 0.4rem;
+}
+
+.brand__visual {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.brand__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+}
+
+.brand__rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.brand__rings circle {
+  fill: none;
+  stroke: var(--crema);
+  stroke-opacity: 0.2;
+  stroke-width: 0.5;
+}
+
+.brand__pack {
+  position: relative;
+  width: 56%;
+  filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.35));
+}
+
+.brand__medal {
+  position: absolute;
+  right: -1%;
+  bottom: 5%;
+  width: 36%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 4px solid var(--crema);
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Margen interior para que el aro del medallón original se vea completo */
+.brand__medal img {
+  width: 100%;
+  height: 100%;
+  padding: 7%;
+  object-fit: contain;
+}
+
+.brand__caption {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 42ch;
+  margin-top: 1.5rem;
+  color: var(--crema-suave);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.brand__caption::before {
+  content: '';
+  flex: none;
+  width: 2rem;
+  height: 1px;
+  margin-top: 0.75em;
+  background: var(--hoja);
+}
+
+@media (max-width: 899px) {
+  .brand__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .brand__visual {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand__anchors {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,145 @@
+.closing {
+  overflow: hidden;
+  background: var(--verde-900);
+  color: var(--crema);
+}
+
+.closing__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.closing__lines {
+  font-family: var(--f-display);
+  font-size: min(clamp(2.25rem, 1.1rem + 4.4vw, 5.25rem), 11vw);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.closing__line {
+  display: block;
+}
+
+.closing__line:nth-child(2) {
+  padding-left: clamp(1rem, 4vw, 4rem);
+  color: var(--hoja);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.closing__line:nth-child(3) {
+  padding-left: clamp(2rem, 8vw, 8rem);
+}
+
+.closing__visual {
+  position: relative;
+  width: min(100%, 440px);
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+
+.closing__ring {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+}
+
+.closing__ring circle {
+  fill: none;
+  stroke: var(--crema);
+  stroke-opacity: 0.35;
+  stroke-width: 0.3;
+}
+
+.closing__photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--verde-700);
+}
+
+.closing__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.closing__signature {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 1.25rem 3rem;
+  align-items: start;
+  margin-top: clamp(4.5rem, 9vw, 7.5rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--linea-clara);
+}
+
+.closing__project {
+  font-family: var(--f-display);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.closing__team {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.125rem;
+}
+
+.closing__name {
+  font-weight: 700;
+}
+
+.closing__role {
+  color: var(--crema-suave);
+}
+
+.btn--light {
+  background: var(--crema);
+  color: var(--verde-900);
+}
+
+.btn--light .btn__icon {
+  background: var(--verde-900);
+  color: var(--crema);
+}
+
+.closing__brief {
+  grid-column: 2;
+  justify-self: start;
+}
+
+@media (max-width: 899px) {
+  .closing__grid,
+  .closing__signature {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .closing__visual {
+    width: min(78%, 360px);
+  }
+
+  .closing__brief {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .closing__member {
+    display: grid;
+  }
+
+  .closing__sep {
+    display: none;
+  }
+}

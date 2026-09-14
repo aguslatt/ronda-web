@@ -1,0 +1,285 @@
+/* ==========================================================================
+   Tokens de diseño · Proyecto Ronda para Romance
+   Paleta tomada del packaging y del manual de marca (validar con la marca).
+   ========================================================================== */
+:root {
+  /* Color: verdes del envase */
+  --verde-950: #00261a;
+  --verde-900: #013d26; /* banda inferior del envase */
+  --verde-700: #14532c;
+  --verde-selva: #006456; /* versión digital del logotipo */
+  --hoja: #a6d09f;
+
+  /* Color: rojo de la banda superior */
+  --rojo: #bf031b;
+  --rojo-700: #9e0217;
+
+  /* Neutros cálidos */
+  --crema: #f4f2ea;
+  --papel: #faf8f2;
+  --arena: #e6e0cf;
+  --arena-suave: #efeadd;
+  --tinta: #12201a;
+  --tinta-suave: #45524a;
+  --oro: #e5c653;
+
+  --linea: rgba(18, 32, 26, 0.16);
+  --linea-fuerte: rgba(18, 32, 26, 0.55);
+  --linea-clara: rgba(244, 242, 234, 0.26);
+  --crema-suave: rgba(244, 242, 234, 0.8);
+
+  --foco: var(--verde-selva);
+
+  /* Tipografía (máximo dos familias) */
+  --f-display: 'Piazzolla', 'Iowan Old Style', Georgia, serif;
+  --f-body: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --fs-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --fs-lede: clamp(1.1875rem, 1.02rem + 0.6vw, 1.5rem);
+  --fs-h3: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+  /* Los titulares grandes se limitan al ancho de pantalla (vw) para que
+     no se corten con el texto ampliado al 200%. */
+  --fs-h2: min(clamp(2.25rem, 1.35rem + 3.4vw, 4.5rem), 12vw);
+  --fs-display: min(clamp(2.875rem, 1.1rem + 6.6vw, 7.5rem), 18vw);
+  --fs-stat: min(clamp(3.5rem, 2.2rem + 5vw, 6.75rem), 17vw);
+  --fs-label: 0.8125rem;
+
+  /* Espacio y layout */
+  --max: 1280px;
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3rem);
+  --space-section: clamp(4.5rem, 2.8rem + 7vw, 9.5rem);
+  --header-h: 4.25rem;
+  --radius: 4px;
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+  --dur-slow: 900ms;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1.25rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+main:focus {
+  outline: none;
+}
+
+.on-dark {
+  --foco: var(--oro);
+}
+
+::selection {
+  background: var(--rojo);
+  color: var(--crema);
+}
+
+/* ==========================================================================
+   Utilidades y piezas compartidas
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--space-section);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--verde-900);
+  color: var(--crema);
+  font-weight: 600;
+  border-radius: 999px;
+  transform: translateY(-160%);
+  transition: transform var(--dur) var(--ease);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.8rem 1.25rem 0.8rem 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  font: 600 1.0625rem/1.2 var(--f-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.btn--primary {
+  background: var(--verde-900);
+  color: var(--crema);
+}
+
+.btn--primary:hover {
+  background: var(--verde-selva);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--crema);
+  color: var(--verde-900);
+  transition: transform var(--dur) var(--ease);
+}
+
+.btn:hover .btn__icon {
+  transform: translateY(3px);
+}
+
+/* Etiquetas para distinguir datos */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.tag::before {
+  content: '';
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.tag--research::before {
+  background: currentColor;
+}
+
+.tag--goal::before {
+  border: 2px dashed currentColor;
+}
+
+/* Notas metodológicas */
+.note {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--tinta-suave);
+}
+
+.on-dark .note {
+  color: var(--crema-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

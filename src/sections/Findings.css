@@ -1,0 +1,116 @@
+.findings {
+  background: var(--papel);
+}
+
+.findings__top,
+.findings__bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+
+.findings__text {
+  max-width: 36ch;
+  color: var(--tinta-suave);
+  font-size: var(--fs-lede);
+  line-height: 1.5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(3rem, 6vw, 5.5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--tinta);
+  list-style: none;
+}
+
+.stat {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2.5rem) 0.5rem 0;
+}
+
+.stat + .stat {
+  padding-left: clamp(1rem, 2.5vw, 2.5rem);
+  border-left: 1px solid var(--linea);
+}
+
+.stat__figure {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.stat__ring {
+  flex: none;
+  width: clamp(2.75rem, 2rem + 2vw, 4rem);
+}
+
+.stat__value {
+  color: var(--verde-900);
+  font-family: var(--f-display);
+  font-size: var(--fs-stat);
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.stat--alert .stat__value {
+  color: var(--rojo);
+}
+
+.stat__label {
+  max-width: 24ch;
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.findings__bottom {
+  align-items: center;
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.findings__photo {
+  margin: 0;
+}
+
+.findings__photo img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.findings__source {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.findings__tag {
+  color: var(--verde-900);
+}
+
+@media (max-width: 899px) {
+  .findings__top,
+  .findings__bottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stat,
+  .stat + .stat {
+    padding: 1.5rem 0;
+    border-left: 0;
+  }
+
+  .stat + .stat {
+    border-top: 1px solid var(--linea);
+  }
+}

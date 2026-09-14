@@ -1,0 +1,56 @@
+.section-head__eyebrow,
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: var(--tinta-suave);
+}
+
+.on-dark .section-head__eyebrow,
+.on-dark .eyebrow {
+  color: var(--hoja);
+}
+
+.section-head__number {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.section-head__rule {
+  flex: 0 1 2rem;
+  min-width: 0.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.section-head__title {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  max-width: 17ch;
+  font-size: var(--fs-h2);
+}
+
+.section-head__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--rojo);
+}
+
+.on-dark .section-head__title em {
+  color: var(--hoja);
+}

@@ -1,0 +1,209 @@
+.strategy {
+  background: var(--papel);
+}
+
+.strategy__top {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+
+.strategy .section-head__title {
+  max-width: 14ch;
+}
+
+.strategy__text {
+  color: var(--tinta-suave);
+  font-size: var(--fs-lede);
+  line-height: 1.5;
+}
+
+/* Progresión */
+.progression {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid var(--tinta);
+}
+
+.progression__list {
+  --gap: clamp(1.5rem, 3vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progression__step {
+  position: relative;
+}
+
+.progression__step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 2.25rem;
+  left: 5.5rem;
+  right: calc(var(--gap) * -1 + 1rem);
+  height: 1px;
+  background: var(--linea-fuerte);
+}
+
+.glyph {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.glyph__line {
+  fill: none;
+  stroke: var(--verde-900);
+  stroke-width: 2;
+}
+
+.glyph__fill {
+  fill: var(--verde-900);
+}
+
+.glyph__fill--accent {
+  fill: var(--rojo);
+}
+
+.progression__name {
+  margin-top: 1.25rem;
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.625rem);
+}
+
+.progression__step:last-child .progression__name {
+  color: var(--rojo);
+}
+
+.progression__text {
+  max-width: 28ch;
+  margin-top: 0.5rem;
+  color: var(--tinta-suave);
+}
+
+/* Respaldos */
+.supports {
+  margin-top: clamp(4.5rem, 9vw, 8rem);
+}
+
+.supports__list {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.support--1 {
+  grid-column: 1 / span 4;
+}
+
+.support--2 {
+  grid-column: 5 / span 5;
+  margin-top: clamp(3rem, 8vw, 6.5rem);
+}
+
+.support--3 {
+  grid-column: 10 / span 3;
+  margin-top: clamp(1rem, 3vw, 2rem);
+}
+
+.support__media img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.support--1 .support__media img {
+  aspect-ratio: 1;
+}
+
+.support--2 .support__media img {
+  aspect-ratio: 4 / 3;
+}
+
+.support--3 .support__media {
+  padding: 9%;
+  border-radius: 50%;
+  background: var(--rojo);
+}
+
+.support--3 .support__media img {
+  aspect-ratio: 1;
+  padding: 7%;
+  object-fit: contain;
+  border: 3px solid var(--crema);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.support__index {
+  margin-top: 1.25rem;
+  color: var(--rojo);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.support__name {
+  max-width: 18ch;
+  margin-top: 0.4rem;
+  font-size: var(--fs-h3);
+  line-height: 1.12;
+}
+
+@media (max-width: 899px) {
+  .strategy__top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .progression__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .progression__step {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+  }
+
+  .progression__step .glyph {
+    grid-row: span 2;
+  }
+
+  .progression__name {
+    align-self: end;
+    margin-top: 0;
+  }
+
+  .progression__step:not(:last-child)::after {
+    top: 5rem;
+    bottom: -1.75rem;
+    left: 2.25rem;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .supports__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .support--1,
+  .support--2,
+  .support--3 {
+    grid-column: auto;
+    margin-top: 0;
+  }
+
+  .support--3 .support__media {
+    max-width: 18rem;
+  }
+}

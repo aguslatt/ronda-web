@@ -1,0 +1,57 @@
+.ring {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ring__track {
+  fill: none;
+  stroke: var(--linea);
+  stroke-width: 9;
+}
+
+.ring__value {
+  fill: none;
+  stroke: var(--verde-900);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dashoffset: var(--full);
+  transition: stroke-dashoffset 1.2s var(--ease);
+}
+
+.ring.is-visible .ring__value {
+  stroke-dashoffset: var(--offset);
+}
+
+.ring--alert .ring__value {
+  stroke: var(--rojo);
+}
+
+.ring--goal .ring__track {
+  stroke: var(--verde-selva);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 6;
+}
+
+.ring__marker {
+  fill: var(--verde-selva);
+  stroke: var(--crema);
+  stroke-width: 4;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  transition: transform 0.5s var(--ease) 0.15s;
+}
+
+.ring.is-visible .ring__marker {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring__value {
+    stroke-dashoffset: var(--offset);
+  }
+  .ring__marker {
+    transform: none;
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "gesto-ofrecer": {
+    "width": 1600,
+    "height": 2240,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "ronda-patio": {
+    "width": 1600,
+    "height": 1066,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "estudio": {
+    "width": 1600,
+    "height": 1067,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "mate-casa": {
+    "width": 1600,
+    "height": 1060,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "dos-mates": {
+    "width": 1200,
+    "height": 2132,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "romance-tradicional": {
+    "width": 620,
+    "height": 900,
+    "widths": [
+      320,
+      620
+    ]
+  },
+  "romance-medallon": {
+    "width": 360,
+    "height": 360,
+    "widths": [
+      360
+    ]
+  },
+  "romance-logo": {
+    "width": 500,
+    "height": 177,
+    "widths": [
+      250,
+      500
+    ]
+  },
+  "romance-cebada": {
+    "width": 800,
+    "height": 800,
+    "widths": [
+      480,
+      800
+    ]
+  },
+  "romance-cosecha": {
+    "width": 1000,
+    "height": 700,
+    "widths": [
+      640,
+      1000
+    ]
+  }
+}
