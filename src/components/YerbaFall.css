@@ -16,3 +16,67 @@
 .yerba-fall--front {
   z-index: 6;
 }
+
+/* Control de la escena: discreto, siempre alcanzable */
+.yerba-control {
+  position: absolute;
+  left: var(--edge);
+  bottom: 1.1rem;
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.25rem;
+  padding: 0 0.9rem 0 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--verde-noche);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px var(--linea), var(--sombra-suave);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  opacity: clamp(0, calc(1 - var(--p, 0) * 3), 1);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    scale var(--t-fast) var(--ease);
+}
+
+.yerba-control:hover {
+  background: var(--blanco);
+}
+
+.yerba-control:active {
+  scale: 0.96;
+}
+
+/* Pausa: dos barras. Reanudar / repetir / reproducir: triángulo */
+.yerba-control__icon {
+  position: relative;
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.yerba-control.is-playing .yerba-control__icon,
+.yerba-control.is-idle .yerba-control__icon {
+  border-inline: 0.2rem solid currentColor;
+}
+
+.yerba-control:not(.is-playing, .is-idle) .yerba-control__icon {
+  width: 0;
+  height: 0;
+  margin-left: 0.15rem;
+  border-block: 0.38rem solid transparent;
+  border-left: 0.6rem solid currentColor;
+}
+
+@media (max-width: 899px) {
+  .yerba-control {
+    top: 0.6rem;
+    right: var(--edge);
+    bottom: auto;
+    left: auto;
+  }
+}

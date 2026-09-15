@@ -74,6 +74,50 @@
   font-weight: 600;
 }
 
+/* Dos clusters: mismo hábito, momentos de vida distintos */
+.clusters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cluster {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radio-m);
+  background: var(--claro);
+  box-shadow: 0 0 0 1px var(--linea);
+}
+
+.cluster:first-child {
+  background: var(--verde);
+  color: var(--blanco);
+  box-shadow: var(--sombra-suave);
+}
+
+.cluster__range {
+  font-family: var(--f-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.cluster__name {
+  font-weight: 600;
+}
+
+.cluster__aim {
+  color: var(--gris);
+  font-size: 0.9375rem;
+}
+
+.cluster:first-child .cluster__aim {
+  color: var(--blanco-suave);
+}
+
 /* Escenas */
 .scenes {
   display: grid;

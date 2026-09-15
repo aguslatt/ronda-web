@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Preguntas frecuentes · zona tranquila de lectura
+   ========================================================================== */
+.faq {
+  background: var(--blanco);
+}
+
+.faq__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 2rem clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.faq__head {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.faq__text {
+  max-width: 38ch;
+  color: var(--gris);
+  font-size: var(--fs-lede);
+  line-height: 1.45;
+}
+
+.faq__list {
+  grid-row: span 2;
+}
+
+.faq__answer {
+  max-width: 62ch;
+  margin-bottom: 0.5rem;
+}
+
+.faq__ask {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-radius: var(--radio-l);
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(185, 224, 127, 0.28), transparent 60%),
+    var(--verde);
+  color: var(--blanco);
+  box-shadow: var(--sombra-objeto);
+}
+
+.faq__ask-title {
+  font-size: var(--fs-h3);
+}
+
+.faq__ask-text {
+  color: var(--blanco-suave);
+}
+
+.faq__mail {
+  color: var(--blanco-suave);
+  font-size: 0.9375rem;
+}
+
+.faq__mail a {
+  color: var(--lima);
+  font-weight: 600;
+}
+
+@media (max-width: 899px) {
+  .faq__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .faq__list {
+    grid-row: auto;
+  }
+}

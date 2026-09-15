@@ -65,6 +65,22 @@ Con `prefers-reduced-motion` todo aparece en su estado final.
 con el punto de selección en el centro y un leve aumento sobre enlaces y botones. Solo con mouse; ignora los clics;
 se desactiva con alto contraste o colores forzados y, si la imagen no carga, queda el cursor nativo.
 
+### Experiencias (idea que conecta todo: “Un gesto empieza una ronda”)
+
+- **Portada**: escena de yerba con entrada, momento de mayor caída y cierre tranquilo; control para pausar o repetir. Con movimiento reducido se muestra un instante detenido y se puede reproducir a pedido.
+- **Gesto de ofrecer** (`src/sections/Hero.tsx`, `.offer`): tramo breve con scroll nativo en el que el mate se acerca a quien mira y desemboca en *El hallazgo*.
+- **Hallazgos explorables** (`src/sections/Findings.tsx`): tres entradas con cifra, anillo proporcional sobre su propia base, explicación y páginas de la tesis.
+- **La propuesta toma forma** (`src/sections/Campaign.tsx`): cuatro bocetos de aplicación (historia de Instagram, streaming, punto de venta e invitación digital) con profundidad y ampliación. Se identifican como “Boceto de aplicación propuesto”: la tesis no incluye piezas (pág. 53).
+- **Presupuesto**: función de cada rubro según la tesis y “Consultar sobre esta inversión”, que abre el asistente con la respuesta verificada.
+- **Preguntale a Ronda** (`src/components/Assistant.tsx`, `src/assistant/`): no usa inteligencia artificial. Busca entre respuestas redactadas a partir de la tesis (`src/data/ronda-kb.json`, con páginas) y deriva a romanceyerba@gmail.com cuando la información no está.
+- **Preguntas frecuentes** (`src/sections/Faq.tsx`): selección de la misma base.
+- **Modo presentación** (`src/components/Presentation.tsx`): ocho escenas con idea, recurso visual, cifras y notas; teclado (flechas, espacio, Inicio/Fin, Esc). Los textos están en `presentation` dentro de `src/content.ts`.
+- **Cierre**: los elementos forman una ronda alrededor del medallón; autoras, contacto y acceso al asistente.
+
+### Verificación con la tesis
+
+Los datos se revisaron contra la tesis actualizada (páginas del PDF). Cambios aplicados: meta de consumo 7% (base 3,0%), plazos por indicador, insight de la pág. 48, dos clusters de público (21–27 prueba; 28–32 adopción), cinco respaldos, bases de cada hallazgo, fechas de preparación y seguimiento, rol del streaming y descripción del isotipo.
+
 ## Abrir la web
 
 Requiere Node.js 20 o superior.

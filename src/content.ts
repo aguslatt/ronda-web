@@ -13,8 +13,8 @@ interface ImageRef {
 export const nav: { label: string; href: string; sections: string[] }[] = [
   { label: 'Hallazgos', href: '#hallazgo', sections: ['hallazgo', 'marca', 'publico', 'insight'] },
   { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'estrategia-cont', 'cambio'] },
-  { label: 'Activación', href: '#activacion', sections: ['activacion'] },
-  { label: 'Inversión', href: '#inversion', sections: ['inversion', 'cierre'] },
+  { label: 'Activación', href: '#activacion', sections: ['activacion', 'propuesta-forma'] },
+  { label: 'Inversión', href: '#inversion', sections: ['inversion', 'preguntas', 'cierre'] },
 ]
 
 /* 1 · Portada ------------------------------------------------------------ */
@@ -37,6 +37,9 @@ export const hero = {
     alt: 'Envase de Yerba Mate Romance Tradicional de 1 kg.',
   } satisfies ImageRef,
   photoCredit: 'Foto: Camila Seves Espasandin (recorte)',
+  // Idea que conecta toda la experiencia (aparece con el gesto de ofrecer)
+  idea: 'Un gesto empieza una ronda.',
+  gesture: ['Un gesto', 'empieza', 'una ronda.'],
   logo: { name: 'romance-logo-hoja', alt: 'Yerba Mate Romance' } satisfies ImageRef,
 }
 
@@ -46,11 +49,45 @@ export const findings = {
   number: '01',
   eyebrow: 'El hallazgo',
   title: 'El hábito cambió. El valor de compartir sigue ahí.',
-  text: 'El mate acompaña cada vez más momentos individuales. Compartirlo conserva su significado: cercanía, confianza y una forma simple de estar con alguien.',
+  text: 'El mate acompaña cada vez más momentos individuales. Compartirlo conserva su significado: cercanía y confianza.',
+  // Cada cifra con su base y su explicación, verificadas contra la tesis (páginas del PDF)
+  explorerLabel: 'Explorá los hallazgos',
+  scope: 'Muestra no probabilística de 403 personas.',
+  independence: 'Cada cifra se calcula sobre su propia base: no son grupos que se sumen ni que se excluyan entre sí.',
   stats: [
-    { role: 'El hábito individual', display: '59,7%', label: 'Toma mate más veces solo que acompañado.' },
-    { role: 'El valor del encuentro', display: '81,6%', label: 'Considera que compartir mate genera cercanía y confianza.' },
-    { role: 'La oportunidad de Romance', display: '69%', label: 'No conoce Romance.' },
+    {
+      tab: 'Cómo tomamos',
+      role: 'El hábito individual',
+      display: '59,7%',
+      value: 59.7,
+      label: 'Entre quienes toman mate cada semana, lo toma más veces solo que acompañado.',
+      base: 'Base: quienes toman mate al menos una vez por semana (n = 315 de 403).',
+      explanation:
+        'El mate sigue siendo frecuente (48,1% lo toma a diario), pero predomina a solas: en la última ocasión, el 34,3% estaba solo y el 58,4% trabajaba o estudiaba.',
+      pages: [30, 31],
+    },
+    {
+      tab: 'Qué significa compartir',
+      role: 'El valor del encuentro',
+      display: '81,6%',
+      value: 81.6,
+      label: 'Considera que compartir mate genera cercanía y confianza.',
+      base: 'Base: grado de acuerdo en una escala de 1 a 5 (promedio 4,25). La tesis no informa el n de esta pregunta.',
+      explanation:
+        'La percepción se mantiene entre quienes toman mate mayormente solos (77,1%): el hábito se individualizó, pero el significado social no se perdió.',
+      pages: [32, 43],
+    },
+    {
+      tab: 'Dónde está la oportunidad',
+      role: 'La oportunidad de Romance',
+      display: '69%',
+      value: 69,
+      label: 'Afirmó no conocer Romance.',
+      base: 'Base: reconocimiento entre catorce marcas; las figuras del apartado indican la muestra total (n = 403).',
+      explanation:
+        'Solo el 15,6% reconoció a Romance y el 3,0% declaró consumirla; entre los 16 y 24 años el desconocimiento llega al 81,0%. Es un problema de notoriedad antes que de imagen.',
+      pages: [33, 36],
+    },
   ],
   source:
     'Fuente: investigación propia para la tesis de Publicidad. Muestra no probabilística de 403 personas. Los resultados describen a las personas encuestadas y no son representativos de toda la población.',
@@ -60,7 +97,7 @@ export const findings = {
       'Encuesta digital realizada entre el 25 de agosto y el 6 de septiembre de 2026, con 403 respuestas válidas.',
       'Muestra por conveniencia, difundida en redes sociales y por reenvío entre contactos.',
       'El 59,7% corresponde a quienes toman mate al menos una vez por semana (315 personas).',
-      'Se complementó con una entrevista en profundidad a una psicóloga clínica.',
+      'Se complementó con una entrevista en profundidad a Rosario Estrada, psicóloga clínica, el 9 de septiembre de 2026.',
     ],
   },
 }
@@ -71,11 +108,11 @@ export const brand = {
   number: '02',
   eyebrow: 'La oportunidad de marca',
   title: 'El vínculo ya está en la marca. Falta hacerlo visible.',
-  text: 'Romance lleva el encuentro en su nombre, su historia y las dos manos de su packaging. La propuesta amplía ese significado hacia amigos, compañeros y familia, asociando la marca con un gesto concreto: ofrecer un mate.',
+  text: 'Romance lleva el vínculo en su nombre, su historia y las dos manos de su packaging. La propuesta amplía ese significado hacia amigos, compañeros y familia, asociando la marca con un gesto concreto: ofrecer un mate.',
   anchors: [
     { label: 'Nombre', text: 'Una palabra que ya habla de vínculo.' },
-    { label: 'Historia', text: 'Una empresa familiar de Misiones.' },
-    { label: 'Packaging', text: 'Dos manos, dos mates y una hoja.' },
+    { label: 'Historia', text: 'Una familia yerbatera en Misiones desde 1900.' },
+    { label: 'Packaging', text: 'Dos manos que sostienen dos mates.' },
   ],
   product: {
     name: 'romance-tradicional',
@@ -86,7 +123,7 @@ export const brand = {
     name: 'romance-medallon',
     alt: 'Detalle del medallón del envase: dos manos distintas sostienen dos mates sobre una hoja de yerba.',
   } satisfies ImageRef,
-  medallionCaption: 'Medallón original: dos mates sostenidos por dos manos distintas, sobre una hoja de yerba.',
+  medallionCaption: 'Isotipo del envase: dos manos sosteniendo dos mates, presente en las cinco variedades.',
 }
 
 /* 4 · El público --------------------------------------------------------- */
@@ -95,9 +132,14 @@ export const audience = {
   number: '03',
   eyebrow: 'El público',
   title: 'Ceba solo. Comparte poco. Cuando lo invitan, se suma.',
-  text: 'Jóvenes de 21 a 32 años del AMBA que comienzan a decidir y pagar su propia yerba. Estudian, trabajan y toman mate frente a una pantalla. Disfrutan hacerlo solos y también aceptan una ronda.',
+  text: 'Jóvenes de 21 a 32 años del AMBA que ya deciden y pagan su propia yerba. Estudian, trabajan y toman mate frente a una pantalla. Disfrutan hacerlo solos y también aceptan una ronda.',
   range: { min: 21, max: 32, focusMax: 27 },
-  focus: 'Foco prioritario: 21 a 27 años.',
+  // Dos clusters con el mismo hábito en momentos de vida distintos (tesis, pág. 46–47)
+  clusters: [
+    { range: '21 a 27', name: 'Ceba solo en la facu', aim: 'Se busca la prueba' },
+    { range: '28 a 32', name: 'Recién independizado', aim: 'Se busca la adopción' },
+  ],
+  focus: 'Dos grupos con el mismo hábito en momentos de vida distintos.',
   scenes: [
     {
       title: 'Estudio',
@@ -131,10 +173,10 @@ export const insight = {
   id: 'insight',
   number: '04',
   eyebrow: 'El insight',
-  // Se lee: “Lo que me falta no son ganas: es que alguien lo ofrezca.”
-  lines: ['Lo que me falta', 'no son ganas:', 'es'],
-  marked: 'que alguien lo ofrezca.',
-  clarification: 'Síntesis del insight estratégico.',
+  // Se lee: “Nadie rechaza un mate cuando se lo ofrecen. El mate no perdió deseo, perdió ocasiones.” (tesis, pág. 48)
+  lines: ['Nadie rechaza un mate', 'cuando se lo', 'ofrecen.'],
+  marked: 'El mate no perdió deseo, perdió ocasiones.',
+  clarification: 'Insight de la campaña (tesis, pág. 48).',
 }
 
 /* 6 · La respuesta estratégica ------------------------------------------ */
@@ -154,12 +196,13 @@ export const strategy = {
     name: 'gesto-ofrecer',
     alt: 'Una misma fotografía dividida en tres ventanas: una mano le pasa un mate a otra.',
   } satisfies ImageRef,
+  // Notoriedad y significado se construyen al mismo tiempo, no en etapas (tesis, pág. 44)
   progression: [
-    { title: 'Reconocimiento', text: 'Que Romance se registre en cada contacto.' },
-    { title: 'Significado', text: 'Que la marca se asocie con el gesto de ofrecer.' },
-    { title: 'Prueba compartida', text: 'Que esa asociación termine en una ronda con Romance.' },
+    { title: 'Reconocimiento y significado', text: 'Al mismo tiempo, en cada contacto con la marca.' },
+    { title: 'Una invitación', text: 'Que “¿unos mates?” termine en una prueba compartida.' },
+    { title: 'Una elección', text: 'Que Romance entre en la próxima compra.' },
   ],
-  supportTitle: 'Tres respaldos',
+  supportTitle: 'Cinco respaldos',
   supports: [
     {
       title: 'Sabor equilibrado y suave.',
@@ -178,6 +221,17 @@ export const strategy = {
     {
       title: 'Un packaging que ya representa el gesto.',
       image: brand.medallion,
+    },
+    {
+      title: 'Precio accesible.',
+      image: brand.product,
+    },
+    {
+      title: 'Una asociación positiva ya instalada.',
+      image: {
+        name: 'dos-mates',
+        alt: 'Dos manos acercan dos mates de madera con bombilla, uno junto al otro.',
+      } satisfies ImageRef,
     },
   ],
 }
@@ -203,12 +257,14 @@ export const change = {
     },
   ],
   goalsTitle: 'Metas propuestas',
+  // Metas y plazos según la tesis (pág. 44–46, 49)
   goals: [
-    { display: '40%', label: 'Asociación con compartir o encuentro.' },
-    { display: '30%', label: 'Reconocimiento de marca.' },
-    { display: '6%', label: 'Consumo declarado.' },
+    { display: '40%', label: 'Conoce Romance y la asocia con “compartir” (base: 21,1%).' },
+    { display: '30%', label: 'Reconocimiento asistido de marca (base: 15,6%).' },
+    { display: '7%', label: 'Consumo declarado (base: 3,0%).' },
   ],
-  deadlines: 'Plazos por indicador pendientes de definición.',
+  deadlines:
+    'Reconocimiento y asociación: al cierre de los tres meses de campaña, con medición pre y post. Consumo: doce meses después del lanzamiento.',
   legend: {
     research: 'Resultado de investigación',
     goal: 'Meta propuesta',
@@ -216,10 +272,10 @@ export const change = {
   criteria: {
     summary: 'Criterios de medición',
     items: [
-      'Validar la base de consumo del 3% específicamente en el público objetivo antes de compararla con la meta.',
-      'No denominar “asociación espontánea” al 21,1% sin revisar la formulación de la pregunta original.',
-      'Comparar resultados con definiciones, preguntas y bases consistentes.',
-      'Las metas son propuestas estratégicas, no resultados garantizados.',
+      'Las bases (15,6% de reconocimiento asistido y 3,0% de consumo declarado) se recalcularán sobre el público de 21 a 32 años antes de la campaña.',
+      'El 21,1% proviene de una pregunta de respuesta múltiple sobre palabras asociadas a Romance.',
+      'Se mide antes y después con la misma encuesta del capítulo 4: dos encuestas de 400 casos.',
+      'Las metas son proyecciones de la propuesta; su eficacia real se evaluará midiendo antes y después de la campaña.',
     ],
   },
 }
@@ -248,8 +304,8 @@ export const activation = {
       key: 'streaming',
       name: 'Streaming',
       detail: 'Luzu TV y Olga',
-      role: 'Mostrar el gesto',
-      text: 'Integrar el producto al gesto de ofrecer en programas y segmentos propuestos.',
+      role: 'Reconocimiento y significado',
+      text: 'Diez menciones con la dinámica “¿unos mates?” en Nadie Dice Nada (Luzu TV) y Sería Increíble (Olga), con Romance en la mesa durante doce semanas. Integraciones propuestas.',
       visual:
         'Boceto de una integración propuesta en streaming: en pantalla, dos personas se pasan un mate; el envase de Romance acompaña la escena y debajo aparecen los logos de Luzu TV y Olga como medios propuestos.',
     },
@@ -258,7 +314,7 @@ export const activation = {
       name: 'Instagram',
       detail: null,
       role: 'Sostener',
-      text: 'Sostener el mensaje y la relación con la comunidad.',
+      text: 'Sostener el vínculo con el público: es el canal preferido por el 45,9% de la muestra.',
       visual:
         'Boceto de piezas para Instagram: una publicación con dos mates que se encuentran y la pregunta “¿Unos mates?”, una historia con un mate cebado con Romance y una placa con el mensaje de campaña.',
     },
@@ -293,29 +349,121 @@ export const activation = {
   note: 'Canales y acciones propuestos. Sujetos a evaluación y acuerdos comerciales.',
 }
 
+/* 8b · La propuesta toma forma (exploración creativa) -------------------- */
+// Bocetos de aplicación: NO forman parte de la tesis, que termina en el brief (pág. 53).
+// Usan el concepto y la invitación que la tesis sí define. Las funciones estratégicas citan la tesis.
+export const campaign = {
+  id: 'propuesta-forma',
+  number: '08',
+  eyebrow: 'Exploración creativa',
+  title: 'La propuesta toma forma.',
+  text: 'Cuatro aplicaciones para imaginar cómo se vería la campaña. La tesis termina en el brief y no incluye piezas: estas exploraciones parten de su concepto, “la yerba que se ofrece”, y de su invitación, “¿unos mates?”.',
+  tag: 'Boceto de aplicación propuesto',
+  zoom: 'Ampliar pieza',
+  close: 'Cerrar pieza ampliada',
+  functionLabel: 'Función estratégica según la tesis',
+  messageLabel: 'Mensaje',
+  claim: 'Romance, la yerba que se ofrece.',
+  idea: 'Un gesto empieza una ronda.',
+  pieces: [
+    {
+      key: 'historia',
+      name: 'Historia de Instagram',
+      support: 'Formato vertical 9:16',
+      message: '¿Unos mates?',
+      function:
+        'Instagram sostiene el vínculo con el público: es el canal preferido por el 45,9% de la muestra para mantener el vínculo con las marcas.',
+      pages: [34, 50],
+      alt: 'Boceto de historia de Instagram: manos que ceban un mate al atardecer en la costanera, con la pregunta “¿Unos mates?”, el envase de Romance y la frase “Un gesto empieza una ronda”.',
+    },
+    {
+      key: 'streaming',
+      name: 'Pieza para streaming',
+      support: 'Transmisión en vivo 16:9',
+      message: '¿Unos mates? Romance, la yerba que se ofrece.',
+      function:
+        'El streaming en vivo es el medio principal: construye reconocimiento y significado a la vez. Se proponen diez menciones “¿unos mates?” con Romance en la mesa. Luzu TV y Olga son medios propuestos, sin acuerdo confirmado.',
+      pages: [49, 52, 53],
+      alt: 'Boceto de integración en streaming: un set con sillones y micrófonos, el envase de Romance sobre la mesa y un zócalo con la pregunta “¿Unos mates?”.',
+    },
+    {
+      key: 'pdv',
+      name: 'Aplicación en punto de venta',
+      support: 'Material de góndola',
+      message: '¿Unos mates? Llevá la yerba que se ofrece.',
+      function:
+        'El 65,5% descubre marcas en el punto de venta. La tesis propone material de góndola en unos 300 comercios y degustaciones para facilitar la prueba y la compra.',
+      pages: [34, 53],
+      alt: 'Boceto de material de góndola frente a un maxikiosco de barrio: un cartel rojo con “¿Unos mates?”, envases de Romance en el estante y un sello circular.',
+    },
+    {
+      key: 'invitacion',
+      name: 'Invitación digital',
+      support: 'Tarjeta para compartir por chat',
+      message: '¿Unos mates? Yo llevo la Romance.',
+      function:
+        'Los medios propios (sitio y WhatsApp) sostienen la promoción de la campaña. La tesis prevé 10.000 invitaciones con promoción, sin detallar la mecánica.',
+      pages: [45, 50],
+      alt: 'Boceto de invitación digital en un chat: una tarjeta con amigas sentadas en ronda en un parque, el envase de Romance y la pregunta “¿Unos mates?”.',
+    },
+  ],
+}
+
 /* 9 · Inversión y calendario -------------------------------------------- */
 export const investment = {
   id: 'inversion',
-  number: '08',
+  number: '09',
   eyebrow: 'Inversión y calendario',
   title: 'Una inversión para construir marca y generar prueba.',
   totalLabel: 'Inversión estimada',
   total: 150_000_000,
-  totalNote: 'Estimación a valores de septiembre de 2026.',
+  totalNote: 'Estimación a valores de septiembre de 2026 (dólar de referencia: $1.530).',
   distributionTitle: 'Distribución',
+  askLabel: 'Consultar sobre esta inversión',
+  // role: función del rubro según la tesis (null si la tesis no la fundamenta)
   items: [
-    { label: 'Streaming', pct: 40, amount: 60_000_000 },
-    { label: 'Producción', pct: 15, amount: 22_500_000 },
-    { label: 'Pauta digital', pct: 20, amount: 30_000_000 },
-    { label: 'Creadores', pct: 10, amount: 15_000_000 },
-    { label: 'Activaciones y punto de venta', pct: 12, amount: 18_000_000 },
-    { label: 'Medición', pct: 3, amount: 4_500_000 },
+    {
+      label: 'Streaming',
+      pct: 40,
+      amount: 60_000_000,
+      role: 'Medio principal: diez menciones “¿unos mates?”, Romance en la mesa durante doce semanas y cuatro historias o clips (pág. 52).' as string | null,
+    },
+    {
+      label: 'Producción',
+      pct: 15,
+      amount: 22_500_000,
+      role: 'Una pieza central, veinte piezas cortas para redes y streaming y material de punto de venta; estimación a cotizar (pág. 53).' as string | null,
+    },
+    {
+      label: 'Pauta digital',
+      pct: 20,
+      amount: 30_000_000,
+      role: 'Instagram ($18.000.000) sostiene el vínculo y TikTok ($12.000.000) abre el tramo más joven; cerca del 60% de alcance (pág. 50, 52–53).' as string | null,
+    },
+    {
+      label: 'Creadores',
+      pct: 10,
+      amount: 15_000_000,
+      role: 'Doce creadores con dos piezas cada uno y logística de catas: la recomendación pesa más que la publicidad (pág. 50, 53).' as string | null,
+    },
+    {
+      label: 'Activaciones y punto de venta',
+      pct: 12,
+      amount: 18_000_000,
+      role: 'Ocho degustaciones en universidades y coworkings, stand en MATEAR y material de góndola en unos 300 puntos de venta (pág. 53).' as string | null,
+    },
+    {
+      label: 'Medición',
+      pct: 3,
+      amount: 4_500_000,
+      role: 'Dos encuestas de 400 casos, antes y después de la campaña, con el instrumento del capítulo 4 (pág. 53).' as string | null,
+    },
   ],
   calendarTitle: 'Calendario',
   phases: [
-    { name: 'Preparación', when: 'antes del lanzamiento', key: false },
+    { name: 'Preparación', when: 'septiembre de 2026 a marzo de 2027', key: false },
     { name: 'Campaña', when: 'abril–junio de 2027', key: true },
-    { name: 'Seguimiento de resultados', when: 'hasta marzo de 2028', key: false },
+    { name: 'Seguimiento de resultados', when: 'doce meses desde el lanzamiento', key: false },
   ],
 }
 
@@ -335,10 +483,142 @@ export const closing = {
   briefUrl: null as string | null,
 }
 
+/* Modo presentación ------------------------------------------------------ */
+// Ocho escenas para la defensa. Toman sus datos de las mismas secciones de este archivo.
+export const presentation = {
+  label: 'Modo presentación',
+  exit: 'Volver al recorrido completo',
+  notesToggle: { show: 'Mostrar notas', hide: 'Ocultar notas' },
+  // Textos verificados contra la tesis (páginas del PDF). Los datos de cada visual salen de las secciones de arriba.
+  scenes: [
+    {
+      id: 'portada',
+      title: 'Romance, la yerba que se ofrece',
+      idea: 'Campaña integral de posicionamiento para Yerba Mate Romance: proyecto “Ronda”, abril a junio de 2027.',
+      notes: [
+        'Trabajo Integrador Final de la Licenciatura en Publicidad de UADE. La temática asignada es la revalorización del mate como bebida gregaria, aplicada a Yerba Mate Romance.',
+        'La propuesta, llamada “Ronda”, busca instalar a Romance como la yerba que se ofrece.',
+      ],
+      figures: [hero.campaign, 'ARS 150.000.000 estimados'],
+      pages: [1, 44, 50],
+    },
+    {
+      id: 'hallazgos',
+      title: 'El hábito cambió, el valor no',
+      idea: 'El mate se toma más a solas, pero compartirlo sigue significando cercanía y confianza; Romance es poco conocida.',
+      notes: [
+        'Encuesta a 403 personas entre el 25 de agosto y el 6 de septiembre de 2026, con una muestra por conveniencia.',
+        'Entre quienes toman mate cada semana, el 59,7% lo toma más veces solo que acompañado. Aun así, el 81,6% considera que compartirlo genera cercanía y confianza.',
+        'El 69% no conoce Romance; entre los 16 y 24 años la cifra llega al 81%.',
+      ],
+      figures: ['59,7% (n = 315)', '81,6%', '69%', 'Muestra: 403'],
+      pages: [30, 31, 32, 33],
+    },
+    {
+      id: 'insight',
+      title: 'El mate perdió ocasiones',
+      idea: 'Nadie rechaza un mate cuando se lo ofrecen; el problema es que la juntada ocurre cada vez menos.',
+      notes: [
+        'El insight nace de una contradicción: compartir mate sigue siendo deseado, pero se hace cada vez menos.',
+        'Romance no tiene que convencer a nadie de que compartir es bueno: tiene que devolver la ocasión.',
+      ],
+      figures: ['40,9% lo tomaría si se lo ofrecen'],
+      pages: [34, 36, 48],
+    },
+    {
+      id: 'estrategia',
+      title: 'La yerba que se ofrece',
+      idea: 'Posicionamiento con activación de prueba: construir notoriedad y significado a la vez.',
+      notes: [
+        'Romance está en góndolas de todo el país, pero el público la ve como una yerba más. Por eso la campaña es de posicionamiento: notoriedad y significado se construyen al mismo tiempo.',
+        'El vínculo ya está en su nombre, su historia y el isotipo de las dos manos.',
+      ],
+      figures: ['5,7 millones de kg vendidos (2025)', 'Puesto 13 del ranking'],
+      pages: [12, 22, 43, 44, 48],
+    },
+    {
+      id: 'activaciones',
+      title: 'Dónde y cómo se ofrece',
+      idea: 'Streaming como medio principal, con digital, creadores, punto de venta y medios propios.',
+      notes: [
+        'Se proponen diez menciones “¿unos mates?” en Luzu TV y Olga, con Romance en la mesa durante doce semanas. Son integraciones propuestas, sujetas a negociación.',
+        'Instagram sostiene el vínculo, TikTok y los creadores generan descubrimiento, y las degustaciones y la góndola facilitan la prueba.',
+      ],
+      figures: ['10 menciones', '12 creadores', '20.000 muestras', '300 puntos de venta'],
+      pages: [49, 50, 52, 53],
+    },
+    {
+      id: 'inversion',
+      title: 'ARS 150 millones estimados',
+      idea: 'Inversión estimada en seis rubros: 75% construcción de marca, 25% activación, creadores y medición.',
+      notes: [
+        'Presupuesto a valores de septiembre de 2026, con un dólar de referencia de $1.530; debe ajustarse con cotizaciones reales.',
+        'Equivale a poco más del 0,5% de la venta anual estimada de Romance.',
+      ],
+      figures: ['40% streaming', '20% pauta digital', '15% producción', '12% activaciones', '10% creadores', '3% medición'],
+      pages: [50, 51, 52, 53],
+    },
+    {
+      id: 'objetivos',
+      title: 'Qué queremos lograr',
+      idea: 'Del 15,6% al 30% de reconocimiento, 40% de asociación con compartir y consumo del 3% al 7%.',
+      notes: [
+        'Comunicación: que el 40% del target conozca Romance y la asocie con compartir en tres meses.',
+        'Marketing: sumar cuatro puntos de consumo entre personas de 21 a 32 años del AMBA en un año. Se mide replicando la encuesta antes y después, con 400 casos cada vez.',
+      ],
+      figures: ['30% reconocimiento', '40% asociación', '7% consumo'],
+      pages: [44, 45, 46, 49, 53],
+    },
+    {
+      id: 'cierre',
+      title: 'Facilitar el encuentro',
+      idea: 'El mate no dejó de ser gregario: dejó de tener tantas ocasiones. Romance puede devolverlas.',
+      notes: [
+        'El consumo se individualizó, pero compartir conserva su valor. El nombre, la historia y el packaging de Romance ya dicen lo que la categoría intenta decir.',
+        'Reconocemos las limitaciones de la muestra y proponemos medir la eficacia real antes y después de la campaña.',
+      ],
+      figures: closing.lines,
+      pages: [54, 55],
+    },
+  ],
+}
+
+/* Contacto --------------------------------------------------------------- */
+export const contact = {
+  email: 'romanceyerba@gmail.com',
+  label: 'Consultas sobre el proyecto',
+}
+
+/* Preguntale a Ronda y preguntas frecuentes ------------------------------- */
+export const assistant = {
+  name: 'Preguntale a Ronda',
+  launcher: 'Preguntale a Ronda',
+  intro: 'Hola. Respondo con información de la tesis y te indico en qué páginas verificarla. ¿Qué querés saber?',
+  disclaimer:
+    'No es un chat con inteligencia artificial: busca entre respuestas redactadas y verificadas a partir de la tesis.',
+  placeholder: 'Escribí tu pregunta',
+  noMatch: 'No encontré esa información en la tesis.',
+  notInThesis: 'La tesis no incluye esa información.',
+  redirect: 'Podés escribir a',
+  related: 'También puede interesarte',
+  pagesLabel: 'Fuente: tesis, pág.',
+}
+
+export const faqSection = {
+  id: 'preguntas',
+  number: '10',
+  eyebrow: 'Preguntas frecuentes',
+  title: 'Lo que la tesis responde.',
+  text: 'Respuestas breves con la página de la tesis donde se desarrolla cada tema.',
+  askTitle: '¿Tenés otra pregunta?',
+  askText: 'Consultá a Ronda o escribinos si la tesis no tiene la información que buscás.',
+  askCta: 'Preguntale a Ronda',
+}
+
 /* Créditos --------------------------------------------------------------- */
 export const credits = {
   disclaimer:
-    'Proyecto académico para la tesis de Publicidad. No es una comunicación oficial de Yerba Mate Romance.',
+    'Proyecto académico (Trabajo Integrador Final, Licenciatura en Publicidad, UADE). No es una comunicación oficial de Yerba Mate Romance.',
   brandAssets:
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
@@ -352,6 +632,10 @@ export const credits = {
     { author: 'Uriel Lu', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-joven-trabajando-en-su-computadora-portatil-en-un-aula-37770842/' },
     { author: 'Alexander Mass', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-leyendo-un-libro-en-un-acogedor-entorno-de-oficina-en-casa-30008705/' },
     { author: 'Los Muertos Crew', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-vertiendo-tetera-agua-caliente-8279936/' },
+    { author: 'Fermin Rodriguez Penelas', source: 'Unsplash', url: 'https://unsplash.com/photos/fEBLgkfmUDM' },
+    { author: 'Pavel Morillo', source: 'Pexels', url: 'https://www.pexels.com/photo/stylish-podcast-studio-with-modern-decor-30059613/' },
+    { author: 'Roberto Fiadone', source: 'Wikimedia Commons, CC BY-SA 4.0', url: 'https://commons.wikimedia.org/w/index.php?curid=165033817' },
+    { author: 'Matheus Bertelli', source: 'Pexels', url: 'https://www.pexels.com/photo/group-of-people-having-a-picnic-on-grass-field-11761015/' },
     { author: 'Crisher P.H.', source: 'Pexels', url: 'https://www.pexels.com/photo/couple-eating-breakfast-in-a-mountain-valley-15082054/' },
     { author: 'Nour Alhoda', source: 'Pexels', url: 'https://www.pexels.com/photo/sharing-traditional-yerba-mate-drinks-33181406/' },
   ],

@@ -1,19 +1,32 @@
 /* ==========================================================================
-   Portada · pieza de campaña
+   Portada · escena publicitaria + gesto de ofrecer
    Capas (de atrás hacia adelante): luz difusa, superficie verde, envase,
-   mano con el mate, texto. La luz llega desde arriba a la izquierda:
-   las sombras caen hacia abajo a la derecha.
-   --p (0 → 1): primer tramo de scroll. La superficie verde se extiende a todo
-   el ancho y la escena cambia levemente de encuadre.
+   yerba de fondo, mano con el mate, yerba de primer plano, texto.
+   La luz llega desde arriba a la izquierda: las sombras caen abajo a la derecha.
+
+   .offer es un tramo breve de scroll (90svh) con la portada fija:
+   --p  0 → 1  avance del tramo
+   --s         la superficie verde se abre a pantalla completa
+   --o         el mate se acerca a quien mira (va al centro y crece)
+   --g         aparece “Un gesto empieza una ronda”
    ========================================================================== */
-.hero {
+.offer {
   --p: 0;
   --q: calc(1 - var(--p));
-  /* Borde superior e izquierdo de la superficie verde */
+  /* El verde se abre recién cuando el titular ya se retiró */
+  --s: clamp(0, calc((var(--p) - 0.13) * 2.2), 1);
+  --o: clamp(0, calc((var(--p) - 0.08) * 1.4), 1);
+  --g: clamp(0, calc((var(--p) - 0.55) * 3), 1);
+  position: relative;
+  height: calc(max(100svh, 42rem) + 90svh);
+}
+
+.hero {
   --surface-top: 47%;
   --surface-left: 50%;
-  position: relative;
-  min-height: max(100svh, 42rem);
+  position: sticky;
+  top: 0;
+  height: max(100svh, 42rem);
   overflow: hidden;
   background: var(--claro);
 }
@@ -23,7 +36,7 @@
   inset: 0;
 }
 
-/* Luz difusa detrás del mate: dirige la mirada y separa la mano del fondo */
+/* Luz difusa detrás del mate */
 .hero__glow {
   position: absolute;
   top: 2%;
@@ -35,28 +48,24 @@
     radial-gradient(closest-side at 55% 50%, rgba(185, 224, 127, 0.85), rgba(185, 224, 127, 0.35) 45%, transparent 75%),
     radial-gradient(closest-side at 40% 60%, rgba(63, 143, 90, 0.35), transparent 80%);
   filter: blur(10px);
-  opacity: calc(0.85 + var(--p) * 0.15);
   animation: glow-in 1s var(--ease) both;
 }
 
-/* Superficie verde: ocupa toda la escena y se recorta. Con el scroll el recorte se abre
-   hasta cubrirla completa y el verde continúa en la sección siguiente. */
+/* Superficie verde: ocupa toda la escena y se recorta; con el gesto se abre por completo */
 .hero__surface {
   position: absolute;
   inset: 0;
   background:
-    /* luz detrás del cuerpo del mate: separa el mate oscuro del verde */
-    radial-gradient(24% 30% at 84% 60%, rgba(185, 224, 127, 0.5), transparent 72%),
     radial-gradient(40% 24% at 76% var(--surface-top), rgba(185, 224, 127, 0.45), transparent 75%),
     radial-gradient(60% 50% at 25% 100%, rgba(0, 39, 26, 0.5), transparent 70%),
     linear-gradient(180deg, var(--verde-hoja) 0%, var(--verde-medio) calc(var(--surface-top) + 12%), var(--verde) 100%);
   clip-path: inset(
-    calc(var(--surface-top) * var(--q)) 0 0 calc(var(--surface-left) * var(--q)) round calc(var(--q) * var(--radio-l)) 0 0 0
+    calc(var(--surface-top) * (1 - var(--s))) 0 0 calc(var(--surface-left) * (1 - var(--s))) round calc((1 - var(--s)) * var(--radio-l)) 0 0 0
   );
   animation: surface-in 0.8s var(--ease) both;
 }
 
-/* Mano y mate: entra desde el borde derecho y cruza el borde de la superficie */
+/* Mano y mate: entra desde el borde derecho; con el scroll se acerca al centro */
 .hero__hand {
   position: absolute;
   right: 0;
@@ -65,10 +74,22 @@
   height: 78%;
   aspect-ratio: 939 / 1400;
   margin: 0;
-  translate: 0 calc(var(--p) * -5%);
-  scale: calc(1 + var(--p) * 0.06);
-  transform-origin: 80% 60%;
+  translate: calc(var(--o) * -33vw) calc(var(--o) * 4svh);
+  scale: calc(1 + var(--o) * 0.6);
+  transform-origin: 48% 45%;
   animation: hand-in 0.9s var(--ease) 0.12s both;
+}
+
+/* Halo propio del mate: acompaña al objeto cuando se acerca */
+.hero__hand::before {
+  content: '';
+  position: absolute;
+  inset: 4% -45% 20%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side at 50% 45%, rgba(185, 224, 127, 0.55), rgba(185, 224, 127, 0.18) 55%, transparent 75%);
+  opacity: calc(0.45 + var(--o) * 0.55);
+  pointer-events: none;
 }
 
 .hero__hand img {
@@ -77,16 +98,21 @@
   object-fit: contain;
   object-position: right bottom;
   filter: brightness(1.1) contrast(1.06) saturate(1.08) drop-shadow(22px 34px 26px rgba(0, 20, 12, 0.4));
+  /* El corte de la muñeca se disuelve: nunca se lee como una mano recortada */
+  -webkit-mask-image: linear-gradient(to left, transparent 0, #000 16%);
+  mask-image: linear-gradient(to left, transparent 0, #000 16%);
 }
 
-/* Envase real: menor escala, apoyado sobre el borde de la superficie */
+/* Envase real: menor escala; al acercarse el mate se retira */
 .hero__pack {
   position: absolute;
   left: calc(var(--surface-left) - 5.5%);
   bottom: 7%;
   z-index: 2;
   width: clamp(8.5rem, 12vw, 13.5rem);
-  translate: 0 calc(var(--p) * -3%);
+  translate: calc(var(--o) * -10vw) calc(var(--o) * 3svh);
+  scale: calc(1 - var(--o) * 0.18);
+  opacity: clamp(0, calc(1 - var(--o) * 1.4), 1);
   animation: pack-in 0.8s var(--ease) 0.25s both;
 }
 
@@ -103,15 +129,48 @@
   height: 9%;
 }
 
+/* La idea que conecta todo el sitio */
+.hero__gesture {
+  position: absolute;
+  left: var(--edge);
+  bottom: 11svh;
+  z-index: 7;
+  display: grid;
+  margin: 0;
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 1rem + 2.6vw, 3.75rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  pointer-events: none;
+}
+
+.hero__gesture span {
+  display: block;
+  opacity: clamp(0, calc(var(--g) * 3 - var(--i, 0)), 1);
+  translate: 0 calc((1 - var(--g)) * 1.5rem);
+}
+
+.hero__gesture span:nth-child(2) {
+  --i: 0.7;
+}
+
+.hero__gesture span:nth-child(3) {
+  --i: 1.4;
+  color: var(--lima);
+}
+
 .hero__credit {
   position: absolute;
   right: var(--edge);
-  bottom: 1.25rem;
+  /* Por encima del acceso a “Preguntale a Ronda” */
+  bottom: 5rem;
   z-index: 5;
   color: var(--blanco-suave);
   font-size: 0.8125rem;
   font-weight: 500;
-  opacity: var(--q);
+  opacity: clamp(0, calc(1 - var(--p) * 3), 1);
 }
 
 /* Texto */
@@ -125,9 +184,13 @@
   width: min(54vw, 52rem);
   min-height: max(100svh, 42rem);
   padding: calc(var(--header-h) + clamp(2rem, 6svh, 4.5rem)) 0 3rem var(--edge);
-  translate: 0 calc(var(--p) * -6svh);
+  translate: 0 calc(var(--p) * -10svh);
   /* El texto se retira antes de que el verde lo alcance */
-  opacity: clamp(0, calc(1 - var(--p) * 1.8), 1);
+  opacity: clamp(0, calc(1 - var(--p) * 7), 1);
+}
+
+.hero__copy:focus-within {
+  opacity: 1;
 }
 
 .hero__kicker {
@@ -196,7 +259,7 @@
   right: var(--edge);
   z-index: 7;
   width: clamp(8rem, 11vw, 11rem);
-  opacity: calc(1 - var(--p) * 1.5);
+  opacity: clamp(0, calc(1 - var(--p) * 2.5), 1);
   animation: rise-in 0.5s var(--ease) 0.7s backwards;
 }
 
@@ -264,12 +327,35 @@
   }
 }
 
-/* Tablet y celular: texto arriba, escena abajo */
+/* Movimiento reducido: sin tramo fijo; la portada queda en su composición estática */
+@media (prefers-reduced-motion: reduce) {
+  .offer {
+    height: auto;
+  }
+
+  .hero {
+    position: relative;
+  }
+
+  .hero__gesture {
+    display: none;
+  }
+}
+
+/* Tablet y celular: texto arriba, escena abajo; el gesto ocurre dentro de la escena */
 @media (max-width: 899px) {
+  .offer {
+    --o: clamp(0, calc(var(--p) * 1.2), 1);
+    --g: clamp(0, calc((var(--p) - 0.45) * 2.5), 1);
+    height: auto;
+  }
+
   .hero {
     --surface-top: 34%;
     --surface-left: 14%;
+    position: relative;
     display: grid;
+    height: auto;
     min-height: 0;
   }
 
@@ -304,7 +390,7 @@
     position: relative;
     order: 2;
     inset: auto;
-    height: min(118vw, 34rem);
+    height: min(128vw, 36rem);
     margin-top: 1rem;
   }
 
@@ -317,7 +403,9 @@
 
   .hero__hand {
     top: 0;
-    height: 94%;
+    height: 86%;
+    translate: calc(var(--o) * -16vw) calc(var(--o) * 3%);
+    scale: calc(1 + var(--o) * 0.22);
   }
 
   .hero__pack {
@@ -326,25 +414,32 @@
     width: 27vw;
   }
 
+  .hero__gesture {
+    bottom: 1.5rem;
+    font-size: clamp(1.625rem, 8vw, 2.25rem);
+  }
+
   /* Logo en el ángulo superior izquierdo de la escena, sobre la luz clara */
   .hero__logo {
     top: auto;
     right: auto;
-    bottom: calc(min(118vw, 34rem) - 4.25rem);
+    bottom: calc(min(128vw, 36rem) - 4.25rem);
     left: var(--edge);
     width: 6.75rem;
+    opacity: 1;
   }
 
   .hero__credit {
+    top: calc(var(--surface-top) + 0.75rem);
     right: var(--edge);
-    bottom: 0.6rem;
+    bottom: auto;
     font-size: 0.75rem;
   }
 }
 
 @media (max-width: 899px) and (min-width: 600px) {
   .hero__scene {
-    height: 34rem;
+    height: 36rem;
   }
 
   .hero__pack {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { nav } from '../content'
+import { openPresentation } from '../presentation/bus'
 import './Header.css'
 
 /**
@@ -119,6 +120,20 @@ export function Header() {
               </li>
             ))}
           </ul>
+          <button
+            type="button"
+            className="site-header__present"
+            onClick={() => {
+              close()
+              openPresentation()
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M8 11.5v2.5M5 14h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            Modo presentación
+          </button>
         </nav>
       </div>
     </header>

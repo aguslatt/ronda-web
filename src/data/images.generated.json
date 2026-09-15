@@ -85,6 +85,40 @@
       2400
     ]
   },
+  "camp-historia": {
+    "width": 1200,
+    "height": 2133,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "camp-streaming": {
+    "width": 2000,
+    "height": 1125,
+    "widths": [
+      800,
+      1400,
+      2000
+    ]
+  },
+  "camp-pdv": {
+    "width": 1400,
+    "height": 1050,
+    "widths": [
+      800,
+      1400
+    ]
+  },
+  "camp-invitacion": {
+    "width": 1000,
+    "height": 1000,
+    "widths": [
+      600,
+      1000
+    ]
+  },
   "romance-tradicional": {
     "width": 620,
     "height": 900,

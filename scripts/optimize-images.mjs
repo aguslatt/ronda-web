@@ -25,6 +25,11 @@ const jobs = [
   { name: 'gesto-ofrecer', file: 'gesto-ofrecer.jpg', widths: [1000, 2000] },
   { name: 'dos-mates', file: 'dos-mates.jpg', widths: [480, 800, 1200] },
   { name: 'encuentro-rio', file: 'encuentro-rio.jpg', widths: [800, 1600, 2400] },
+  // La propuesta toma forma: fotografías de contexto para los bocetos de aplicación
+  { name: 'camp-historia', file: 'camp-historia.jpg', widths: [480, 800, 1200] },
+  { name: 'camp-streaming', file: 'camp-streaming.jpg', widths: [800, 1400, 2000] },
+  { name: 'camp-pdv', file: 'camp-pdv.jpg', widths: [800, 1400] },
+  { name: 'camp-invitacion', file: 'camp-invitacion.jpg', widths: [600, 1000] },
   // Recursos oficiales de Romance (sitio de Gerula S.A.)
   { name: 'romance-tradicional', file: 'romance-tradicional.png', widths: [320, 620], quality: 88 },
   // Medallón: recorte cuadrado centrado en el aro (centro ≈ 211, 436 en el envase de 620 px)

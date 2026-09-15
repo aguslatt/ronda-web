@@ -26,69 +26,76 @@ function Line({ text, index }: { text: string; index: number }) {
 }
 
 /**
- * Portada como pieza de campaña: sobre la superficie clara, una mano acerca el mate
- * hacia quien mira. La yerba cae en cámara lenta hasta su abertura, en tres planos
- * de profundidad. El mate atraviesa el borde de una superficie verde; el envase real
- * equilibra la escena. Con el primer scroll las partículas se retiran, la escena cambia
- * de encuadre y el verde se extiende hasta conectar con El hallazgo.
+ * Portada + gesto de ofrecer.
+ * 1. Escena publicitaria: la yerba cae en cámara lenta hasta el mate; el envase real equilibra la escena.
+ * 2. Firma del sitio: con el scroll (tramo breve, desplazamiento nativo) el mate se acerca a quien mira,
+ *    el verde ocupa la pantalla y aparece la idea “Un gesto empieza una ronda”, que desemboca en El hallazgo.
  */
 export function Hero() {
-  const ref = useScrollProgress<HTMLElement>('start', 0, 0.8)
+  const offerRef = useScrollProgress<HTMLDivElement>('runway', 0)
   const sceneRef = useRef<HTMLDivElement>(null)
   const handRef = useRef<HTMLElement>(null)
 
   return (
-    <section ref={ref} id="inicio" className="hero" data-surface="claro" aria-labelledby="hero-title">
-      <div ref={sceneRef} className="hero__scene">
-        <span className="hero__glow" aria-hidden="true" />
-        <span className="hero__surface" aria-hidden="true" />
+    <div ref={offerRef} className="offer">
+      <section id="inicio" className="hero" data-surface="claro" aria-labelledby="hero-title">
+        <div ref={sceneRef} className="hero__scene">
+          <span className="hero__glow" aria-hidden="true" />
+          <span className="hero__surface" aria-hidden="true" />
 
-        <div className="hero__pack">
-          <span className="hero__pack-shadow contact-shadow" aria-hidden="true" />
-          <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 13vw, 28vw" priority />
+          <div className="hero__pack">
+            <span className="hero__pack-shadow contact-shadow" aria-hidden="true" />
+            <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 13vw, 28vw" priority />
+          </div>
+
+          <figure ref={handRef} className="hero__hand">
+            <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 40vw, 62vw" priority />
+          </figure>
+
+          <YerbaFall sceneRef={sceneRef} targetRef={handRef} progressRef={offerRef} />
+
+          <p className="hero__gesture">
+            {hero.gesture.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </p>
+
+          <p className="hero__credit">{hero.photoCredit}</p>
         </div>
 
-        <figure ref={handRef} className="hero__hand">
-          <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 34vw, 62vw" priority />
-        </figure>
+        <div className="hero__copy">
+          <p className="hero__kicker label">{hero.kicker}</p>
 
-        <YerbaFall sceneRef={sceneRef} targetRef={handRef} progressRef={ref} />
-
-        <p className="hero__credit">{hero.photoCredit}</p>
-      </div>
-
-      <div className="hero__copy">
-        <p className="hero__kicker label">{hero.kicker}</p>
-
-        <h1 id="hero-title" className="hero__title">
-          <span className="sr-only">{hero.title}</span>
-          <span className="hero__lines hero__lines--wide" aria-hidden="true">
-            {hero.linesWide.map((line, index) => (
-              <Line key={line} text={line} index={index} />
-            ))}
-          </span>
-          <span className="hero__lines hero__lines--narrow" aria-hidden="true">
-            {hero.linesNarrow.map((line, index) => (
-              <Line key={line} text={line} index={index} />
-            ))}
-          </span>
-        </h1>
-
-        <p className="hero__lede">{hero.lede}</p>
-        <div className="hero__actions">
-          <a className="cta" href={hero.cta.href}>
-            {hero.cta.label}
-            <span className="cta__icon">
-              <ArrowDownIcon />
+          <h1 id="hero-title" className="hero__title">
+            <span className="sr-only">{hero.title}</span>
+            <span className="hero__lines hero__lines--wide" aria-hidden="true">
+              {hero.linesWide.map((line, index) => (
+                <Line key={line} text={line} index={index} />
+              ))}
             </span>
-          </a>
-          <p className="hero__meta label">{hero.campaign}</p>
-        </div>
-      </div>
+            <span className="hero__lines hero__lines--narrow" aria-hidden="true">
+              {hero.linesNarrow.map((line, index) => (
+                <Line key={line} text={line} index={index} />
+              ))}
+            </span>
+          </h1>
 
-      <div className="hero__logo">
-        <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="200px" priority />
-      </div>
-    </section>
+          <p className="hero__lede">{hero.lede}</p>
+          <div className="hero__actions">
+            <a className="cta" href={hero.cta.href}>
+              {hero.cta.label}
+              <span className="cta__icon">
+                <ArrowDownIcon />
+              </span>
+            </a>
+            <p className="hero__meta label">{hero.campaign}</p>
+          </div>
+        </div>
+
+        <div className="hero__logo">
+          <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="200px" priority />
+        </div>
+      </section>
+    </div>
   )
 }

@@ -2,10 +2,21 @@ import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { investment as inv } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { useInView } from '../hooks/useInView'
+import { openAssistant } from '../assistant/bus'
 import './Investment.css'
 
 const number = new Intl.NumberFormat('es-AR')
 const money = (value: number) => `ARS ${number.format(value)}`
+
+// Respuesta verificada del asistente para cada rubro (ids de src/data/ronda-kb.json)
+const ASK_IDS: Record<string, string> = {
+  Streaming: 'presupuesto-streaming',
+  Producción: 'presupuesto-otros',
+  'Pauta digital': 'canales-instagram-tiktok',
+  Creadores: 'canales-creadores',
+  'Activaciones y punto de venta': 'canales-activaciones',
+  Medición: 'objetivos-medicion',
+}
 
 // Punto de partida de cada rubro dentro de la barra (suma de los anteriores)
 const offsets = inv.items.map((_, index) => inv.items.slice(0, index).reduce((sum, item) => sum + item.pct, 0))
@@ -89,6 +100,7 @@ export function Investment() {
                 <li key={item.label}>
                   <button
                     type="button"
+                    style={{ '--i': index } as CSSProperties}
                     className={`legend-item${selected === index ? ' is-selected' : ''}`}
                     aria-pressed={selected === index}
                     onMouseEnter={() => setSelected(index)}
@@ -109,11 +121,26 @@ export function Investment() {
               Rubro seleccionado
             </p>
             <p className="budget-panel__name">{current.label}</p>
-            <div className="budget-panel__figures">
+            <div key={current.label} className="budget-panel__figures">
               <p className="budget-panel__pct">{current.pct}%</p>
               <p className="budget-panel__amount">{money(current.amount)}</p>
               <p className="budget-panel__of">del total de {money(inv.total)}</p>
             </div>
+            {current.role && (
+              <p key={`${current.label}-role`} className="budget-panel__role">
+                {current.role}
+              </p>
+            )}
+            <button
+              type="button"
+              className="budget-panel__ask"
+              onClick={() => openAssistant(`¿Para qué se destina la inversión en ${current.label.toLowerCase()}?`, ASK_IDS[current.label])}
+            >
+              {inv.askLabel}
+              <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M2.5 8h10M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
           </div>
         </div>
 
@@ -140,6 +167,7 @@ export function Investment() {
                   key={item.label}
                   className={selected === index ? 'is-selected' : undefined}
                   onMouseEnter={() => setSelected(index)}
+                  onClick={() => setSelected(index)}
                 >
                   <th scope="row">
                     <span className="budget__label">

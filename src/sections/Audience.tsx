@@ -30,6 +30,15 @@ export function Audience() {
               <span className="ages__num ages__num--max">{max}</span>
             </div>
             <p className="audience__focus">{a.focus}</p>
+            <ul className="clusters">
+              {a.clusters.map((cluster) => (
+                <li key={cluster.name} className="cluster">
+                  <span className="cluster__range">{cluster.range} años</span>
+                  <span className="cluster__name">“{cluster.name}”</span>
+                  <span className="cluster__aim">{cluster.aim}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

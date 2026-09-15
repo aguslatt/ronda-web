@@ -89,7 +89,7 @@
 
 .supports__list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: var(--col-gap);
   margin: 1.25rem 0 0;
   padding: 0;

@@ -8,8 +8,9 @@ import './Insight.css'
 /** Composición del insight. Se dibuja dos veces: cada copia es una mitad de la lámina roja. */
 function Composition({ decorative = false }: { decorative?: boolean }) {
   const Folio = decorative ? 'p' : 'h2'
-  const cut = i.marked.indexOf(' lo ')
-  const marked = cut > 0 ? [i.marked.slice(0, cut), i.marked.slice(cut + 1)] : [i.marked]
+  // La frase marcada se parte en dos líneas después de la coma
+  const cut = i.marked.indexOf(', ')
+  const marked = cut > 0 ? [i.marked.slice(0, cut + 1), i.marked.slice(cut + 2)] : [i.marked]
 
   return (
     <div className="insight__composition">
