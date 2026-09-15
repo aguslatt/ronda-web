@@ -8,6 +8,15 @@
       1600
     ]
   },
+  "mano-mate": {
+    "width": 939,
+    "height": 1400,
+    "widths": [
+      480,
+      720,
+      939
+    ]
+  },
   "romance-logo-blanco": {
     "width": 277,
     "height": 122,
@@ -15,39 +24,39 @@
       277
     ]
   },
-  "estudio": {
-    "width": 1600,
-    "height": 1067,
+  "publico-estudio": {
+    "width": 1200,
+    "height": 800,
     "widths": [
-      640,
-      1080,
-      1600
+      480,
+      800,
+      1200
+    ]
+  },
+  "publico-trabajo": {
+    "width": 1200,
+    "height": 1800,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "publico-independencia": {
+    "width": 1200,
+    "height": 800,
+    "widths": [
+      480,
+      800,
+      1200
     ]
   },
   "pausa": {
-    "width": 1600,
-    "height": 2845,
+    "width": 800,
+    "height": 1422,
     "widths": [
-      640,
-      1080,
-      1600
-    ]
-  },
-  "independencia": {
-    "width": 1600,
-    "height": 901,
-    "widths": [
-      640,
-      1080,
-      1600
-    ]
-  },
-  "oferta": {
-    "width": 1080,
-    "height": 1920,
-    "widths": [
-      640,
-      1080
+      480,
+      800
     ]
   },
   "gesto-ofrecer": {
@@ -85,10 +94,27 @@
     ]
   },
   "romance-medallon": {
-    "width": 360,
-    "height": 360,
+    "width": 300,
+    "height": 300,
     "widths": [
-      360
+      300
+    ]
+  },
+  "cursor-medallon": {
+    "width": 108,
+    "height": 108,
+    "widths": [
+      36,
+      72,
+      108
+    ]
+  },
+  "romance-logo-hoja": {
+    "width": 500,
+    "height": 177,
+    "widths": [
+      250,
+      500
     ]
   },
   "romance-cebada": {
@@ -97,6 +123,22 @@
     "widths": [
       480,
       800
+    ]
+  },
+  "medio-luzu-tv": {
+    "width": 560,
+    "height": 162,
+    "widths": [
+      280,
+      560
+    ]
+  },
+  "medio-olga": {
+    "width": 520,
+    "height": 120,
+    "widths": [
+      260,
+      520
     ]
   },
   "romance-cosecha": {

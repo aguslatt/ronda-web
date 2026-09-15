@@ -1,7 +1,8 @@
 /* ==========================================================================
    Proyecto Ronda para Romance · Sistema visual
-   Principio de composición: la página hace lugar. Los encuadres se abren,
-   las imágenes ganan espacio y los bloques se desplazan para revelar lo siguiente.
+   Superficies claras con atmósferas de color localizadas, objetos con
+   profundidad (sombras de contacto, superposiciones puntuales) y fondos
+   intensos solo para marcar cambios de ritmo.
    Paleta derivada del envase de Romance (validar con la marca).
    ========================================================================== */
 
@@ -12,38 +13,50 @@
   --verde: #013d26; /* banda inferior */
   --verde-noche: #00271a;
   --verde-medio: #0d5a38;
-  --lima: #b9e07f; /* claro de la hoja del medallón */
-  --rojo: #bf031b; /* banda superior */
+  --verde-hoja: #3f8f5a; /* hoja del medallón: atmósferas */
+  --verde-bruma: #dcebd2;
+  --lima: #b9e07f; /* claro de la hoja */
+  --rojo: #bf031b; /* banda superior: solo acentos */
   --rojo-oscuro: #93021a;
   --blanco: #ffffff;
-  --niebla: #eef1ec; /* neutro frío, no beige */
+  --claro: #f5f7f2; /* superficie base */
+  --niebla: #eaefe6;
   --tinta: #0d1a13;
   --gris: #56625b;
 
-  --linea: rgba(13, 26, 19, 0.16);
-  --linea-fuerte: rgba(13, 26, 19, 0.7);
-  --linea-clara: rgba(255, 255, 255, 0.28);
-  --blanco-suave: rgba(255, 255, 255, 0.82);
+  --linea: rgba(13, 26, 19, 0.12);
+  --linea-fuerte: rgba(13, 26, 19, 0.55);
+  --linea-clara: rgba(255, 255, 255, 0.22);
+  --blanco-suave: rgba(255, 255, 255, 0.8);
 
   --foco: var(--rojo);
+
+  /* Profundidad: la luz llega desde arriba a la izquierda */
+  --radio-s: 0.75rem;
+  --radio-m: 1.25rem;
+  --radio-l: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+  --sombra-suave: 0 1px 2px rgba(0, 39, 26, 0.05), 0 12px 32px -14px rgba(0, 39, 26, 0.2);
+  --sombra-objeto: 0 2px 6px rgba(0, 39, 26, 0.08), 0 28px 56px -20px rgba(0, 39, 26, 0.38);
+  --sombra-flotante: 0 6px 14px rgba(0, 39, 26, 0.1), 0 48px 90px -30px rgba(0, 39, 26, 0.45);
 
   /* Tipografía */
   --f-display: 'Clash Display', 'Arial Narrow', system-ui, sans-serif;
   --f-text: 'General Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --fs-hero: clamp(3.25rem, 1rem + 8.2vw, 9.375rem); /* ≈ 150 px en escritorio grande */
-  --fs-h2: clamp(2.5rem, 1.1rem + 4.4vw, 5.5rem); /* 60–90 px en escritorio */
-  --fs-h3: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
-  --fs-body: clamp(1.0625rem, 0.95rem + 0.3vw, 1.25rem); /* 18–20 px en escritorio */
-  --fs-lede: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
-  --fs-small: 1rem;
+  --fs-hero: clamp(3.25rem, 0.9rem + 7.4vw, 8.75rem);
+  --fs-impact: clamp(2.5rem, 1rem + 5vw, 6.5rem); /* insight y cierre */
+  --fs-h2: clamp(2rem, 1.3rem + 2.2vw, 3.5rem); /* titulares secundarios contenidos */
+  --fs-h3: clamp(1.3125rem, 1.1rem + 0.7vw, 1.75rem);
+  --fs-body: clamp(1rem, 0.96rem + 0.15vw, 1.125rem);
+  --fs-lede: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --fs-small: 0.9375rem;
 
   /* Grilla y espacio */
-  --max: 1360px;
-  --gutter: clamp(1.25rem, 0.4rem + 3.4vw, 3.75rem);
+  --max: 1320px;
+  --gutter: clamp(1.25rem, 0.4rem + 3.4vw, 3.5rem);
   --edge: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
   --col-gap: clamp(1rem, 2vw, 2rem);
-  --space-section: clamp(5rem, 3rem + 8vw, 11rem);
+  --space-section: clamp(4.5rem, 3rem + 5vw, 8rem);
   --header-h: 4.25rem;
 
   /* Movimiento: una curva, dos ritmos */
@@ -74,12 +87,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--blanco);
+  background: var(--claro);
   color: var(--tinta);
   font-family: var(--f-text);
   font-size: var(--fs-body);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.55;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   font-kerning: normal;
@@ -106,7 +119,7 @@ h4 {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 600;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
@@ -176,7 +189,8 @@ main:focus {
   left: 0.75rem;
   z-index: 100;
   padding: 0.75rem 1.25rem;
-  background: var(--rojo);
+  border-radius: 999px;
+  background: var(--verde);
   color: var(--blanco);
   font-weight: 600;
   transform: translateY(-160%);
@@ -187,49 +201,50 @@ main:focus {
   transform: none;
 }
 
-/* Llamado principal: bloque recto con flecha que avanza */
+/* Llamado principal: píldora verde con la flecha en un círculo lima */
 .cta {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 1.25rem;
-  min-height: 3.5rem;
-  padding: 0 1.5rem;
-  overflow: hidden;
-  background: var(--rojo);
+  gap: 1rem;
+  min-height: 3.25rem;
+  padding: 0.375rem 0.375rem 0.375rem 1.375rem;
+  border-radius: 999px;
+  background: var(--verde);
   color: var(--blanco);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.01em;
+  line-height: 1.2;
   text-decoration: none;
-  isolation: isolate;
-  transition: color var(--t-fast) var(--ease);
+  box-shadow: var(--sombra-suave);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
 }
 
-.cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--blanco);
-  transform: translateY(101%);
-  transition: transform var(--t-fast) var(--ease);
-}
-
-.cta svg {
+.cta__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--lima);
+  color: var(--verde-noche);
   transition: transform var(--t-fast) var(--ease);
 }
 
 .cta:hover {
-  color: var(--rojo);
+  background: var(--verde-medio);
+  box-shadow: var(--sombra-objeto);
 }
 
-.cta:hover::before {
-  transform: none;
+.cta:hover .cta__icon {
+  transform: translateY(2px);
 }
 
-.cta:hover svg {
-  transform: translateY(3px);
+.tone-dark .cta {
+  background: var(--blanco);
+  color: var(--verde);
 }
 
 /* Enlace de texto con subrayado que se completa */
@@ -264,10 +279,34 @@ main:focus {
 .label {
   margin: 0;
   font-family: var(--f-text);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1.3;
+}
+
+/* Identificación de bocetos y propuestas visuales */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  box-shadow: 0 0 0 1px var(--linea);
+}
+
+.tag::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--rojo);
 }
 
 /* Notas metodológicas */
@@ -281,6 +320,13 @@ main:focus {
   color: var(--blanco-suave);
 }
 
+/* Sombra de contacto: una elipse difusa bajo el objeto */
+.contact-shadow {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 25, 15, 0.42), rgba(0, 25, 15, 0.18) 55%, transparent);
+}
+
 /* Todo movimiento se apaga con movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -290,5 +336,6 @@ main:focus {
     animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
   }
 }

@@ -16,6 +16,7 @@ export function Footer() {
             </a>
             .
           </p>
+          <p>{credits.media}</p>
           <p>
             Fotografías de contexto con licencias de uso libre:{' '}
             {credits.photos.map((photo, index) => (

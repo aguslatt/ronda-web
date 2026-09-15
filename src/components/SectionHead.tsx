@@ -9,16 +9,13 @@ interface SectionHeadProps {
   className?: string
 }
 
-/** Cabecera de sección: filete, folio corrido y titular. */
+/** Cabecera de sección: número y capítulo en una etiqueta breve, luego el titular. */
 export function SectionHead({ number, eyebrow, title, titleId, className = '' }: SectionHeadProps) {
   return (
     <div className={`section-head ${className}`}>
-      <p className="folio">
-        <span className="folio__number">{number}</span>
-        <span className="folio__name">{eyebrow}</span>
-        <span className="folio__project" aria-hidden="true">
-          Ronda / Romance
-        </span>
+      <p className="eyebrow">
+        <span className="eyebrow__number">{number}</span>
+        {eyebrow}
       </p>
       <h2 id={titleId} className="section-head__title">
         {title}

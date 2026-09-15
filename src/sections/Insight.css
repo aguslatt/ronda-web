@@ -1,15 +1,15 @@
 /* ==========================================================================
    El insight como golpe gráfico → la respuesta estratégica
-   --p recorre la pista (160svh de scroll):
+   --p recorre la pista (110svh de scroll):
    0 → 0,42  la banda verde descubre “que alguien lo ofrezca”
-   0,55 → 0,93  la lámina roja se abre en dos y revela la respuesta
+   0,5 → 0,92  la lámina roja se abre en dos y revela la respuesta
    ========================================================================== */
 .turn {
   --p: 0;
   --m: clamp(0, calc(var(--p) * 2.4), 1);
-  --o: clamp(0, calc((var(--p) - 0.55) * 2.6), 1);
+  --o: clamp(0, calc((var(--p) - 0.5) * 2.4), 1);
   position: relative;
-  height: 260svh;
+  height: 210svh;
 }
 
 .turn__stage {
@@ -78,24 +78,27 @@
 
 .insight__lead {
   display: block;
-  font-size: clamp(2.25rem, 1rem + 4.6vw, 6rem);
-  line-height: 0.95;
+  font-size: var(--fs-impact);
+  line-height: 0.98;
 }
 
 /* Cambio de escala + banda que se descubre al avanzar */
 .insight__mark {
   position: relative;
   display: block;
-  margin-top: 0.12em;
-  padding-block: 0.08em 0.12em;
-  font-size: clamp(3.25rem, 1rem + 9vw, 11rem);
-  line-height: 0.88;
+  margin-top: 0.15em;
+  padding-block: 0.1em 0.14em;
+  font-size: clamp(3rem, 1rem + 7.6vw, 9.5rem);
+  line-height: 0.9;
 }
 
 .insight__band {
   position: absolute;
   inset: 0 calc(var(--edge) * -1);
-  background: var(--verde);
+  background:
+    radial-gradient(50% 120% at 70% 50%, rgba(63, 143, 90, 0.55), transparent 70%),
+    var(--verde);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.5);
   transform: scaleX(var(--m));
   transform-origin: left;
 }
@@ -118,7 +121,9 @@
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
-  background: var(--verde);
+  background:
+    radial-gradient(55% 70% at 78% 55%, rgba(185, 224, 127, 0.3), transparent 70%),
+    linear-gradient(160deg, var(--verde) 30%, var(--verde-noche) 100%);
   color: var(--blanco);
 }
 
@@ -130,20 +135,23 @@
 }
 
 .strategy-cover .section-head__title {
-  max-width: 10ch;
+  max-width: 11ch;
+  font-size: clamp(2.5rem, 1.3rem + 3.4vw, 5rem);
 }
 
 .strategy-cover__lede {
   max-width: 34ch;
   color: var(--blanco-suave);
   font-size: var(--fs-lede);
-  line-height: 1.35;
+  line-height: 1.45;
 }
 
 .strategy-cover__photo {
   position: relative;
-  margin: 0;
+  margin: calc(var(--header-h) + 2rem) var(--edge) 2.5rem 0;
   overflow: hidden;
+  border-radius: var(--radio-l);
+  box-shadow: var(--sombra-flotante);
 }
 
 .strategy-cover__photo img {
@@ -156,7 +164,7 @@
 
 .turn__anchor {
   position: absolute;
-  top: 150svh;
+  top: 120svh;
   bottom: 0;
   left: 0;
   width: 1px;
@@ -201,7 +209,11 @@
 
 @media (max-width: 899px) {
   .turn {
-    height: 240svh;
+    height: 200svh;
+  }
+
+  .strategy-cover__photo {
+    margin: 0 var(--edge) 1.5rem;
   }
 
   .insight__composition {
@@ -229,6 +241,6 @@
   }
 
   .turn__anchor {
-    top: 140svh;
+    top: 110svh;
   }
 }

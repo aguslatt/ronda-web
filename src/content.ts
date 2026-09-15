@@ -27,12 +27,17 @@ export const hero = {
   lede: 'Una propuesta para convertir una invitación cotidiana en reconocimiento, prueba y elección de marca.',
   campaign: 'Campaña: abril–junio de 2027',
   cta: { label: 'Explorar la propuesta', href: '#hallazgo' },
+  // Protagonista: una mano acerca el mate hacia quien mira la página
   image: {
-    name: 'encuentro-rio',
-    alt: 'Dos personas se pasan un mate con bombilla al borde de un río de montaña.',
+    name: 'mano-mate',
+    alt: 'Una mano acerca un mate con bombilla hacia quien mira, como ofreciéndolo.',
   } satisfies ImageRef,
-  photoCredit: 'Cajón del Azul, El Bolsón · Foto: Camila Seves Espasandin',
-  logo: { name: 'romance-logo-blanco', alt: 'Romance' } satisfies ImageRef,
+  pack: {
+    name: 'romance-tradicional',
+    alt: 'Envase de Yerba Mate Romance Tradicional de 1 kg.',
+  } satisfies ImageRef,
+  photoCredit: 'Foto: Camila Seves Espasandin (recorte)',
+  logo: { name: 'romance-logo-hoja', alt: 'Yerba Mate Romance' } satisfies ImageRef,
 }
 
 /* 2 · El hallazgo -------------------------------------------------------- */
@@ -82,12 +87,6 @@ export const brand = {
     alt: 'Detalle del medallón del envase: dos manos distintas sostienen dos mates sobre una hoja de yerba.',
   } satisfies ImageRef,
   medallionCaption: 'Medallón original: dos mates sostenidos por dos manos distintas, sobre una hoja de yerba.',
-  gestureLabel: 'En la vida cotidiana',
-  gesture: {
-    name: 'dos-mates',
-    alt: 'Dos manos acercan dos mates de madera con bombilla, uno junto al otro.',
-  } satisfies ImageRef,
-  gestureCaption: 'Dos manos y dos mates: el mismo signo, fuera del envase.',
 }
 
 /* 4 · El público --------------------------------------------------------- */
@@ -104,24 +103,24 @@ export const audience = {
       title: 'Estudio',
       text: 'El mate al lado de los apuntes, entre clases y entregas.',
       image: {
-        name: 'estudio',
-        alt: 'Un estudiante sentado en un aula sostiene un mate, con libros y un cuaderno sobre el pupitre.',
+        name: 'publico-estudio',
+        alt: 'Una joven estudiante concentrada frente a su notebook en un aula con luz natural cálida.',
       } satisfies ImageRef,
     },
     {
       title: 'Primeros trabajos',
       text: 'Una pausa en la jornada, entre tareas y pantallas.',
       image: {
-        name: 'pausa',
-        alt: 'Primer plano de unas manos que ceban agua desde un termo en un mate.',
+        name: 'publico-trabajo',
+        alt: 'Una joven hace una pausa en su home office y lee junto a la ventana, al lado de su escritorio.',
       } satisfies ImageRef,
     },
     {
       title: 'Independencia reciente',
       text: 'La primera yerba que elige y paga por su cuenta.',
       image: {
-        name: 'independencia',
-        alt: 'Una joven se ceba un mate con su propio termo, sentada sola junto a un lago en un parque.',
+        name: 'publico-independencia',
+        alt: 'Una joven ceba un mate con la pava en la entrada de su casa, con plantas y luz de día.',
       } satisfies ImageRef,
     },
   ],
@@ -147,8 +146,8 @@ export const strategy = {
   titleAccent: 'la yerba que se ofrece.',
   text: 'Construir reconocimiento y significado en cada contacto, y facilitar que esa asociación se convierta en una prueba compartida.',
   image: {
-    name: 'oferta',
-    alt: 'Un joven extiende un mate hacia quien mira, mientras una mano se acerca a recibirlo.',
+    name: 'gesto-rio',
+    alt: 'Dos manos se pasan un mate con bombilla sobre un arroyo de montaña.',
   } satisfies ImageRef,
   progressionTitle: 'Cómo avanza la propuesta',
   passage: {
@@ -231,45 +230,64 @@ export const activation = {
   number: '07',
   eyebrow: 'Cómo se activa',
   title: 'Una misma idea. Distintas ocasiones para ofrecer.',
-  imageNote: 'Imagen de referencia. No es una pieza de la campaña.',
+  // Las visualizaciones son bocetos conceptuales armados con el mensaje y los recursos aprobados
+  visualTag: 'Propuesta visual',
+  visualNote: 'Boceto conceptual. No es una pieza de la campaña.',
+  claim: 'Romance, la yerba que se ofrece.',
+  invitation: '¿Unos mates?',
+  media: {
+    label: 'Medios propuestos',
+    note: 'Acuerdos comerciales pendientes.',
+    logos: [
+      { name: 'medio-luzu-tv', alt: 'Luzu TV' },
+      { name: 'medio-olga', alt: 'Olga' },
+    ] satisfies ImageRef[],
+  },
   channels: [
     {
+      key: 'streaming',
       name: 'Streaming',
       detail: 'Luzu TV y Olga',
       role: 'Mostrar el gesto',
       text: 'Integrar el producto al gesto de ofrecer en programas y segmentos propuestos.',
-      image: {
-        name: 'gesto-rio',
-        alt: 'Dos manos se pasan un mate con bombilla.',
-      } satisfies ImageRef,
+      visual:
+        'Boceto de una integración propuesta en streaming: en pantalla, dos personas se pasan un mate; el envase de Romance acompaña la escena y debajo aparecen los logos de Luzu TV y Olga como medios propuestos.',
     },
     {
+      key: 'instagram',
       name: 'Instagram',
       detail: null,
       role: 'Sostener',
       text: 'Sostener el mensaje y la relación con la comunidad.',
-      image: brand.gesture,
+      visual:
+        'Boceto de piezas para Instagram: una publicación con dos mates que se encuentran y la pregunta “¿Unos mates?”, una historia con un mate cebado con Romance y una placa con el mensaje de campaña.',
     },
     {
+      key: 'tiktok',
       name: 'TikTok y creadores',
       detail: null,
       role: 'Descubrir',
       text: 'Generar descubrimiento, catas y recomendación.',
-      image: audience.scenes[1].image,
+      visual:
+        'Boceto de un video vertical para creadores: una persona ceba un mate frente a cámara, con tarjetas que resumen la cata y la recomendación de Romance.',
     },
     {
+      key: 'pdv',
       name: 'Activaciones y punto de venta',
       detail: null,
       role: 'Probar y comprar',
       text: 'Facilitar prueba y compra.',
-      image: strategy.supports[0].image,
+      visual:
+        'Boceto de una aplicación en punto de venta: un cartel rojo con la pregunta “¿Unos mates?” y el mensaje de campaña sobre una góndola con envases de Romance.',
     },
     {
+      key: 'web',
       name: 'Web y WhatsApp',
       detail: null,
       role: 'Continuar',
       text: 'Dar continuidad a las invitaciones y promociones.',
-      image: audience.scenes[2].image,
+      visual:
+        'Boceto de continuidad digital: una página con el mensaje de campaña y el envase, y una invitación “¿Unos mates?” compartida en un chat.',
     },
   ],
   note: 'Canales y acciones propuestos. Sujetos a evaluación y acuerdos comerciales.',
@@ -325,10 +343,13 @@ export const credits = {
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
   type: 'Tipografías: Clash Display y General Sans (Indian Type Foundry, Fontshare).',
+  media:
+    'Los logos de Luzu TV y Olga provienen de sus sitios oficiales y se usan solo para identificar medios propuestos; no implican acuerdos.',
   photos: [
     { author: 'Camila Seves Espasandin', source: 'Unsplash', url: 'https://unsplash.com/@camilaespasandin' },
-    { author: 'Eduard Perez', source: 'Pexels', url: 'https://www.pexels.com/photo/university-student-holding-mate-in-classroom-37795319/' },
-    { author: 'Guillermo Berlin', source: 'Pexels', url: 'https://www.pexels.com/photo/33152241/' },
+    { author: 'Uriel Lu', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-joven-trabajando-en-su-computadora-portatil-en-un-aula-37770842/' },
+    { author: 'Alexander Mass', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-leyendo-un-libro-en-un-acogedor-entorno-de-oficina-en-casa-30008705/' },
+    { author: 'Los Muertos Crew', source: 'Pexels', url: 'https://www.pexels.com/es-es/foto/mujer-vertiendo-tetera-agua-caliente-8279936/' },
     { author: 'Crisher P.H.', source: 'Pexels', url: 'https://www.pexels.com/photo/couple-eating-breakfast-in-a-mountain-valley-15082054/' },
     { author: 'Nour Alhoda', source: 'Pexels', url: 'https://www.pexels.com/photo/sharing-traditional-yerba-mate-drinks-33181406/' },
   ],

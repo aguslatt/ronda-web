@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties } from 'react'
 import { hero } from '../content'
 import { Picture } from '../components/Picture'
 import { ArrowDownIcon } from '../components/Icons'
@@ -25,21 +25,34 @@ function Line({ text, index }: { text: string; index: number }) {
 }
 
 /**
- * Apertura: la portada queda fija. Al comenzar el scroll, el marco de la fotografía
- * se abre hasta ocupar la pantalla y el texto sale; después, El hallazgo entra como
- * una lámina sobre la imagen.
+ * Portada como pieza de campaña: sobre la superficie clara, una mano acerca el mate
+ * hacia quien mira. El mate atraviesa el borde de una superficie verde; el envase real
+ * equilibra la escena con menor escala. Con el primer scroll la escena cambia de encuadre
+ * y el verde se extiende hasta conectar con El hallazgo.
  */
-export function Opening({ children }: { children: ReactNode }) {
-  const ref = useScrollProgress<HTMLDivElement>('start', 0, 0.6)
+export function Hero() {
+  const ref = useScrollProgress<HTMLElement>('start', 0, 0.8)
 
   return (
-    <div ref={ref} className="opening">
-      <section id="inicio" className="hero tone-dark" data-surface="verde" aria-labelledby="hero-title">
-        <p className="hero__kicker label">{hero.kicker}</p>
+    <section ref={ref} id="inicio" className="hero" data-surface="claro" aria-labelledby="hero-title">
+      <div className="hero__scene">
+        <span className="hero__glow" aria-hidden="true" />
+        <span className="hero__surface" aria-hidden="true" />
 
-        <figure className="hero__photo">
-          <Picture name={hero.image.name} alt={hero.image.alt} sizes="100vw" priority />
+        <div className="hero__pack">
+          <span className="hero__pack-shadow contact-shadow" aria-hidden="true" />
+          <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 13vw, 28vw" priority />
+        </div>
+
+        <figure className="hero__hand">
+          <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 34vw, 62vw" priority />
         </figure>
+
+        <p className="hero__credit">{hero.photoCredit}</p>
+      </div>
+
+      <div className="hero__copy">
+        <p className="hero__kicker label">{hero.kicker}</p>
 
         <h1 id="hero-title" className="hero__title">
           <span className="sr-only">{hero.title}</span>
@@ -55,24 +68,21 @@ export function Opening({ children }: { children: ReactNode }) {
           </span>
         </h1>
 
-        <div className="hero__logo">
-          <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="220px" priority />
-        </div>
-        <p className="hero__credit">{hero.photoCredit}</p>
-
-        <div className="hero__foot">
-          <p className="hero__lede">{hero.lede}</p>
-          <div className="hero__actions">
-            <a className="cta" href={hero.cta.href}>
-              {hero.cta.label}
+        <p className="hero__lede">{hero.lede}</p>
+        <div className="hero__actions">
+          <a className="cta" href={hero.cta.href}>
+            {hero.cta.label}
+            <span className="cta__icon">
               <ArrowDownIcon />
-            </a>
-            <p className="hero__meta label">{hero.campaign}</p>
-          </div>
+            </span>
+          </a>
+          <p className="hero__meta label">{hero.campaign}</p>
         </div>
-      </section>
+      </div>
 
-      {children}
-    </div>
+      <div className="hero__logo">
+        <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="200px" priority />
+      </div>
+    </section>
   )
 }

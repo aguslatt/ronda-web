@@ -1,5 +1,5 @@
 /* ==========================================================================
-   El hallazgo · lámina blanca con ventana y cifras tipográficas
+   El hallazgo · el verde de la portada continúa y la tarjeta de cifras lo cruza
    ========================================================================== */
 .findings {
   position: relative;
@@ -7,224 +7,132 @@
 }
 
 .findings__top {
-  display: grid;
-  grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
-  min-height: 82svh;
+  position: relative;
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(9rem, 14vw, 12rem);
+  overflow: hidden;
+  border-radius: 0 0 var(--radio-l) var(--radio-l);
+  background:
+    radial-gradient(60% 90% at 88% 0%, rgba(63, 143, 90, 0.5), transparent 70%),
+    linear-gradient(180deg, var(--verde) 0%, var(--verde-medio) 100%);
+  color: var(--blanco);
 }
 
 .findings__head {
   display: grid;
-  align-content: start;
-  gap: clamp(2rem, 4vw, 3rem);
-  padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 4vw, 4rem) clamp(3rem, 6vw, 5rem) var(--edge);
-  background: var(--blanco);
-}
-
-.findings__head .section-head__title {
-  max-width: 11ch;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 1.5rem clamp(2rem, 5vw, 5rem);
+  align-items: end;
 }
 
 .findings__text {
-  max-width: 34ch;
-  color: var(--gris);
+  max-width: 40ch;
+  color: var(--blanco-suave);
   font-size: var(--fs-lede);
-  line-height: 1.35;
-}
-
-.findings__window {
-  position: relative;
-}
-
-.findings__window-credit {
-  position: absolute;
-  right: var(--edge);
-  bottom: 1.25rem;
-  color: var(--blanco);
-  font-size: 0.875rem;
-  font-weight: 500;
+  line-height: 1.45;
 }
 
 .findings__body {
   padding-bottom: var(--space-section);
-  background: var(--blanco);
 }
 
-/* Cifras */
+/* Tarjeta de cifras: se apoya sobre el borde del bloque verde */
 .figures {
-  margin: 0;
-  padding: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: calc(clamp(9rem, 14vw, 12rem) * -1 + 3rem) 0 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  border-radius: var(--radio-l);
+  background: var(--blanco);
+  box-shadow: var(--sombra-flotante);
   list-style: none;
 }
 
 .figure {
-  --p: 0;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--col-gap);
-  align-items: end;
-  padding-block: clamp(2.5rem, 5vw, 4.5rem);
-  border-top: 1px solid var(--linea-fuerte);
+  align-content: start;
+  gap: 0.75rem;
+  padding-inline: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.figure + .figure {
+  border-left: 1px solid var(--linea);
 }
 
 .figure__role {
   display: flex;
-  gap: 0.75rem;
-  grid-column: 1 / -1;
-  grid-row: 1;
-  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  color: var(--rojo);
+  gap: 0.6rem;
+  color: var(--gris);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 .figure__index {
-  min-width: 1.5rem;
-  color: var(--tinta);
+  color: var(--verde);
+  font-weight: 600;
 }
 
 .figure__value {
-  grid-row: 2;
   color: var(--verde);
   font-family: var(--f-display);
-  font-size: clamp(5.5rem, 2rem + 13vw, 15rem);
+  font-size: clamp(3.25rem, 1.8rem + 3.6vw, 5.75rem);
   font-weight: 600;
-  line-height: 0.78;
-  letter-spacing: -0.045em;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
   white-space: nowrap;
-  translate: calc((1 - var(--p)) * -2.5rem) 0;
-}
-
-.figure__rule {
-  grid-row: 3;
-  grid-column: 1 / -1;
-  height: 2px;
-  margin-top: clamp(1.25rem, 2.5vw, 2rem);
-  background: currentColor;
-  transform: scaleX(var(--p));
-  transform-origin: left;
-}
-
-.figure__label {
-  grid-row: 2;
-  align-self: end;
-  font-family: var(--f-display);
-  font-size: clamp(1.5rem, 0.9rem + 1.7vw, 2.625rem);
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-}
-
-/* A · 59,7% */
-.figure--1 .figure__value {
-  grid-column: 1 / span 7;
-}
-
-.figure--1 .figure__label {
-  grid-column: 8 / -1;
-  max-width: 16ch;
-}
-
-/* B · 81,6%: la cifra se corre al margen derecho */
-.figure--2 .figure__value {
-  grid-column: 5 / -1;
-  justify-self: end;
-  translate: calc((1 - var(--p)) * 2.5rem) 0;
-}
-
-.figure--2 .figure__label {
-  grid-column: 1 / span 4;
-  grid-row: 2;
-  max-width: 14ch;
-}
-
-.figure--2 .figure__rule {
-  transform-origin: right;
-}
-
-/* C · 69%: bloque rojo a sangre */
-.figure--3 {
-  margin-inline: calc(50% - 50vw);
-  padding-inline: calc(50vw - 50%);
-  border-top: 0;
-  background: var(--rojo);
-  color: var(--blanco);
-}
-
-.figure--3 .figure__role,
-.figure--3 .figure__index {
-  color: var(--blanco);
 }
 
 .figure--3 .figure__value {
-  grid-column: 1 / span 6;
-  color: var(--blanco);
-  font-size: clamp(7rem, 3rem + 17vw, 20rem);
+  color: var(--rojo);
 }
 
-.figure--3 .figure__label {
-  grid-column: 7 / -1;
-  max-width: 10ch;
-  font-size: clamp(2.25rem, 1rem + 3.6vw, 5rem);
-  font-weight: 600;
-  line-height: 0.95;
+.figure__label {
+  max-width: 26ch;
+  font-size: 1.0625rem;
+  line-height: 1.4;
 }
 
 .findings__source {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 2rem clamp(2rem, 5vw, 5rem);
+  gap: 1.5rem clamp(2rem, 5vw, 5rem);
   align-items: start;
-  margin-top: clamp(3.5rem, 7vw, 6rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 @media (max-width: 899px) {
-  .findings__top {
+  .findings__head,
+  .findings__source {
     grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
   }
 
-  .findings__head {
-    padding-inline: var(--edge);
-  }
-
-  .findings__window {
-    height: 46svh;
+  .figures {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0.5rem 0;
   }
 
   .figure {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1.25rem;
+    align-items: center;
+    padding-block: 1.25rem;
   }
 
-  .figure .figure__value,
-  .figure .figure__label {
-    grid-column: 1;
-    justify-self: start;
+  .figure + .figure {
+    border-top: 1px solid var(--linea);
+    border-left: 0;
   }
 
-  .figure .figure__value {
-    grid-row: 2;
-    font-size: 25vw;
-    translate: none;
+  .figure__role {
+    grid-column: 1 / -1;
   }
 
-  .figure .figure__label {
-    grid-row: 4;
-    max-width: 18ch;
-    margin-top: 1.25rem;
-    font-size: 1.625rem;
+  .figure__value {
+    font-size: clamp(2.75rem, 13vw, 3.75rem);
   }
 
-  .figure--2 .figure__rule {
-    transform-origin: left;
-  }
-
-  .figure--3 .figure__value {
-    font-size: 38vw;
-  }
-
-  .figure--3 .figure__label {
-    font-size: 2.5rem;
-  }
-
-  .findings__source {
-    grid-template-columns: minmax(0, 1fr);
+  .figure__label {
+    font-size: 1rem;
   }
 }

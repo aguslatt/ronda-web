@@ -1,67 +1,147 @@
 /* ==========================================================================
-   Portada tipográfica + encuadre que se abre
-   --p (0 → 1): primeros 60svh de scroll. El marco pasa de un recorte
-   asimétrico a ocupar toda la pantalla. Luego entra la lámina de El hallazgo.
+   Portada · pieza de campaña
+   Capas (de atrás hacia adelante): luz difusa, superficie verde, envase,
+   mano con el mate, texto. La luz llega desde arriba a la izquierda:
+   las sombras caen hacia abajo a la derecha.
+   --p (0 → 1): primer tramo de scroll. La superficie verde se extiende a todo
+   el ancho y la escena cambia levemente de encuadre.
    ========================================================================== */
-.opening {
-  --p: 0;
-  position: relative;
-}
-
 .hero {
-  /* Recorte inicial de la fotografía (inset: arriba, derecha, abajo, izquierda) */
-  --t0: 23%;
-  --r0: 0%;
-  --b0: 0%;
-  --l0: 45%;
+  --p: 0;
   --q: calc(1 - var(--p));
-
-  position: sticky;
-  top: 0;
-  z-index: 0;
-  height: 100svh;
-  min-height: 36rem;
+  /* Borde superior e izquierdo de la superficie verde */
+  --surface-top: 47%;
+  --surface-left: 50%;
+  position: relative;
+  min-height: max(100svh, 42rem);
   overflow: hidden;
-  background: var(--verde);
-  color: var(--blanco);
+  background: var(--claro);
 }
 
-/* Fotografía: el marco se abre con el scroll */
-.hero__photo {
+.hero__scene {
   position: absolute;
   inset: 0;
-  margin: 0;
-  overflow: hidden;
-  background: var(--verde-noche);
-  clip-path: inset(
-    calc(var(--t0) * var(--q)) calc(var(--r0) * var(--q)) calc(var(--b0) * var(--q)) calc(var(--l0) * var(--q))
-  );
-  animation: photo-frame 0.8s var(--ease) 0.1s backwards;
 }
 
-.hero__photo img {
+/* Luz difusa detrás del mate: dirige la mirada y separa la mano del fondo */
+.hero__glow {
+  position: absolute;
+  top: 2%;
+  left: 46%;
+  width: 62%;
+  height: 78%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side at 55% 50%, rgba(185, 224, 127, 0.85), rgba(185, 224, 127, 0.35) 45%, transparent 75%),
+    radial-gradient(closest-side at 40% 60%, rgba(63, 143, 90, 0.35), transparent 80%);
+  filter: blur(10px);
+  opacity: calc(0.85 + var(--p) * 0.15);
+  animation: glow-in 1s var(--ease) both;
+}
+
+/* Superficie verde: ocupa toda la escena y se recorta. Con el scroll el recorte se abre
+   hasta cubrirla completa y el verde continúa en la sección siguiente. */
+.hero__surface {
+  position: absolute;
+  inset: 0;
+  background:
+    /* luz detrás del cuerpo del mate: separa el mate oscuro del verde */
+    radial-gradient(24% 30% at 84% 60%, rgba(185, 224, 127, 0.5), transparent 72%),
+    radial-gradient(40% 24% at 76% var(--surface-top), rgba(185, 224, 127, 0.45), transparent 75%),
+    radial-gradient(60% 50% at 25% 100%, rgba(0, 39, 26, 0.5), transparent 70%),
+    linear-gradient(180deg, var(--verde-hoja) 0%, var(--verde-medio) calc(var(--surface-top) + 12%), var(--verde) 100%);
+  clip-path: inset(
+    calc(var(--surface-top) * var(--q)) 0 0 calc(var(--surface-left) * var(--q)) round calc(var(--q) * var(--radio-l)) 0 0 0
+  );
+  animation: surface-in 0.8s var(--ease) both;
+}
+
+/* Mano y mate: entra desde el borde derecho y cruza el borde de la superficie */
+.hero__hand {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  z-index: 3;
+  height: 78%;
+  aspect-ratio: 939 / 1400;
+  margin: 0;
+  translate: 0 calc(var(--p) * -5%);
+  scale: calc(1 + var(--p) * 0.06);
+  transform-origin: 80% 60%;
+  animation: hand-in 0.9s var(--ease) 0.12s both;
+}
+
+.hero__hand img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 45%;
-  filter: brightness(0.8);
-  scale: calc(1.12 - var(--p) * 0.12);
-  animation: photo-scale 0.9s var(--ease) 0.1s backwards;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: brightness(1.1) contrast(1.06) saturate(1.08) drop-shadow(22px 34px 26px rgba(0, 20, 12, 0.4));
 }
 
-/* Titular */
-.hero__title {
+/* Envase real: menor escala, apoyado sobre el borde de la superficie */
+.hero__pack {
   position: absolute;
-  top: calc(var(--header-h) + 7svh);
-  left: var(--edge);
-  right: var(--edge);
+  left: calc(var(--surface-left) - 5.5%);
+  bottom: 7%;
   z-index: 2;
-  margin: 0;
-  font-size: var(--fs-hero);
+  width: clamp(8.5rem, 12vw, 13.5rem);
+  translate: 0 calc(var(--p) * -3%);
+  animation: pack-in 0.8s var(--ease) 0.25s both;
+}
+
+.hero__pack img {
+  position: relative;
+  width: 100%;
+  filter: drop-shadow(10px 18px 16px rgba(0, 20, 12, 0.3));
+}
+
+.hero__pack-shadow {
+  left: 6%;
+  right: -8%;
+  bottom: -4%;
+  height: 9%;
+}
+
+.hero__credit {
+  position: absolute;
+  right: var(--edge);
+  bottom: 1.25rem;
+  z-index: 4;
+  color: var(--blanco-suave);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: var(--q);
+}
+
+/* Texto */
+.hero__copy {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 1.5rem;
+  width: min(54vw, 52rem);
+  min-height: max(100svh, 42rem);
+  padding: calc(var(--header-h) + clamp(2rem, 6svh, 4.5rem)) 0 3rem var(--edge);
+  translate: 0 calc(var(--p) * -6svh);
+  /* El texto se retira antes de que el verde lo alcance */
+  opacity: clamp(0, calc(1 - var(--p) * 1.8), 1);
+}
+
+.hero__kicker {
+  color: var(--verde);
+  animation: rise-in 0.5s var(--ease) 0.5s backwards;
+}
+
+.hero__title {
+  margin: 0 0 0.5rem;
+  color: var(--tinta);
+  font-size: min(var(--fs-hero), 15svh);
   font-weight: 600;
-  line-height: 0.9;
-  letter-spacing: -0.025em;
-  pointer-events: none;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
 }
 
 .hero__lines {
@@ -75,95 +155,89 @@
 .hero__line {
   display: block;
   overflow: hidden;
-  margin-bottom: -0.08em;
-  padding-bottom: 0.08em;
+  margin-bottom: -0.1em;
+  padding-bottom: 0.1em;
   white-space: nowrap;
 }
 
-/* Entra y sale por la misma máscara: la entrada anima transform, la salida (scroll) translate */
 .hero__line-inner {
   display: block;
-  /* -150%: los descendentes (y, q, coma) salen por completo de la máscara */
-  translate: 0 calc(clamp(0, var(--p) * 2.2 - var(--i) * 0.18, 1) * -150%);
-  animation: line-in 0.65s var(--ease) both;
-  animation-delay: calc(var(--i) * 70ms);
+  animation: line-in 0.7s var(--ease) both;
+  animation-delay: calc(0.22s + var(--i) * 80ms);
 }
 
 .hero__accent {
-  color: var(--lima);
-}
-
-/* Información secundaria */
-.hero__kicker {
-  position: absolute;
-  top: calc(var(--header-h) + 2.5svh);
-  left: var(--edge);
-  z-index: 2;
-  opacity: max(0, calc(1 - var(--p) * 3));
-  animation: rise-in 0.5s var(--ease) 0.45s backwards;
-}
-
-.hero__logo {
-  position: absolute;
-  right: var(--edge);
-  bottom: 6svh;
-  z-index: 2;
-  width: clamp(7rem, 11vw, 11.5rem);
-  opacity: max(0, calc(1 - var(--p) * 2));
-  animation: rise-in 0.5s var(--ease) 0.55s backwards;
-}
-
-.hero__credit {
-  position: absolute;
-  top: calc(var(--t0) + 1rem);
-  right: var(--edge);
-  z-index: 2;
-  font-size: 0.875rem;
-  font-weight: 500;
-  opacity: max(0, calc(0.85 - var(--p) * 3));
-  animation: rise-in 0.5s var(--ease) 0.6s backwards;
-}
-
-.hero__foot {
-  position: absolute;
-  bottom: 6svh;
-  left: var(--edge);
-  z-index: 2;
-  display: grid;
-  gap: 1.75rem;
-  width: min(36vw, 32rem);
-  opacity: max(0, calc(1 - var(--p) * 2.5));
-  translate: 0 calc(var(--p) * -8svh);
-}
-
-.hero__foot > * {
-  animation: rise-in 0.5s var(--ease) backwards;
+  color: var(--rojo);
 }
 
 .hero__lede {
-  color: var(--blanco-suave);
+  max-width: 34ch;
+  color: var(--gris);
   font-size: var(--fs-lede);
-  line-height: 1.32;
-  animation-delay: 0.45s;
+  line-height: 1.4;
+  animation: rise-in 0.5s var(--ease) 0.55s backwards;
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem 1.75rem;
-  animation-delay: 0.55s;
+  gap: 1rem 1.5rem;
+  animation: rise-in 0.5s var(--ease) 0.65s backwards;
+}
+
+.hero__meta {
+  color: var(--gris);
+}
+
+.hero__logo {
+  position: absolute;
+  top: calc(var(--header-h) + 2rem);
+  right: var(--edge);
+  z-index: 4;
+  width: clamp(8rem, 11vw, 11rem);
+  opacity: calc(1 - var(--p) * 1.5);
+  animation: rise-in 0.5s var(--ease) 0.7s backwards;
 }
 
 /* La entrada no empieza hasta que las fuentes están listas */
+.fonts-pending .hero__glow,
+.fonts-pending .hero__surface,
+.fonts-pending .hero__hand,
+.fonts-pending .hero__pack,
 .fonts-pending .hero__line-inner,
-.fonts-pending .hero__photo,
-.fonts-pending .hero__photo img,
 .fonts-pending .hero__kicker,
-.fonts-pending .hero__logo,
-.fonts-pending .hero__credit,
-.fonts-pending .hero__foot > * {
+.fonts-pending .hero__lede,
+.fonts-pending .hero__actions,
+.fonts-pending .hero__logo {
   animation-play-state: paused;
+}
+
+@keyframes glow-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes surface-in {
+  from {
+    transform: translateY(12%);
+  }
+}
+
+@keyframes hand-in {
+  from {
+    opacity: 0;
+    transform: translate(6%, 5%);
+  }
+}
+
+@keyframes pack-in {
+  from {
+    opacity: 0;
+    transform: translateY(14%);
+  }
 }
 
 @keyframes line-in {
@@ -172,59 +246,42 @@
   }
 }
 
-@keyframes photo-frame {
-  from {
-    clip-path: inset(calc(var(--t0) + 16%) var(--r0) var(--b0) calc(var(--l0) + 5%));
-  }
-}
-
-@keyframes photo-scale {
-  from {
-    transform: scale(1.08);
-  }
-}
-
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
 }
 
-/* La lámina de El hallazgo entra después de que el marco se abrió */
-.opening > .findings {
-  margin-top: 60svh;
-}
-
+/* Pantallas bajas de escritorio */
 @media (min-width: 900px) and (max-height: 760px) {
-  .hero__title {
-    top: calc(var(--header-h) + 5svh);
-    font-size: min(var(--fs-hero), 15svh);
+  .hero__copy {
+    gap: 1.1rem;
   }
 
   .hero__lede {
-    font-size: 1.1875rem;
+    font-size: 1.125rem;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero {
-    position: relative;
-  }
-
-  .opening > .findings {
-    margin-top: 0;
-  }
-}
-
-/* Celular y tablet: cuatro líneas, marco debajo del titular con cruce parcial */
+/* Tablet y celular: texto arriba, escena abajo */
 @media (max-width: 899px) {
   .hero {
-    --t0: 36%;
-    --r0: 16%;
-    --b0: 21%;
-    --l0: 0%;
+    --surface-top: 34%;
+    --surface-left: 14%;
+    display: grid;
     min-height: 0;
+  }
+
+  /* En celular el texto se lee mientras se desplaza: no se desvanece */
+  .hero__copy {
+    order: 1;
+    width: auto;
+    min-height: 0;
+    opacity: 1;
+    translate: none;
+    gap: 1.1rem;
+    padding: calc(var(--header-h) + 1.75rem) var(--edge) 0;
   }
 
   .hero__lines--wide {
@@ -236,55 +293,61 @@
   }
 
   .hero__title {
-    top: calc(var(--header-h) + 6svh);
-    font-size: min(16.5vw, 7.6svh);
-  }
-
-  .hero__kicker {
-    top: calc(var(--header-h) + 1.25svh);
-    right: var(--edge);
-    font-size: 0.875rem;
-  }
-
-  .hero__logo {
-    right: calc(16% + 0.9rem);
-    bottom: calc(21% + 0.9rem);
-    width: 6.5rem;
-  }
-
-  .hero__credit {
-    display: none;
-  }
-
-  .hero__foot {
-    right: var(--edge);
-    bottom: 2.5svh;
-    width: auto;
-    gap: 0.9rem;
+    font-size: min(15.5vw, 5.25rem);
   }
 
   .hero__lede {
-    font-size: 1rem;
-    line-height: 1.35;
+    font-size: 1.0625rem;
   }
 
-  .hero__actions {
-    flex-wrap: nowrap;
-    gap: 1rem;
+  .hero__scene {
+    position: relative;
+    order: 2;
+    inset: auto;
+    height: min(118vw, 34rem);
+    margin-top: 1rem;
   }
 
-  .hero__actions .cta {
-    flex: none;
-    min-height: 3rem;
-    padding-inline: 1.1rem;
-    font-size: 1rem;
+  .hero__glow {
+    top: -8%;
+    left: 20%;
+    width: 90%;
+    height: 80%;
   }
 
-  .hero__meta {
-    font-size: 0.875rem;
+  .hero__hand {
+    top: 0;
+    height: 94%;
   }
 
-  .opening > .findings {
-    margin-top: 45svh;
+  .hero__pack {
+    left: 7%;
+    bottom: 8%;
+    width: 27vw;
+  }
+
+  /* Logo en el ángulo superior izquierdo de la escena, sobre la luz clara */
+  .hero__logo {
+    top: auto;
+    right: auto;
+    bottom: calc(min(118vw, 34rem) - 4.25rem);
+    left: var(--edge);
+    width: 6.75rem;
+  }
+
+  .hero__credit {
+    right: var(--edge);
+    bottom: 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 899px) and (min-width: 600px) {
+  .hero__scene {
+    height: 34rem;
+  }
+
+  .hero__pack {
+    width: 9.5rem;
   }
 }

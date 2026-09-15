@@ -2,36 +2,35 @@
    Respuesta estratégica · continuación
    ========================================================================== */
 .strategy {
-  background: var(--blanco);
+  background: var(--claro);
 }
 
 .strategy__lede {
   display: none;
-  max-width: 30ch;
-  margin-bottom: 3.5rem;
+  max-width: 34ch;
+  margin-bottom: 2.5rem;
   font-size: var(--fs-lede);
-  line-height: 1.35;
+  line-height: 1.45;
 }
 
 .strategy__subhead {
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--linea-fuerte);
+  color: var(--gris);
   font-family: var(--f-text);
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   line-height: 1.2;
 }
 
 /* Tres ventanas sobre una sola fotografía: los encuadres se abren en orden */
 .passage__list {
   --p: 0;
-  --gap: clamp(0.5rem, 1.2vw, 1rem);
+  --gap: clamp(0.75rem, 1.4vw, 1.25rem);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: var(--gap);
-  row-gap: 1.5rem;
-  margin: 2.5rem 0 0;
+  row-gap: 1.25rem;
+  margin: 1.25rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -43,10 +42,11 @@
 
 .passage__frame {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
+  border-radius: var(--radio-m);
   background: var(--niebla);
-  clip-path: inset(calc((1 - var(--r)) * 50%) 0 calc((1 - var(--r)) * 50%) 0);
+  clip-path: inset(calc((1 - var(--r)) * 50%) 0 calc((1 - var(--r)) * 50%) 0 round var(--radio-m));
 }
 
 .passage__image {
@@ -56,75 +56,64 @@
   width: calc(300% + 2 * var(--gap) + 3rem);
   max-width: none;
   height: auto;
-  translate: calc((var(--p) - 0.5) * 2.5rem) -60%;
+  translate: calc((var(--p) - 0.5) * 2.5rem) -58%;
 }
 
 .passage__copy {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   padding-right: 1rem;
 }
 
 .passage__number {
   color: var(--rojo);
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
-/* El tamaño se limita al ancho de columna: “Reconocimiento” entra sin chocar */
 .passage__name {
-  margin-top: 0.5rem;
-  font-size: min(clamp(2rem, 1rem + 2.6vw, 3.5rem), 3.6vw);
-  letter-spacing: -0.025em;
-}
-
-.passage__step:last-child .passage__name {
-  color: var(--rojo);
+  margin-top: 0.4rem;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
 }
 
 .passage__text {
-  max-width: 26ch;
-  margin-top: 0.75rem;
+  max-width: 30ch;
+  margin-top: 0.4rem;
   color: var(--gris);
 }
 
-/* Respaldos */
+/* Respaldos: tres tarjetas */
 .supports {
-  margin-top: clamp(5rem, 10vw, 9rem);
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
 }
 
 .supports__list {
-  margin: 1.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--col-gap);
+  margin: 1.25rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .support {
   display: grid;
-  grid-template-columns: minmax(3rem, 1fr) minmax(0, 7fr) minmax(8rem, 3fr);
-  gap: var(--col-gap);
-  align-items: start;
-  padding-block: clamp(1.25rem, 2.5vw, 2rem);
-  border-bottom: 1px solid var(--linea);
-}
-
-.support__number {
-  padding-top: 0.35rem;
-  font-size: 0.9375rem;
-  font-weight: 500;
-}
-
-.support__name {
-  font-size: clamp(2rem, 1rem + 3vw, 4.5rem);
-  letter-spacing: -0.025em;
-  transition:
-    translate var(--t-fast) var(--ease),
-    color var(--t-fast) var(--ease);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem 0.75rem;
+  align-content: start;
+  padding: 0.75rem 0.75rem 1.25rem;
+  border-radius: var(--radio-l);
+  background: var(--blanco);
+  box-shadow: var(--sombra-suave);
 }
 
 .support__media {
+  grid-column: 1 / -1;
+  grid-row: 1;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--blanco);
+  border-radius: calc(var(--radio-l) - 0.5rem);
+  background: var(--niebla);
 }
 
 .support__media img {
@@ -134,22 +123,26 @@
   transition: scale var(--t-reveal) var(--ease);
 }
 
-.support--3 .support__media {
-  background: var(--niebla);
-}
-
 .support--3 .support__media img {
-  padding: 6%;
+  padding: 8%;
   object-fit: contain;
 }
 
-.support:hover .support__name {
-  translate: 0.75rem 0;
+.support__number {
+  padding: 0.3rem 0 0 0.5rem;
   color: var(--rojo);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.support__name {
+  padding-right: 0.5rem;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
 }
 
 .support:hover .support__media img {
-  scale: 1.06;
+  scale: 1.05;
 }
 
 @media (max-width: 899px) {
@@ -157,42 +150,50 @@
     display: block;
   }
 
+  .passage__list {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
   .passage__step {
-    display: contents;
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding-block: 0.75rem;
   }
 
   .passage__frame {
-    grid-row: 1;
+    aspect-ratio: 1;
+  }
+
+  /* En celular cada ventana muestra su propio tramo de la foto */
+  .passage__image {
+    left: calc(var(--i) * -100% - 0.5rem);
+    width: calc(300% + 1rem);
   }
 
   .passage__copy {
-    grid-column: 1 / -1;
     margin-top: 0;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--linea);
   }
 
-  .passage__step:nth-child(1) .passage__copy {
-    grid-row: 2;
-  }
-
-  .passage__step:nth-child(2) .passage__copy {
-    grid-row: 3;
-  }
-
-  .passage__step:nth-child(3) .passage__copy {
-    grid-row: 4;
-  }
-
-  .passage__name {
-    font-size: 2rem;
+  .supports__list {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .support {
-    grid-template-columns: 2rem minmax(0, 1fr) 6.5rem;
+    grid-template-columns: 7.5rem auto minmax(0, 1fr);
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
   }
 
-  .support__name {
-    font-size: 1.625rem;
+  .support__media {
+    grid-column: 1;
+    grid-row: 1;
+    aspect-ratio: 1;
+  }
+
+  .support__number {
+    padding: 0;
   }
 }

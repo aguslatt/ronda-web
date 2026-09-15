@@ -4,45 +4,53 @@ Landing narrativa de la propuesta estratégica de campaña para Yerba Mate Roman
 (tesis de Publicidad · Andrea Gutiérrez y Agustina Lattanzi).
 
 Stack liviano: Vite + React + TypeScript. Sin backend, sin bibliotecas de animación
-y sin servicios externos en tiempo de ejecución: fuentes e imágenes están autoalojadas.
+y sin servicios externos en tiempo de ejecución: fuentes, imágenes y logos están autoalojados.
 
 ## Dirección visual
 
-Afiche cultural contemporáneo + campaña de marca + portfolio de dirección de arte.
-
-**Principio de composición: la página hace lugar.** Ofrecer implica hacerle lugar a alguien:
-los encuadres se abren, las imágenes ganan espacio y los bloques se desplazan para revelar lo siguiente.
+Una campaña de Romance pensada para la web: superficies claras, atmósferas de color localizadas
+y objetos con profundidad (sombras de contacto, superposiciones puntuales, diferencia de escala).
+Los fondos intensos (verde, rojo del insight) marcan cambios de ritmo.
 
 ### Tipografía
 
 - **Clash Display** (500 y 600) para titulares y cifras.
 - **General Sans** (400, 500 y 600) para textos y navegación.
-- Escalas de escritorio: titular principal ≈ 134–150 px, títulos de sección ≈ 60–90 px, lectura 18–20 px.
+- Jerarquía: impacto en portada, insight y cierre; titulares secundarios contenidos (≈ 56 px) y lectura de 16–18 px.
 - El logotipo oficial de Romance conserva su tipografía (es la imagen original).
 
-Las fuentes están en `src/assets/fonts` y se registran en `src/fonts.ts` con la API `FontFace`,
-para que las rutas funcionen igual en desarrollo y en GitHub Pages. La entrada de la portada
-espera a que estén cargadas (máximo 1,5 s), así el titular nunca se revela con la fuente de respaldo.
+Las fuentes están en `src/assets/fonts` y se registran en `src/fonts.ts` con la API `FontFace`.
+La entrada de la portada espera a que estén cargadas (máximo 1,5 s).
 Licencia: ITF Free Font License (Fontshare): uso libre, comercial incluido; no se pueden revender.
 
 ### Color
 
-Derivado del envase: verde `#013D26`, rojo `#BF031B`, lima `#B9E07F` (claro de la hoja del medallón),
-blanco y un neutro frío. Validar con la marca. Todos los tokens están en `src/styles/global.css`.
+Derivado del envase: verde `#013D26`, verde hoja `#3F8F5A`, lima `#B9E07F`, rojo `#BF031B` (solo acentos)
+y la superficie clara `#F5F7F2`. Validar con la marca. Tokens, radios y sombras en `src/styles/global.css`.
 
-### Tres momentos
+### Composiciones
 
-1. **Portada tipográfica con profundidad**: titular a gran escala con saltos de línea propios para escritorio y celular,
-   fotografía grande con superposición parcial. Entrada ≈ 1 s: titular por líneas con máscara, fotografía con cambio de encuadre, luego navegación e información secundaria.
-2. **Un encuadre que se abre**: con el scroll, el marco de la foto ocupa toda la pantalla, el titular sale por sus máscaras y *El hallazgo* entra como una lámina con una ventana a la foto.
-3. **El insight como golpe gráfico**: bloque rojo; una banda verde descubre “que alguien lo ofrezca” y luego la lámina se abre en dos para revelar la respuesta estratégica.
+1. **Portada**: una mano acerca el mate hacia quien mira (recorte de `oferta.jpg`, en `assets-src/mano-mate.png`).
+   El mate atraviesa el borde de una superficie verde, con luz difusa detrás; el envase real equilibra la escena.
+   Con el primer scroll la superficie se extiende a todo el ancho y el verde continúa en *El hallazgo*.
+2. **Oportunidad de marca**: el envase y la ampliación de su medallón (dos escalas del mismo recurso),
+   unidos por el encuadre del aro y dos líneas de tangencia. Al entrar aparece primero el envase y después la ampliación.
+3. **Activaciones**: bocetos conceptuales por canal (streaming con logos de Luzu TV y Olga, Instagram, TikTok y creadores,
+   punto de venta, web y WhatsApp) dentro de un escenario de medidas fijas. Todos se identifican como *Propuesta visual*.
+4. **Presupuesto explorable**: barra al 100% con seis rubros proporcionales; cursor, foco (flechas) o toque muestran
+   el rubro en un panel estable y resaltan su fila. La leyenda permite elegir rubros chicos como Medición.
 
 ### Movimiento
 
-Una curva compartida (`--ease`) y dos ritmos: respuestas de interacción ≈ 200 ms (`--t-fast`)
-y revelaciones ≈ 700 ms (`--t-reveal`). `src/hooks/useScrollProgress.ts` escribe `--p` (0 → 1)
-y cada sección decide en su CSS qué hacer con ese avance. Con `prefers-reduced-motion`
-no hay tramos fijos ni animaciones y todo queda legible.
+Una curva compartida (`--ease`): respuestas ≈ 200 ms y revelaciones ≈ 700 ms. El movimiento se concentra
+en la portada (entrada por capas y primer scroll), la marca, las activaciones y la construcción del presupuesto.
+Con `prefers-reduced-motion` todo aparece en su estado final.
+
+### Cursor
+
+`src/components/Cursor.tsx`: el medallón del envase (recortado en círculo) sigue al mouse sin retraso,
+con el punto de selección en el centro y un leve aumento sobre enlaces y botones. Solo con mouse; ignora los clics;
+se desactiva con alto contraste o colores forzados y, si la imagen no carga, queda el cursor nativo.
 
 ## Abrir la web
 
@@ -60,15 +68,15 @@ npm run preview    # revisa localmente la versión final
 | Qué | Dónde |
 | --- | --- |
 | Textos, cifras, porcentajes, montos, fechas, nombres, imágenes | `src/content.ts` |
-| Saltos de línea del titular (escritorio y celular) | `hero.linesWide` / `hero.linesNarrow` en `src/content.ts` |
-| Colores, tipografías, tamaños, espacios, movimiento | `src/styles/global.css` (bloque `:root`) |
+| Mensajes de los bocetos de activación y medios propuestos | `activation` en `src/content.ts` |
+| Colores, tipografías, tamaños, radios, sombras, movimiento | `src/styles/global.css` (bloque `:root`) |
 | Composición y movimiento de cada sección | `src/sections/*.tsx` y su `.css` |
-| Recorte inicial de la foto de portada | `src/sections/Hero.css` (variables `--t0`, `--r0`, `--b0`, `--l0`) |
+| Geometría envase + medallón | constantes al inicio de `src/sections/Brand.tsx` |
 
 ### Imágenes
 
 1. Guardar el original en `assets-src/`.
-2. Registrarlo en `scripts/optimize-images.mjs` (nombre, archivo y anchos).
+2. Registrarlo en `scripts/optimize-images.mjs` (nombre, archivo, anchos; `extract` y `mask: 'circle'` son opcionales).
 3. Ejecutar `npm run images`: regenera los WebP en `public/img/` y el manifiesto de dimensiones.
 4. Usarlo desde `src/content.ts` por su nombre.
 
@@ -79,17 +87,20 @@ Colocar el PDF final en `public/` (por ejemplo `public/brief-ronda.pdf`) y compl
 
 ## Recursos pendientes o a validar
 
-- **Paleta**: validar con la marca (en especial el lima de acento).
-- **Packaging, logotipo y fotos de producto**: provienen del sitio oficial de Romance. Reemplazar por archivos en alta resolución provistos por Gerula S.A.
-- **Imágenes de activaciones**: son referencias visuales (se aclara en la web), no piezas de campaña.
-- **Escena “Primeros trabajos”**: primer plano de una pausa para cebar; conviene producir una foto propia en contexto laboral.
+- **Paleta**: validar con la marca.
+- **Packaging y medallón**: el sitio oficial solo ofrece el envase a 620×900 px; la ampliación del medallón sale de ese archivo. Pedir originales en alta resolución a Gerula S.A.
+- **Foto de portada**: recorte a partir de una fotografía existente; una producción propia del gesto (mano que ofrece el mate hacia cámara, fondo liso) mejoraría nitidez y luz.
+- **Bocetos de activación**: son propuestas visuales; reemplazar por piezas reales cuando existan.
+- **Logos de medios**: tomados de luzutv.com.ar y olgaenvivo.com; confirmar versiones vigentes y permisos de uso.
+- **Público**: “Estudio” y “Primeros trabajos” no muestran mate; conviene producir fotos propias con el público en contexto.
 - **Plazos por indicador**: pendientes de definición en el brief.
 
 ## Créditos
 
-- **Unsplash** (licencia Unsplash): Camila Seves Espasandin (portada, cierre, insight/estrategia, escenas y canales).
-- **Pexels** (licencia Pexels): Eduard Perez (“Estudio”), Guillermo Berlin (“Independencia reciente”), Crisher P.H. (tres ventanas) y Nour Alhoda (díptico de marca).
-- **Gerula S.A.** (sitio oficial de Romance): logotipo, envase Tradicional, medallón, fotografía de cebado y cosecha.
+- **Unsplash**: Camila Seves Espasandin (portada y cierre, estrategia, bocetos de streaming y TikTok).
+- **Pexels**: Uriel Lu, Alexander Mass y Los Muertos Crew (público); Crisher P.H. (tres ventanas y boceto web); Nour Alhoda (boceto de Instagram).
+- **Gerula S.A.** (sitio oficial de Romance): logotipos, envase Tradicional, medallón, fotografía de cebado y cosecha.
+- **Luzu TV y Olga**: logos de sus sitios oficiales, solo para identificar medios propuestos.
 - **Tipografías**: Clash Display y General Sans, Indian Type Foundry (Fontshare).
 
 ## Publicar

@@ -9,7 +9,7 @@ import './Header.css'
 export function Header() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
-  const [surface, setSurface] = useState('verde')
+  const [surface, setSurface] = useState('claro')
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
@@ -30,7 +30,7 @@ export function Header() {
       // La superficie más profunda (última en el documento) debajo del centro de la barra
       const line = 34
       const center = window.innerWidth / 2
-      let next = 'blanco'
+      let next = 'claro'
       document.querySelectorAll<HTMLElement>('[data-surface]').forEach((element) => {
         const rect = element.getBoundingClientRect()
         if (rect.top <= line && rect.bottom > line && rect.left <= center && rect.right > center) {

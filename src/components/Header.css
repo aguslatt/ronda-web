@@ -1,17 +1,23 @@
 /* Barra que adopta la superficie de la sección que tiene debajo */
+/* Barra translúcida: deja pasar el color de la superficie con un desenfoque */
 .site-header {
-  --h-bg: var(--verde);
-  --h-fg: var(--blanco);
-  --foco: var(--lima);
+  --h-bg: rgba(245, 247, 242, 0.78);
+  --h-fg: var(--tinta);
+  --h-line: rgba(13, 26, 19, 0.08);
+  --foco: var(--rojo);
   position: fixed;
   inset: 0 0 auto;
   z-index: 40;
   background: var(--h-bg);
   color: var(--h-fg);
+  box-shadow: 0 1px 0 var(--h-line);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
   transition:
     background-color var(--t-fast) var(--ease),
-    color var(--t-fast) var(--ease);
-  animation: header-in 0.5s var(--ease) 0.45s both;
+    color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+  animation: header-in 0.5s var(--ease) 0.5s both;
 }
 
 .fonts-pending .site-header {
@@ -19,26 +25,24 @@
 }
 
 .surface-blanco {
-  --h-bg: var(--blanco);
-  --h-fg: var(--tinta);
-  --foco: var(--rojo);
+  --h-bg: rgba(255, 255, 255, 0.8);
 }
 
 .surface-niebla {
-  --h-bg: var(--niebla);
-  --h-fg: var(--tinta);
-  --foco: var(--rojo);
+  --h-bg: rgba(234, 239, 230, 0.8);
 }
 
-.surface-lima {
-  --h-bg: var(--lima);
-  --h-fg: var(--verde-noche);
-  --foco: var(--rojo);
+.surface-verde {
+  --h-bg: rgba(1, 61, 38, 0.82);
+  --h-fg: var(--blanco);
+  --h-line: rgba(255, 255, 255, 0.1);
+  --foco: var(--lima);
 }
 
 .surface-rojo {
-  --h-bg: var(--rojo);
+  --h-bg: rgba(191, 3, 27, 0.85);
   --h-fg: var(--blanco);
+  --h-line: rgba(255, 255, 255, 0.14);
   --foco: var(--blanco);
 }
 
@@ -50,17 +54,6 @@
   gap: 1rem;
   height: var(--header-h);
   padding-inline: var(--edge);
-}
-
-.site-header__bar::after {
-  content: '';
-  position: absolute;
-  left: var(--edge);
-  right: var(--edge);
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.22;
 }
 
 .site-header__brand {

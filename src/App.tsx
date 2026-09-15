@@ -1,5 +1,6 @@
 import { Header } from './components/Header'
-import { Opening } from './sections/Hero'
+import { Cursor } from './components/Cursor'
+import { Hero } from './sections/Hero'
 import { Findings } from './sections/Findings'
 import { Brand } from './sections/Brand'
 import { Audience } from './sections/Audience'
@@ -14,15 +15,15 @@ import { Footer } from './components/Footer'
 export default function App() {
   return (
     <>
+      <Cursor />
       <a className="skip-link" href="#contenido">
         Saltar al contenido
       </a>
       <Header />
       <main id="contenido" tabIndex={-1}>
-        {/* La portada queda fija y El hallazgo entra como una lámina sobre la fotografía */}
-        <Opening>
-          <Findings />
-        </Opening>
+        {/* La superficie verde de la portada se extiende y continúa en El hallazgo */}
+        <Hero />
+        <Findings />
         <Brand />
         <Audience />
         {/* El insight se abre para revelar la respuesta estratégica */}

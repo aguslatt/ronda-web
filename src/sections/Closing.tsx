@@ -1,26 +1,23 @@
-import { closing as c } from '../content'
+import { closing as c, hero } from '../content'
 import { Picture } from '../components/Picture'
 import { ArrowDownIcon, ArrowUpIcon } from '../components/Icons'
-import { useScrollProgress } from '../hooks/useScrollProgress'
+import { useInView } from '../hooks/useInView'
 import './Closing.css'
 
 /**
- * Cierre: vuelve la composición de la portada (fotografía, titular y logo)
- * y el encuadre se abre hasta mostrar el encuentro completo.
+ * Cierre: vuelve la escena de la portada (mano, mate, envase y superficie verde),
+ * ahora como respuesta a las tres frases finales.
  */
 export function Closing() {
-  const stageRef = useScrollProgress<HTMLDivElement>('enter')
+  const [stageRef, inView] = useInView<HTMLDivElement>(0.3)
 
   return (
-    <section id={c.id} className="closing tone-dark" data-surface="verde" aria-labelledby={`${c.id}-title`}>
+    <section id={c.id} className="closing" data-surface="claro" aria-labelledby={`${c.id}-title`}>
       <h2 id={`${c.id}-title`} className="sr-only">
         Cierre
       </h2>
 
-      <div ref={stageRef} className="closing__stage">
-        <figure className="closing__photo">
-          <Picture name={c.image.name} alt={c.image.alt} sizes="100vw" />
-        </figure>
+      <div ref={stageRef} className={`closing__stage${inView ? ' is-in' : ''}`}>
         <p className="closing__lines">
           {c.lines.map((line, index) => (
             <span key={line} className={`closing__line${index === 1 ? ' closing__line--accent' : ''}`}>
@@ -28,8 +25,20 @@ export function Closing() {
             </span>
           ))}
         </p>
-        <div className="closing__logo">
-          <Picture name={c.logo.name} alt={c.logo.alt} sizes="200px" />
+
+        <div className="closing__scene" aria-hidden="true">
+          <span className="closing__glow" />
+          <span className="closing__surface" />
+          <div className="closing__pack">
+            <span className="closing__pack-shadow contact-shadow" />
+            <Picture name={hero.pack.name} alt="" sizes="(min-width: 900px) 11vw, 24vw" />
+          </div>
+          <div className="closing__hand">
+            <Picture name={hero.image.name} alt="" sizes="(min-width: 900px) 28vw, 50vw" />
+          </div>
+          <div className="closing__logo">
+            <Picture name={c.logo.name} alt="" sizes="180px" />
+          </div>
         </div>
       </div>
 
@@ -39,9 +48,6 @@ export function Closing() {
           {c.team.map((member) => (
             <li key={member.name} className="closing__member">
               <span className="closing__name">{member.name}</span>
-              <span className="closing__sep" aria-hidden="true">
-                {' · '}
-              </span>
               <span className="closing__role">{member.role}</span>
             </li>
           ))}
@@ -50,7 +56,9 @@ export function Closing() {
           {c.briefUrl && (
             <a className="cta" href={c.briefUrl} download>
               Descargar el brief completo
-              <ArrowDownIcon />
+              <span className="cta__icon">
+                <ArrowDownIcon />
+              </span>
             </a>
           )}
           <a className="text-link" href="#inicio">

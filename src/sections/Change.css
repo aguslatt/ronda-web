@@ -21,13 +21,14 @@
 
 .shifts__head {
   padding-bottom: 0.9rem;
-  border-bottom: 2px solid var(--tinta);
-  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--linea-fuerte);
+  color: var(--gris);
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
 .shift {
-  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding-block: clamp(1.25rem, 2.5vw, 1.75rem);
   border-bottom: 1px solid var(--linea);
 }
 
@@ -54,13 +55,13 @@
 }
 
 .shift__target p {
-  max-width: 22ch;
+  max-width: 28ch;
   color: var(--verde);
   font-family: var(--f-display);
-  font-size: clamp(1.75rem, 1rem + 2.2vw, 3.25rem);
+  font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.015em;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 /* Flecha recta que avanza al pasar el cursor */
@@ -91,7 +92,11 @@
 
 /* Metas */
 .goals {
-  margin-top: clamp(5rem, 10vw, 8.5rem);
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: var(--radio-l);
+  background: var(--blanco);
+  box-shadow: var(--sombra-suave);
 }
 
 .goals__head {
@@ -101,12 +106,12 @@
   justify-content: space-between;
   gap: 1.25rem 3rem;
   padding-bottom: 1.25rem;
-  border-bottom: 2px solid var(--tinta);
+  border-bottom: 1px solid var(--linea-fuerte);
 }
 
 .goals__title {
-  font-size: clamp(2.25rem, 1.2rem + 3vw, 4.5rem);
-  letter-spacing: -0.025em;
+  font-size: var(--fs-h3);
+  letter-spacing: -0.01em;
 }
 
 .legend {
@@ -135,7 +140,7 @@
 
 .legend__swatch--goal {
   background: var(--rojo);
-  box-shadow: 0 0.5rem 0 -0.25rem var(--niebla), 0 0.45rem 0 -0.2rem var(--rojo);
+  box-shadow: 0 0.5rem 0 -0.25rem var(--blanco), 0 0.45rem 0 -0.2rem var(--rojo);
 }
 
 .goals__list {
@@ -167,11 +172,11 @@
 .goal__value {
   color: var(--rojo);
   font-family: var(--f-display);
-  font-size: clamp(5rem, 2rem + 9vw, 11rem);
+  font-size: clamp(3.5rem, 2rem + 4vw, 6.5rem);
   font-weight: 600;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-decoration: underline dashed 4px var(--rojo);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-decoration: underline dashed 3px var(--rojo);
   text-underline-offset: 0.12em;
 }
 
@@ -182,11 +187,23 @@
 }
 
 .goals__deadline {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
-  padding: 1rem 1.25rem;
-  border-left: 4px solid var(--rojo);
-  background: var(--blanco);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--niebla);
+  font-size: 0.9375rem;
   font-weight: 500;
+}
+
+.goals__deadline::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--rojo);
 }
 
 .goals__criteria {

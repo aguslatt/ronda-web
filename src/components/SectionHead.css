@@ -1,44 +1,44 @@
 .section-head {
   display: grid;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  justify-items: start;
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* Folio corrido: número · capítulo · proyecto, sobre un filete */
-.folio {
-  display: grid;
-  grid-template-columns: 4rem minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: baseline;
+/* Etiqueta: número en una píldora + nombre del capítulo */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
   margin: 0;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--linea-fuerte);
+  color: var(--verde);
   font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
 }
 
-.tone-dark .folio {
-  border-top-color: var(--linea-clara);
-}
-
-.folio__number {
+.eyebrow__number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.25rem;
+  height: 1.625rem;
+  padding-inline: 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
 
-.folio__project {
-  color: var(--gris);
-}
-
-.tone-dark .folio__project {
-  color: var(--blanco-suave);
+.tone-dark .eyebrow {
+  color: var(--lima);
 }
 
 .section-head__title {
-  max-width: 14ch;
+  max-width: 19ch;
   font-size: var(--fs-h2);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+  line-height: 1;
+  letter-spacing: -0.022em;
 }
 
 .section-head__title .accent {
@@ -47,14 +47,4 @@
 
 .tone-dark .section-head__title .accent {
   color: var(--lima);
-}
-
-@media (max-width: 600px) {
-  .folio {
-    grid-template-columns: 2.5rem minmax(0, 1fr);
-  }
-
-  .folio__project {
-    display: none;
-  }
 }

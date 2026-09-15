@@ -1,0 +1,73 @@
+/* Solo se oculta el cursor nativo cuando el medallón cargó y hay mouse */
+.has-brand-cursor,
+.has-brand-cursor * {
+  cursor: none !important;
+}
+
+/* Donde se escribe, vuelve el cursor de texto nativo */
+.has-brand-cursor :is(input, textarea, select, [contenteditable='true']) {
+  cursor: text !important;
+}
+
+.brand-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* El punto de selección es el centro del medallón */
+.brand-cursor__body {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--blanco);
+  /* Aro blanco + sombra: se lee sobre fondos claros y oscuros */
+  box-shadow:
+    0 0 0 2px var(--blanco),
+    0 0 0 3px rgba(0, 39, 26, 0.35),
+    0 4px 10px rgba(0, 25, 15, 0.35);
+  transition:
+    scale 160ms var(--ease),
+    opacity 120ms linear;
+}
+
+.brand-cursor__body img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Centro exacto */
+.brand-cursor__body::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--rojo);
+  box-shadow: 0 0 0 1.5px var(--blanco);
+}
+
+.brand-cursor[data-state='interactive'] .brand-cursor__body {
+  scale: 1.25;
+}
+
+.brand-cursor.is-pressed .brand-cursor__body {
+  scale: 0.9;
+}
+
+.brand-cursor[data-state='hidden'] .brand-cursor__body {
+  opacity: 0;
+}

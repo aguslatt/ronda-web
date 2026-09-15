@@ -14,18 +14,28 @@ const MANIFEST = path.join(root, 'src', 'data', 'images.generated.json')
 const jobs = [
   // Fotografías de contexto (Unsplash y Pexels, licencias de uso libre)
   { name: 'gesto-rio', file: 'gesto-rio.jpg', widths: [640, 1080, 1600] },
+  // Recorte de la mano que ofrece el mate (a partir de oferta.jpg, fondo transparente)
+  { name: 'mano-mate', file: 'mano-mate.png', widths: [480, 720, 939], quality: 86 },
   { name: 'romance-logo-blanco', file: 'romance-logo-blanco.png', widths: [277], quality: 92 },
-  { name: 'estudio', file: 'estudio.jpg', widths: [640, 1080, 1600] },
-  { name: 'pausa', file: 'pausa.jpg', widths: [640, 1080, 1600] },
-  { name: 'independencia', file: 'independencia.jpg', widths: [640, 1080, 1600] },
-  { name: 'oferta', file: 'oferta.jpg', widths: [640, 1080] },
+  // El público (Pexels): mismo tratamiento de luz natural cálida
+  { name: 'publico-estudio', file: 'publico-estudio.jpg', widths: [480, 800, 1200] },
+  { name: 'publico-trabajo', file: 'publico-trabajo.jpg', widths: [480, 800, 1200] },
+  { name: 'publico-independencia', file: 'publico-independencia.jpg', widths: [480, 800, 1200] },
+  { name: 'pausa', file: 'pausa.jpg', widths: [480, 800] },
   { name: 'gesto-ofrecer', file: 'gesto-ofrecer.jpg', widths: [1000, 2000] },
   { name: 'dos-mates', file: 'dos-mates.jpg', widths: [480, 800, 1200] },
   { name: 'encuentro-rio', file: 'encuentro-rio.jpg', widths: [800, 1600, 2400] },
   // Recursos oficiales de Romance (sitio de Gerula S.A.)
   { name: 'romance-tradicional', file: 'romance-tradicional.png', widths: [320, 620], quality: 88 },
-  { name: 'romance-medallon', file: 'romance-tradicional.png', widths: [360], quality: 90, extract: { left: 30, top: 250, width: 360, height: 360 } },
+  // Medallón: recorte cuadrado centrado en el aro (centro ≈ 211, 436 en el envase de 620 px)
+  { name: 'romance-medallon', file: 'romance-tradicional.png', widths: [300], quality: 92, extract: { left: 61, top: 288, width: 300, height: 300 } },
+  // Cursor: el mismo medallón, recortado en círculo y con fondo transparente
+  { name: 'cursor-medallon', file: 'romance-tradicional.png', widths: [36, 72, 108], quality: 95, extract: { left: 79, top: 304, width: 264, height: 264 }, mask: 'circle' },
+  { name: 'romance-logo-hoja', file: 'romance-logo-hoja.png', widths: [250, 500], quality: 92 },
   { name: 'romance-cebada', file: 'romance-cebada.jpg', widths: [480, 800] },
+  // Medios propuestos: logos oficiales (luzutv.com.ar y olgaenvivo.com)
+  { name: 'medio-luzu-tv', file: 'medio-luzu-tv.png', widths: [280, 560], quality: 92 },
+  { name: 'medio-olga', file: 'medio-olga.png', widths: [260, 520], quality: 92 },
   { name: 'romance-cosecha', file: 'romance-cosecha.jpg', widths: [640, 1000] },
 ]
 
@@ -44,8 +54,15 @@ for (const job of jobs) {
   if (!widths.length) widths.push(info.width)
 
   for (const width of widths) {
-    await pipeline()
-      .resize({ width, withoutEnlargement: true })
+    let resized = await pipeline().resize({ width, withoutEnlargement: true }).ensureAlpha().png().toBuffer()
+    if (job.mask === 'circle') {
+      const { height } = await sharp(resized).metadata()
+      const circle = Buffer.from(
+        `<svg width="${width}" height="${height}"><circle cx="${width / 2}" cy="${height / 2}" r="${Math.min(width, height) / 2}" fill="#fff"/></svg>`,
+      )
+      resized = await sharp(resized).composite([{ input: circle, blend: 'dest-in' }]).png().toBuffer()
+    }
+    await sharp(resized)
       .webp({ quality: job.quality ?? 78, alphaQuality: 90, effort: 5 })
       .toFile(path.join(OUT, `${job.name}-${width}.webp`))
   }
