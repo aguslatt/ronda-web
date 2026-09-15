@@ -153,6 +153,28 @@ main {
   z-index: 1;
 }
 
+/* Modo escenario de la pieza animada: la mesa se atenúa y la interfaz fija se retira */
+html.is-theater,
+html.is-theater body {
+  overflow: hidden;
+}
+
+html.is-theater :is(.site-header, .chapter-rail, .chapter-sheet, .scene-caption, .assistant-launcher) {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms var(--ease),
+    visibility 0s linear 300ms;
+}
+
+.scene {
+  transition: opacity 600ms var(--ease);
+}
+
+html.is-theater .scene {
+  opacity: 0.2;
+}
+
 .tone-dark {
   --foco: var(--lima);
 }

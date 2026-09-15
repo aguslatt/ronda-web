@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Cierre · la ronda compartida
+   Cierre · la ronda compartida y la invitación a entrar en ella
    ========================================================================== */
 .closing {
   min-height: 250svh;
@@ -8,6 +8,16 @@
 .closing.is-fit > .chapter__inner {
   align-content: start;
   padding-top: calc(var(--header-h) + 5svh);
+}
+
+/* Titulares y mensaje final comparten el mismo espacio: uno se retira y el otro aparece ahí */
+.closing__stage {
+  display: grid;
+  justify-items: center;
+}
+
+.closing__stage > * {
+  grid-area: 1 / 1;
 }
 
 .closing__lines {
@@ -19,28 +29,126 @@
   text-shadow: 0 4px 40px rgba(0, 8, 4, 0.55);
 }
 
+.closing__line {
+  transition:
+    opacity 520ms var(--ease) calc(var(--i, 0) * 70ms),
+    translate 700ms var(--ease) calc(var(--i, 0) * 70ms),
+    filter 520ms var(--ease) calc(var(--i, 0) * 70ms);
+}
+
 .closing__line--accent {
   color: var(--lima);
 }
 
-/* Invitación: el botón protagonista y, al terminar, el mensaje con un control discreto para repetir */
+/* Al aceptar, los tres titulares se retiran suavemente hacia arriba */
+.closing__lines.is-retired {
+  visibility: hidden;
+  transition: visibility 0s linear 800ms;
+}
+
+.closing__lines.is-retired .closing__line {
+  opacity: 0;
+  translate: 0 -0.6em;
+  filter: blur(6px);
+}
+
+/* Mensaje final: en el espacio despejado de arriba, sin tapar el envase ni el mate */
+.closing__result {
+  display: grid;
+  align-self: start;
+  justify-items: center;
+  gap: 1rem;
+  padding-top: clamp(0.5rem, 3svh, 2rem);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 0.8rem;
+  transition:
+    opacity 500ms var(--ease),
+    translate 600ms var(--ease),
+    visibility 0s linear 600ms;
+}
+
+.closing__result.is-shown {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  transition:
+    opacity 900ms var(--ease),
+    translate 1000ms var(--ease),
+    visibility 0s;
+}
+
+.invite__message {
+  max-width: 18ch;
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 1rem + 3vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 40px rgba(0, 8, 4, 0.7);
+}
+
+/* Repetir: discreto, aparece después del mensaje */
+.invite__replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(3, 16, 10, 0.42);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    opacity 600ms var(--ease);
+}
+
+.closing__result.is-shown .invite__replay {
+  opacity: 1;
+  transition-delay: 0s, 0s, 700ms;
+}
+
+.invite__replay:hover {
+  background: rgba(185, 224, 127, 0.18);
+  color: var(--blanco);
+}
+
+/* Invitación: una cápsula oscura con buen contraste para el botón y la frase */
 .invite {
   display: grid;
   justify-items: center;
-  min-height: 8.5rem;
-  margin-top: clamp(0.25rem, 1.5svh, 1rem);
+  gap: 0.75rem;
+  margin-top: clamp(1rem, 3svh, 2rem);
+  padding: 0.7rem 0.7rem 1rem;
+  border-radius: 2.25rem;
+  background: rgba(3, 14, 9, 0.66);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 60px -24px rgba(0, 0, 0, 0.7);
+  transition:
+    opacity 450ms var(--ease),
+    translate 600ms var(--ease),
+    visibility 0s linear 0s;
 }
 
-.invite__group {
-  display: grid;
-  justify-items: center;
-  gap: 0.8rem;
-  grid-area: 1 / 1;
-}
-
-/* El atributo hidden debe ganarle al display del grupo: nunca se ven pregunta y respuesta a la vez */
-.invite__group[hidden] {
-  display: none;
+.invite.is-away {
+  opacity: 0;
+  translate: 0 0.8rem;
+  visibility: hidden;
+  transition:
+    opacity 400ms var(--ease),
+    translate 600ms var(--ease),
+    visibility 0s linear 600ms;
 }
 
 .invite__ask {
@@ -60,14 +168,12 @@
   line-height: 1;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 18px 40px -14px rgba(191, 3, 27, 0.7),
-    0 0 70px rgba(255, 196, 130, 0.2);
+    0 18px 40px -14px rgba(191, 3, 27, 0.7);
   cursor: pointer;
   transition:
     background-color var(--t-fast) var(--ease),
     translate 300ms var(--ease),
-    box-shadow 300ms var(--ease),
-    opacity 450ms var(--ease);
+    box-shadow 300ms var(--ease);
 }
 
 .invite__ask:hover {
@@ -75,8 +181,7 @@
   translate: 0 -2px;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 24px 48px -14px rgba(191, 3, 27, 0.8),
-    0 0 90px rgba(255, 196, 130, 0.28);
+    0 24px 48px -14px rgba(191, 3, 27, 0.85);
 }
 
 .invite__ask:focus-visible {
@@ -102,67 +207,9 @@
 }
 
 .invite__hint {
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--blanco);
   font-size: var(--fs-lede);
-  text-shadow: 0 2px 24px rgba(0, 8, 4, 0.6);
-  transition: opacity 450ms var(--ease);
-}
-
-.invite__message {
-  max-width: 22ch;
-  color: var(--blanco);
-  font-family: var(--f-display);
-  font-size: clamp(1.6rem, 1rem + 2vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-shadow: 0 4px 36px rgba(0, 8, 4, 0.6);
-}
-
-.invite__replay {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(3, 16, 10, 0.5);
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 0.875rem;
-  font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  transition:
-    background-color var(--t-fast) var(--ease),
-    color var(--t-fast) var(--ease),
-    opacity 450ms var(--ease);
-}
-
-.invite__replay:hover {
-  background: rgba(185, 224, 127, 0.18);
-  color: var(--blanco);
-}
-
-/* Mientras ocurre la secuencia, los controles se retiran y no aceptan clics */
-.invite.is-playing :is(.invite__ask, .invite__hint, .invite__replay, .invite__message) {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.invite.is-done .invite__message {
-  animation: invite-message 900ms var(--ease) both;
-}
-
-.invite.is-done .invite__replay {
-  animation: invite-message 700ms var(--ease) 350ms both;
-}
-
-@keyframes invite-message {
-  from {
-    opacity: 0;
-    translate: 0 0.8rem;
-  }
+  font-weight: 500;
 }
 
 /* Firma: al final del capítulo, cuando la ronda ya está completa */
@@ -197,14 +244,15 @@
 
 .closing__academic {
   margin-top: 0.9rem;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.9375rem;
   line-height: 1.45;
 }
 
 .closing__team {
   display: grid;
-  gap: 0.8rem;
+  align-content: start;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -212,7 +260,7 @@
 
 .closing__member {
   display: grid;
-  gap: 0.1rem;
+  gap: 0.15rem;
 }
 
 .closing__name {
@@ -220,7 +268,7 @@
 }
 
 .closing__role {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.76);
   font-size: 0.9375rem;
 }
 
@@ -232,7 +280,7 @@
 
 .closing__contact {
   display: grid;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.76);
   font-size: 0.9375rem;
 }
 
@@ -255,6 +303,13 @@
   cursor: pointer;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .closing__lines.is-retired .closing__line {
+    filter: none;
+    translate: none;
+  }
+}
+
 @media (max-width: 899px) {
   .closing {
     min-height: 260svh;
@@ -267,5 +322,10 @@
 
   .closing__signature {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .invite {
+    width: 100%;
+    max-width: 22rem;
   }
 }

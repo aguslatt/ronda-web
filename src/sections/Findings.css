@@ -143,12 +143,16 @@
   animation: value-in 600ms var(--ease);
 }
 
+/* Dentro del hueco del anillo: angosta y en dos líneas para no pisar el trazo */
 .explore__scale {
   position: absolute;
-  bottom: 26%;
+  bottom: 22%;
+  max-width: 58%;
   color: var(--gris);
   font-size: 0.6875rem;
   font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
 }
 
 @keyframes value-in {
@@ -199,8 +203,8 @@
   border-radius: var(--radio-s);
   background: rgba(13, 26, 19, 0.05);
   color: var(--gris);
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font-size: 0.875rem;
+  line-height: 1.45;
 }
 
 .explore__pages {

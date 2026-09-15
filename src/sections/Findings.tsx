@@ -1,4 +1,5 @@
-import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { requestFinding } from '../scene/events'
 import { findings as f } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Disclosure } from '../components/Disclosure'
@@ -18,6 +19,9 @@ export function Findings() {
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const stat = f.stats[active]
   const count = f.stats.length
+
+  // Cada pestaña cambia también la escena (simbólica: la cantidad de mates no representa el porcentaje)
+  useEffect(() => requestFinding(active), [active])
 
   const onKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     const next = { ArrowRight: index + 1, ArrowDown: index + 1, ArrowLeft: index - 1, ArrowUp: index - 1, Home: 0, End: count - 1 }[event.key]

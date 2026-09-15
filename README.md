@@ -14,6 +14,11 @@ La apertura muestra una situación individual y el cierre revela una ronda compa
 
 ### Decisiones
 
+- **Portada como imagen de campaña**: Romance y el mate son protagonistas, con el frente del envase hacia quien visita
+  y la notebook atrás como contexto; el titular y el botón tienen su zona limpia. Luz focal entre envase y mate y un
+  contraluz cálido que marca la textura de la calabaza. Entrada coordinada de 2,6 s: aparece el titular, la cámara
+  revela el producto y el mate hace un pequeño giro de invitación. El primer cuadro (`aperturaInicio`) ya está compuesto
+  y es también el render de respaldo.
 - **Estudio oscuro en verdes de Romance** (ciclorama verde noche con un halo en el horizonte), una sola mesa redonda
   de algarrobo aceitado y objetos de escala real: mates, bombillas de alpaca, termo esmaltado, notebook y el envase
   de Romance Tradicional de 1 kg.
@@ -33,17 +38,29 @@ La apertura muestra una situación individual y el cierre revela una ronda compa
 
 | Capítulo | En la mesa | Encuadre |
 | --- | --- | --- |
-| 00 Apertura | Una persona sola: mate, termo, notebook abierta | Plano cercano y bajo, foco íntimo |
-| 01 El hallazgo | La mesa grande, casi vacía | Picado desde un costado |
+| 00 Apertura | Romance y el mate al frente; notebook atrás | Plano de producto, luz focal |
+| 01 El hallazgo | Cambia con cada pestaña (ver abajo) | Tres encuadres simbólicos |
 | 02 La marca | El envase y su medallón | Acercamiento al frente del envase |
 | 03 El público | Lugares libres alrededor | Vista baja lateral |
 | 04 El insight | Se cierra la pantalla; el mate cruza la mesa | Picado desde el otro lado |
 | 05 La estrategia | Romance al centro; primer mate de la ronda | Tres cuartos |
-| 06 Objetivos | Más lugares ocupados | Contracampo alto |
-| 07 Activación | La ronda sigue creciendo | Plano general atenuado detrás de las piezas |
-| 08 Inversión | Una mesa repartida | Planta cenital |
-| 09 Preguntas | Casi todos los lugares con su mate | Lateral bajo |
-| 10 La ronda | Seis mates alrededor de Romance, luz plena | Plano general elevado |
+| 06 La idea | La mesa espera mientras se ve la animación | Mismo encuadre que la estrategia |
+| 07 Objetivos | Más lugares ocupados | Contracampo alto |
+| 08 Activación | La ronda sigue creciendo | Plano general atenuado detrás de las piezas |
+| 09 Inversión | Una mesa repartida | Planta cenital |
+| 10 Preguntas | Casi todos los lugares con su mate | Lateral bajo |
+| 11 La ronda | Seis mates alrededor de Romance, luz plena | Plano general elevado |
+
+**Escenas de los hallazgos** (`FINDING_SHOTS`). Son simbólicas: la cantidad de mates no representa porcentajes.
+
+| Pestaña | Escena |
+| --- | --- |
+| 59,7% · Cómo tomamos | Plano cercano de un lugar: una persona representada por su mate, la notebook y el envase |
+| 81,6% · Qué significa compartir | El encuadre se abre y se iluminan los lugares disponibles alrededor de la mesa |
+| 69% · Dónde está la oportunidad | La luz y la cámara se concentran en Romance |
+
+Cada cambio parte del estado que se ve en ese momento, así un cambio rápido de pestaña cancela la transición anterior.
+Cifras, bases y fuentes no se mueven.
 
 Entre capítulos la cámara orbita alrededor de la mesa (interpolación cilíndrica con una leve elevación)
 y los objetos se mueven con curvas suaves. El panel de navegación lateral (escritorio) y el selector de
@@ -54,11 +71,15 @@ capítulos (celular) permiten ir directo a cualquier capítulo; una leyenda brev
 Debajo de “Una invitación. Una prueba compartida. Una próxima elección.” aparece **“¿Unos mates?”** con
 “Hay lugar para vos.”. Al activarlo (`src/sections/Closing.tsx`, secuencia en `src/components/SceneCanvas.tsx`):
 
-1. La cámara baja en 3,2 s, con aceleración y desaceleración suaves, hasta la altura de alguien sentado a la mesa (encuadre `invitacion`).
-2. El mismo mate que cruzó la mesa en el insight se levanta, viaja y se apoya frente a quien visita (0,5 a 3,1 s):
+Antes del clic, el botón y “Hay lugar para vos.” están en una cápsula oscura de alto contraste.
+
+1. Los tres titulares se retiran de a uno (opacidad, desplazamiento y desenfoque breves).
+2. Desde 0,5 s la cámara baja en 2,8 s hasta la altura de alguien sentado a la mesa (encuadre `invitacion`).
+3. Desde 1,1 s el mismo mate que cruzó la mesa en el insight se levanta, viaja y se apoya frente a quien visita:
    la altura adelanta al traslado, se inclina apenas hacia quien lo recibe y gira la bombilla hacia su lugar;
    la sombra de contacto se abre al levantarse y la luz se entibia sobre ese lugar (`carry` en `src/scene/motion.ts`).
-3. A los 3,3 s aparece “La próxima ronda empieza con vos.” y un control discreto para **Repetir**.
+4. Un momento para contemplar y, a los 4,5 s, “La próxima ronda empieza con vos.” arriba, sin tapar el envase ni el mate,
+   con un control discreto para **Repetir** (rebobina la escena completa y la vuelve a reproducir).
 
 La escena solo acepta un inicio desde el reposo y una repetición al terminar, así los clics repetidos no acumulan
 animaciones. Al salir del cierre, volver al inicio o navegar a otro capítulo, la mesa vuelve a su estado.
@@ -77,7 +98,10 @@ materiales y luz de la mesa (`src/film/ConceptFilm.ts`, guion en `src/film/timel
 | Momento central | 7,2–11,2 s | El mate se levanta y se ofrece a quien mira: “¿Unos mates?” |
 | Cierre | 11,2–14,5 s | Placa con el logotipo auténtico y “Romance, la yerba que se ofrece.” |
 
-- Reproducir, pausar y repetir; progreso y guion en texto (se entiende sin sonido ni imagen).
+- **Modo escenario**: al reproducir, el bloque se abre a pantalla completa (16:9 en escritorio, 4:5 en celular) sobre
+  fondo opaco; la escena de fondo deja de dibujarse y se ocultan encabezado, navegación y asistente. Cerrar o Escape
+  vuelve a la página con el foco en el botón de inicio; mientras está abierto, el foco queda dentro del escenario.
+- Reproducir, pausar y repetir; sonido opcional; guion y nota de proceso en “Cómo se construyó la pieza” (desplegable).
 - **Sonido** sintetizado con Web Audio (`src/film/sound.ts`): solo se activa si la persona lo pide.
 - La escena de la animación se carga recién al tocar “Ver la idea en 15 segundos”; se pausa fuera de pantalla o con la pestaña oculta.
 - Con movimiento reducido cada plano se muestra como cuadro fijo; sin WebGL se usan renders de la misma pieza (`public/film/`).
@@ -101,6 +125,11 @@ materiales y luz de la mesa (`src/film/ConceptFilm.ts`, guion en `src/film/timel
 - La escena se dibuja solo cuando cambia (scroll o carga de texturas) y se pausa con la pestaña oculta.
   three.js se carga en un fragmento aparte. Resolución y sombras menores en celular.
 - La escena es decorativa (`aria-hidden`); cada capítulo describe en texto lo que muestra.
+- **Enlaces directos** (`#hallazgo`, `#activacion`, …): `src/hooks/useHashLanding.ts` vuelve a alinear el capítulo
+  mientras cargan fuentes, imágenes y escena, y se detiene apenas la persona interactúa.
+- **Cursor medallón**: solo con mouse; sobre textos se achica y se vuelve translúcido, sobre controles queda solo el anillo.
+- Materiales: madera con poro en relieve, alpaca con reflejo anisotrópico controlado, calabaza con pequeñas
+  irregularidades de superficie y rugosidad variable; sombras suaves (VSM) y sombras de contacto degradadas.
 
 ## Recursos producidos
 

@@ -4,7 +4,8 @@
    Así los clics repetidos no acumulan animaciones: la escena solo acepta
    “play” desde el reposo y “replay” cuando la secuencia terminó.
    ========================================================================== */
-export type InvitePhase = 'idle' | 'playing' | 'done'
+/** idle: esperando · playing: la secuencia ocurre · done: mensaje final · rewinding: la escena vuelve para repetir */
+export type InvitePhase = 'idle' | 'playing' | 'done' | 'rewinding'
 export type InviteAction = 'play' | 'replay' | 'reset'
 
 const ACTION = 'ronda:invitar'

@@ -114,9 +114,6 @@ export function Header() {
                   aria-current={active === item.href ? 'location' : undefined}
                   onClick={close}
                 >
-                  <span className="site-nav__index" aria-hidden="true">
-                    0{index + 1}
-                  </span>
                   {item.label}
                 </a>
               </li>

@@ -12,3 +12,9 @@
 .idea__sheet {
   padding: clamp(0.75rem, 1.6vw, 1.1rem);
 }
+
+/* En modo escenario la placa no debe crear un contenedor para el reproductor fijo */
+.idea__sheet:has(.film.is-theater) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}

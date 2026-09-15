@@ -333,9 +333,9 @@
 }
 
 .film__note {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.75rem;
-  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8125rem;
+  line-height: 1.45;
 }
 
 /* En reproductores angostos el texto del gesto baja para no cruzarse con la etiqueta */
@@ -349,7 +349,183 @@
   }
 }
 
+/* ==========================================================================
+   Modo escenario: la pieza ocupa la pantalla; la mesa de fondo se atenúa y se pausa
+   ========================================================================== */
+.film.is-theater {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  align-content: safe center;
+  justify-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: clamp(0.75rem, 2.5vw, 2rem);
+  overflow-y: auto;
+  background:
+    radial-gradient(80% 70% at 50% 45%, #0a2416, transparent 70%),
+    #020805;
+  animation: theater-in 420ms var(--ease) both;
+}
+
+/* El ancho se calcula para que título, pieza, controles y detalles entren sin superponerse */
+.film.is-theater > * {
+  width: min(100%, calc((100svh - 16rem) * 16 / 9), 1400px);
+}
+
+.film.is-theater .film__screen {
+  border-radius: var(--radio-l);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 40px 120px -30px rgba(0, 0, 0, 0.85);
+  animation: theater-screen 620ms var(--ease) both;
+}
+
+@keyframes theater-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes theater-screen {
+  from {
+    opacity: 0;
+    scale: 0.94;
+  }
+}
+
+.film__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.film__heading {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.film__heading span {
+  color: var(--lima);
+  font-family: var(--f-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.film__close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--blanco);
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+.film__close:hover {
+  background: rgba(185, 224, 127, 0.2);
+}
+
+.film.is-theater .film__bar {
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Detalles del proceso: secundarios, en un desplegable */
+.film__details {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.875rem;
+}
+
+.film__details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.film__details summary::-webkit-details-marker {
+  display: none;
+}
+
+.film__details summary::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 2px solid var(--lima);
+  border-bottom: 2px solid var(--lima);
+  rotate: -45deg;
+  transition: rotate var(--t-fast) var(--ease);
+}
+
+.film__details[open] summary::before {
+  rotate: 45deg;
+}
+
+.film__details .film__beats {
+  margin-top: 0.25rem;
+}
+
+.film__details .film__note {
+  margin-top: 0.6rem;
+}
+
+/* Celular en vertical: escenario 4:5 pensado para la pantalla (la cámara amplía el encuadre) */
+@media (max-width: 760px) and (orientation: portrait) {
+  .film.is-theater {
+    align-content: start;
+    padding-top: 1rem;
+  }
+
+  .film.is-theater > * {
+    width: min(100%, calc((100svh - 17rem) * 4 / 5));
+  }
+
+  .film.is-theater .film__screen {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film.is-theater,
+  .film.is-theater .film__screen {
+    animation: none;
+  }
+}
+
 @media (max-width: 600px) {
+  .film__sound-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
   .film__beats {
     grid-template-columns: minmax(0, 1fr);
   }

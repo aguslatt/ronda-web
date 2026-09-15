@@ -4,6 +4,7 @@ import { Picture } from '../components/Picture'
 import { PageRefs } from '../components/ThesisRef'
 import { beatAt, FILM_BEATS, FILM_DURATION, overlays } from './timeline'
 import { supportsWebGL } from '../scene/webgl'
+import { setTheater } from '../scene/events'
 import type { ConceptFilm } from './ConceptFilm'
 import type { FilmSound } from './sound'
 import './ConceptPlayer.css'
@@ -14,12 +15,14 @@ const clock = (seconds: number) => `0:${String(Math.floor(seconds)).padStart(2, 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
- * Reproductor de la animación conceptual. La escena 3D se carga recién al pedir la
- * reproducción; se pausa sola fuera de pantalla o con la pestaña oculta. Con movimiento
- * reducido cada plano se muestra como cuadro fijo, y sin WebGL se usan renders de la misma pieza.
+ * Reproductor de la animación conceptual. Al reproducir, el bloque se transforma en un escenario
+ * amplio (16:9 en escritorio, 4:5 en celular) y la mesa de fondo se atenúa y deja de dibujarse.
+ * La escena de la pieza se carga recién al pedirla; se pausa sola con la pestaña oculta.
+ * Con movimiento reducido cada plano se muestra como cuadro fijo, y sin WebGL se usan renders de la misma pieza.
  */
 export function ConceptPlayer() {
   const [status, setStatus] = useState<Status>('poster')
+  const [theater, setTheaterOpen] = useState(false)
   const [stills, setStills] = useState(false)
   const [beat, setBeat] = useState(0)
   const [sound, setSound] = useState(false)
@@ -29,6 +32,8 @@ export function ConceptPlayer() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const clockRef = useRef<HTMLSpanElement>(null)
+  const startRef = useRef<HTMLButtonElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
   const filmRef = useRef<ConceptFilm | null>(null)
   const soundRef = useRef<FilmSound | null>(null)
   const statusRef = useRef<Status>('poster')
@@ -37,6 +42,7 @@ export function ConceptPlayer() {
   const frameRef = useRef(0)
   const lastRef = useRef(0)
   const beatRef = useRef(0)
+  const returnFocus = useRef(false)
 
   const setState = (next: Status) => {
     statusRef.current = next
@@ -106,8 +112,30 @@ export function ConceptPlayer() {
     setState('paused')
   }, [])
 
+  const openTheater = () => {
+    setTheaterOpen(true)
+    setTheater(true)
+  }
+
+  const closeTheater = useCallback(() => {
+    cancelAnimationFrame(frameRef.current)
+    frameRef.current = 0
+    soundRef.current?.stop()
+    timeRef.current = 0
+    setState('poster')
+    setTheaterOpen(false)
+    setTheater(false)
+    returnFocus.current = true
+  }, [])
+
   const start = async () => {
     if (statusRef.current !== 'poster') return
+    openTheater()
+    if (filmRef.current || stills) {
+      paint(0)
+      play(0)
+      return
+    }
     setState('loading')
     try {
       if (!supportsWebGL()) throw new Error('sin WebGL')
@@ -125,7 +153,8 @@ export function ConceptPlayer() {
       filmRef.current = null
       setStills(true)
     }
-    play(0)
+    // Si mientras cargaba se cerró el escenario, no se reproduce
+    if ((statusRef.current as Status) === 'loading') play(0)
   }
 
   const toggle = () => {
@@ -154,7 +183,42 @@ export function ConceptPlayer() {
     if (statusRef.current === 'playing' && soundOnRef.current) soundRef.current.start(timeRef.current)
   }
 
-  // Tamaño del lienzo, pausa fuera de pantalla y con la pestaña oculta, limpieza
+  // Escenario: foco inicial, Escape para cerrar y foco contenido en el reproductor
+  useEffect(() => {
+    if (!theater) {
+      if (returnFocus.current) {
+        returnFocus.current = false
+        requestAnimationFrame(() => startRef.current?.focus({ preventScroll: true }))
+      }
+      return
+    }
+    const root = rootRef.current
+    // “Cerrar” existe desde el primer cuadro; pausa y repetir se habilitan recién cuando carga la pieza
+    requestAnimationFrame(() => root?.querySelector<HTMLButtonElement>('.film__close')?.focus({ preventScroll: true }))
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeTheater()
+        return
+      }
+      if (event.key !== 'Tab' || !root) return
+      const focusable = [...root.querySelectorAll<HTMLElement>('button:not([disabled]), summary, a[href]')].filter((el) => el.offsetParent !== null)
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [theater, closeTheater])
+
+  // Tamaño del lienzo, pausa con la pestaña oculta o fuera de pantalla, limpieza
   useEffect(() => {
     const screen = screenRef.current
     const root = rootRef.current
@@ -179,13 +243,35 @@ export function ConceptPlayer() {
       filmRef.current = null
       soundRef.current?.dispose()
       soundRef.current = null
+      setTheater(false)
     }
   }, [paint, pause])
 
   const started = status !== 'poster'
 
   return (
-    <figure ref={rootRef} className={`film is-${status}${stills ? ' is-stills' : ''}`} aria-labelledby="idea-title">
+    <figure
+      ref={rootRef}
+      className={`film is-${status}${stills ? ' is-stills' : ''}${theater ? ' is-theater' : ''}`}
+      aria-labelledby="idea-title"
+      role={theater ? 'dialog' : undefined}
+      aria-modal={theater || undefined}
+    >
+      {theater && (
+        <div className="film__top">
+          <p className="film__heading">
+            <span>{idea.eyebrow}</span>
+            {idea.label}
+          </p>
+          <button type="button" className="film__close" onClick={closeTheater}>
+            {idea.controls.close}
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <div ref={screenRef} className="film__screen">
         <img className="film__poster" src="./film/portada.webp" alt="" width={1280} height={720} decoding="async" loading="lazy" />
         <canvas ref={canvasRef} className="film__canvas" aria-hidden="true" />
@@ -198,13 +284,13 @@ export function ConceptPlayer() {
           {idea.invitation}
         </p>
         <div className="film__end" aria-hidden="true">
-          <Picture name="romance-logo-hoja" alt="" sizes="220px" className="film__logo" />
+          <Picture name="romance-logo-hoja" alt="" sizes="260px" className="film__logo" />
           <p>{idea.claim}</p>
         </div>
         <span className="film__dip" aria-hidden="true" />
-        <span className="film__label">{idea.label}</span>
+        {!theater && <span className="film__label">{idea.label}</span>}
         {status === 'poster' && (
-          <button type="button" className="film__start" onClick={start}>
+          <button ref={startRef} type="button" className="film__start" onClick={start}>
             <span className="film__start-icon" aria-hidden="true" />
             {idea.cta}
           </button>
@@ -217,7 +303,7 @@ export function ConceptPlayer() {
       </div>
 
       <div className="film__bar" hidden={!started}>
-        <button type="button" className="film__control" onClick={toggle} disabled={status === 'loading'} aria-label={status === 'playing' ? idea.controls.pause : idea.controls.play}>
+        <button ref={toggleRef} type="button" className="film__control" onClick={toggle} disabled={status === 'loading'} aria-label={status === 'playing' ? idea.controls.pause : idea.controls.play}>
           {status === 'playing' ? (
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
               <path d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
@@ -249,11 +335,12 @@ export function ConceptPlayer() {
               <path d="M2.5 6h2.5l3.5-3v10L5 10H2.5zM11 6l3.5 4M14.5 6 11 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
-          {sound ? idea.controls.soundOff : idea.controls.soundOn}
+          <span className="film__sound-label">{sound ? idea.controls.soundOff : idea.controls.soundOn}</span>
         </button>
       </div>
 
-      <figcaption className="film__caption">
+      <details className="film__details">
+        <summary>{idea.detailsLabel}</summary>
         <ol className="film__beats">
           {idea.beats.map((item, index) => (
             <li key={item.title} className={started && index === beat ? 'is-current' : undefined}>
@@ -265,9 +352,9 @@ export function ConceptPlayer() {
           ))}
         </ol>
         <p className="film__note">
-          {idea.note} (<PageRefs prefix="pág." pages={idea.notePages} />). {sound && idea.soundNote}
+          {idea.note} (<PageRefs prefix="pág." pages={idea.notePages} />). {idea.soundNote}
         </p>
-      </figcaption>
+      </details>
     </figure>
   )
 }

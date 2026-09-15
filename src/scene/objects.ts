@@ -45,9 +45,12 @@ export function contactShadow(width: number, depth = width, opacity = 0.6) {
     const g = canvas.getContext('2d')!
     g.fillStyle = '#000'
     g.fillRect(0, 0, 128, 128)
+    // Núcleo denso donde el objeto toca la madera y una caída larga y suave
     const gradient = g.createRadialGradient(64, 64, 0, 64, 64, 64)
     gradient.addColorStop(0, '#fff')
-    gradient.addColorStop(0.4, '#999')
+    gradient.addColorStop(0.28, '#d8d8d8')
+    gradient.addColorStop(0.5, '#6a6a6a')
+    gradient.addColorStop(0.75, '#1e1e1e')
     gradient.addColorStop(1, '#000')
     g.fillStyle = gradient
     g.fillRect(0, 0, 128, 128)
@@ -61,6 +64,35 @@ export function contactShadow(width: number, depth = width, opacity = 0.6) {
   mesh.position.y = 0.0012
   mesh.renderOrder = 1
   mesh.userData.opacity = opacity
+  return mesh
+}
+
+/* ---------- Lugar disponible (halo cálido sobre la mesa) ---------- */
+let glowTexture: THREE.CanvasTexture | null = null
+export function seatGlow(size = 0.17) {
+  if (!glowTexture) {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 128
+    const g = canvas.getContext('2d')!
+    const gradient = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+    gradient.addColorStop(0, 'rgba(255,255,255,0.14)')
+    gradient.addColorStop(0.55, 'rgba(255,255,255,0.22)')
+    gradient.addColorStop(0.72, 'rgba(255,255,255,0.8)')
+    gradient.addColorStop(0.82, 'rgba(255,255,255,0.25)')
+    gradient.addColorStop(1, 'rgba(255,255,255,0)')
+    g.fillStyle = gradient
+    g.fillRect(0, 0, 128, 128)
+    glowTexture = new THREE.CanvasTexture(canvas)
+    glowTexture.colorSpace = THREE.SRGBColorSpace
+  }
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(size, size),
+    new THREE.MeshBasicMaterial({ map: glowTexture, color: 0xffcf8f, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
+  )
+  mesh.rotation.x = -Math.PI / 2
+  mesh.position.y = 0.0016
+  mesh.renderOrder = 2
+  mesh.visible = false
   return mesh
 }
 
@@ -92,8 +124,27 @@ export function createMate(style: MateStyle, textures: { gourd: THREE.Texture; y
   const [rTop, yTop] = profile[profile.length - 1]
 
   // Cuerpo con labio interior
+  const bodyGeometry = lathe([...(style.profile === 'acero' ? profile : smooth(profile)), [rTop - 0.0035, yTop + 0.0008], [rTop - 0.0045, yTop - 0.016]], 72)
+  if (style.textured) {
+    // Una calabaza no es un torno perfecto: leves ondulaciones que cambian con la altura (la boca queda redonda)
+    const position = bodyGeometry.attributes.position
+    const seed = ((style.color % 997) / 997) * Math.PI * 2
+    for (let i = 0; i < position.count; i++) {
+      const x = position.getX(i)
+      const y = position.getY(i)
+      const z = position.getZ(i)
+      if (Math.hypot(x, z) < 0.004 || y > yTop - 0.013) continue
+      const angle = Math.atan2(z, x)
+      const h = y / yTop
+      const wobble = 0.016 * Math.sin(3 * angle + seed) + 0.009 * Math.sin(5 * angle + seed * 2 + h * 4) + 0.006 * Math.sin(h * 9 + seed)
+      const k = 1 + wobble * Math.sin(Math.PI * Math.min(1, h * 1.15))
+      position.setX(i, x * k)
+      position.setZ(i, z * k)
+    }
+    bodyGeometry.computeVertexNormals()
+  }
   const body = new THREE.Mesh(
-    lathe([...(style.profile === 'acero' ? profile : smooth(profile)), [rTop - 0.0035, yTop + 0.0008], [rTop - 0.0045, yTop - 0.016]], 72),
+    bodyGeometry,
     new THREE.MeshPhysicalMaterial({
       color: style.color,
       roughness: style.roughness,
@@ -101,9 +152,10 @@ export function createMate(style: MateStyle, textures: { gourd: THREE.Texture; y
       clearcoat: style.clearcoat ?? 0,
       clearcoatRoughness: 0.42,
       map: style.textured ? textures.gourd : null,
-      // Relieve de la calabaza: poros y vetas leen la superficie como material, no como plástico
+      // Relieve y brillo variables: poros y vetas leen la superficie como material, no como plástico
       bumpMap: style.textured ? textures.gourd : null,
-      bumpScale: style.textured ? 1.2 : 0,
+      bumpScale: style.textured ? 1.4 : 0,
+      roughnessMap: style.textured ? textures.gourd : null,
       side: THREE.DoubleSide,
     }),
   )
@@ -113,7 +165,7 @@ export function createMate(style: MateStyle, textures: { gourd: THREE.Texture; y
   if (style.rim !== null) {
     const rim = new THREE.Mesh(
       lathe([[rTop + 0.0004, yTop - 0.011], [rTop + 0.0026, yTop - 0.004], [rTop + 0.0029, yTop + 0.006], [rTop + 0.0012, yTop + 0.0095], [rTop - 0.0028, yTop + 0.0095], [rTop - 0.0038, yTop + 0.004]]),
-      new THREE.MeshStandardMaterial({ color: style.rim, metalness: 1, roughness: 0.22, side: THREE.DoubleSide }),
+      new THREE.MeshPhysicalMaterial({ color: style.rim, metalness: 1, roughness: 0.3, envMapIntensity: 0.85, side: THREE.DoubleSide }),
     )
     group.add(rim)
   }
@@ -190,6 +242,12 @@ export function createPack(faces: THREE.Material[]) {
     // El papel lleno se abomba en frente y laterales
     z += Math.sign(zn) * 0.0045 * (1 - xn * xn) * edge * Math.abs(zn)
     x += Math.sign(xn) * 0.0025 * (1 - zn * zn) * edge * Math.abs(xn)
+    // Aristas verticales redondeadas: el papel lleno no hace esquinas vivas
+    if (Math.abs(xn) > 0.82 && Math.abs(zn) > 0.82) {
+      const c = ((Math.abs(xn) - 0.82) / 0.18) * ((Math.abs(zn) - 0.82) / 0.18) * edge
+      x -= Math.sign(xn) * 0.0022 * c
+      z -= Math.sign(zn) * 0.0022 * c
+    }
     // Cierre plegado arriba y base asentada
     if (yn > 0.84) {
       const k = (yn - 0.84) / 0.16
@@ -241,7 +299,7 @@ export function createLaptop(screen: THREE.Texture) {
   group.add(pivot)
   shadows(group)
   display.castShadow = false
-  return { group, pivot, screenMaterial }
+  return { group, pivot, screenMaterial, bodyMaterial: aluminium }
 }
 
 /** Pantalla: un documento de trabajo con planilla, desenfocado por la distancia. */

@@ -18,6 +18,7 @@ import { Footer } from './components/Footer'
 import { Assistant } from './components/Assistant'
 import { Presentation } from './components/Presentation'
 import { useReveal } from './hooks/useReveal'
+import { useHashLanding } from './hooks/useHashLanding'
 
 /**
  * “La ronda se construye mientras recorrés la propuesta.”
@@ -26,6 +27,7 @@ import { useReveal } from './hooks/useReveal'
  */
 export default function App() {
   useReveal()
+  useHashLanding()
 
   return (
     <>

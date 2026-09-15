@@ -30,7 +30,8 @@ interface CameraMove {
 // Un movimiento de cámara lento y continuo por plano
 const CAMERA: CameraMove[] = [
   { from: [0.2, 0.3, 0.25], to: [0.165, 0.245, 0.205], lookFrom: [0.055, 0.1, 0.055], lookTo: [0.058, 0.094, 0.058], fovFrom: 30, fovTo: 27 },
-  { from: [0.46, 0.12, 0.42], to: [0.27, 0.13, 0.52], lookFrom: [0.02, 0.085, 0.03], lookTo: [-0.02, 0.09, 0.03], fovFrom: 28, fovTo: 26 },
+  // Producto: el frente del envase en primer plano; el mate entra desde la derecha
+  { from: [0.26, 0.15, 0.47], to: [0.17, 0.135, 0.4], lookFrom: [-0.05, 0.1, 0.01], lookTo: [-0.03, 0.098, 0.02], fovFrom: 25, fovTo: 23 },
   { from: [0.04, 0.27, 0.86], to: [0.03, 0.25, 0.79], lookFrom: [0, 0.07, 0.18], lookTo: [0.01, 0.075, 0.24], fovFrom: 32, fovTo: 31 },
   { from: [0.06, 0.42, 1], to: [0, 0.52, 1.14], lookFrom: [-0.02, 0.05, 0.14], lookTo: [-0.02, 0.05, 0.1], fovFrom: 32, fovTo: 33 },
 ]
@@ -187,7 +188,7 @@ export class ConceptFilm {
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.08
     renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.shadowMap.type = THREE.VSMShadowMap
     this.renderer = renderer
 
     const kit = createKit(renderer, {
@@ -214,6 +215,8 @@ export class ConceptFilm {
     this.spot.shadow.mapSize.setScalar(options.mobile ? 1024 : 2048)
     this.spot.shadow.bias = -0.0002
     this.spot.shadow.normalBias = 0.01
+    this.spot.shadow.radius = options.mobile ? 4 : 6
+    this.spot.shadow.blurSamples = options.mobile ? 8 : 12
     this.spot.shadow.camera.near = 0.3
     this.spot.shadow.camera.far = 3
     this.rim = new THREE.DirectionalLight(0xe6eef2, 0.8)
@@ -257,8 +260,15 @@ export class ConceptFilm {
     const move = CAMERA[beat]
     this.camera.position.lerpVectors(vec(move.from), vec(move.to), local)
     this.look.lerpVectors(vec(move.lookFrom), vec(move.lookTo), local)
-    this.camera.fov = THREE.MathUtils.lerp(move.fovFrom, move.fovTo, local)
-    this.camera.aspect = this.size.width / this.size.height
+    const aspect = this.size.width / this.size.height
+    let fov = THREE.MathUtils.lerp(move.fovFrom, move.fovTo, local)
+    if (aspect < 16 / 9 - 0.01) {
+      // Encuadre vertical: se conserva casi todo el ancho del plano pensado en 16:9 y se gana aire arriba y abajo
+      const halfWidth = Math.tan(THREE.MathUtils.degToRad(fov) / 2) * (16 / 9) * 0.84
+      fov = Math.min(68, THREE.MathUtils.radToDeg(2 * Math.atan(halfWidth / aspect)))
+    }
+    this.camera.fov = fov
+    this.camera.aspect = aspect
     this.camera.lookAt(this.look)
     this.camera.updateProjectionMatrix()
 

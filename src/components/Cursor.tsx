@@ -4,6 +4,8 @@ import './Cursor.css'
 
 const INTERACTIVE = 'a[href], button, summary, [role="button"], [role="radio"], label'
 const TEXT_ENTRY = 'input, textarea, select, [contenteditable="true"]'
+/** Sobre textos de lectura el medallón se achica y se aparta para no tapar las palabras. */
+const READING = 'p, li, h1, h2, h3, h4, dd, dt, td, th, figcaption, blockquote, label, mark'
 
 /**
  * Cursor con el medallón de Romance. Solo con mouse (hover + puntero preciso),
@@ -42,7 +44,10 @@ export function Cursor() {
       element.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
       const target = event.target instanceof Element ? event.target : null
       if (target?.closest(TEXT_ENTRY)) element.dataset.state = 'hidden'
-      else element.dataset.state = target?.closest(INTERACTIVE) ? 'interactive' : 'idle'
+      else if (target?.closest(INTERACTIVE)) element.dataset.state = 'interactive'
+      else element.dataset.state = target?.closest(READING) ? 'reading' : 'idle'
+      // Cerca del borde derecho, el medallón pasa al otro lado del punto
+      element.classList.toggle('is-flipped', event.clientX > window.innerWidth - 48)
       shown = true
     }
     const leave = () => {

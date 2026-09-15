@@ -34,9 +34,10 @@ export function createKit(renderer: THREE.WebGLRenderer, events: { onChange: () 
     packSide: texture('pack-side.webp'),
   }
 
-  const metal = new THREE.MeshStandardMaterial({ color: 0xd4d6d8, metalness: 1, roughness: 0.25 })
-  // Madera aceitada (satinada), no barnizada: reflejos amplios y suaves
-  const wood = new THREE.MeshPhysicalMaterial({ map: textures.woodColor, roughnessMap: textures.woodRough, roughness: 1, clearcoat: 0.1, clearcoatRoughness: 0.65 })
+  // Alpaca cepillada: reflejos alargados y contenidos, sin destellos de espejo
+  const metal = new THREE.MeshPhysicalMaterial({ color: 0xd0ccc4, metalness: 1, roughness: 0.32, anisotropy: 0.55, envMapIntensity: 0.8 })
+  // Madera aceitada (satinada), no barnizada: reflejos amplios y suaves; poros y juntas levemente hundidos
+  const wood = new THREE.MeshPhysicalMaterial({ map: textures.woodColor, roughnessMap: textures.woodRough, roughness: 1, clearcoat: 0.1, clearcoatRoughness: 0.65, bumpMap: textures.woodRough, bumpScale: -0.7 })
   const paper = (map: THREE.Texture) => new THREE.MeshPhysicalMaterial({ map, roughness: 0.58, clearcoat: 0.25, clearcoatRoughness: 0.45 })
   // Caras del envase: +x lateral, −x lateral (repite el lateral visible), tapa, base, frente, dorso (repite el frente)
   const front = paper(textures.packFront)

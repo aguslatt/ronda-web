@@ -9,7 +9,7 @@ import './Idea.css'
  */
 export function Idea() {
   return (
-    <Chapter id={idea.id} shot="estrategia" layout="left" className="idea" labelledBy="idea-title">
+    <Chapter id={idea.id} shot="idea" layout="left" className="idea" labelledBy="idea-title">
       <div className="section-head">
         <p className="eyebrow">
           <span className="eyebrow__number">{idea.number}</span>

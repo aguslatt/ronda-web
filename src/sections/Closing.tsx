@@ -12,35 +12,28 @@ import './Closing.css'
 
 /**
  * Cierre: la ronda compartida y una invitación para entrar en ella.
- * “¿Unos mates?” baja la cámara a la altura de alguien sentado a la mesa y el mate que recorrió
- * toda la propuesta llega a su lugar. La escena ejecuta la secuencia; este bloque la pide,
- * refleja su fase y cuida el foco del teclado.
+ * Coreografía de “¿Unos mates?”: se retiran los tres titulares, la cámara baja a la altura de
+ * alguien sentado a la mesa y el mate que recorrió toda la propuesta llega a su lugar; queda un
+ * instante para contemplar el gesto y aparece el mensaje en el espacio que dejaron los titulares.
+ * La escena ejecuta la secuencia; este bloque la pide, refleja su fase y cuida el foco.
  */
 export function Closing() {
   const [phase, setPhase] = useState<InvitePhase>('idle')
-  const [stage, setStage] = useState<'ask' | 'result'>('ask')
   const askRef = useRef<HTMLButtonElement>(null)
   const replayRef = useRef<HTMLButtonElement>(null)
   const keepFocus = useRef(false)
 
-  useEffect(
-    () =>
-      onInvitePhase((next) => {
-        setPhase(next)
-        if (next === 'idle') setStage('ask')
-        if (next === 'done') setStage('result')
-      }),
-    [],
-  )
+  useEffect(() => onInvitePhase(setPhase), [])
 
-  // Si la invitación se activó con el teclado, el foco pasa al control para repetir
+  // Si la invitación se activó con el teclado, el foco pasa al control para repetir (y vuelve a la pregunta al restablecer)
   useEffect(() => {
-    if (phase !== 'done' || !keepFocus.current) return
-    keepFocus.current = false
-    replayRef.current?.focus({ preventScroll: true })
+    if (phase === 'done' && keepFocus.current) replayRef.current?.focus({ preventScroll: true })
+    if (phase === 'idle' && keepFocus.current) {
+      keepFocus.current = false
+      askRef.current?.focus({ preventScroll: true })
+    }
   }, [phase])
 
-  const busy = phase === 'playing'
   const ask = () => {
     if (phase !== 'idle') return
     keepFocus.current = document.activeElement === askRef.current
@@ -52,12 +45,16 @@ export function Closing() {
     requestInvite('replay')
   }
 
+  const retired = phase === 'playing' || phase === 'done'
+  const showAsk = phase === 'idle'
+  const showResult = phase === 'done'
+
   return (
     <Chapter
       id={c.id}
       shot="cierre"
       layout="center"
-      className="closing"
+      className={`closing is-${phase}`}
       labelledBy={`${c.id}-title`}
       after={
         <div className="closing__after">
@@ -107,41 +104,41 @@ export function Closing() {
         </div>
       }
     >
-      <h2 id={`${c.id}-title`} className="closing__lines">
-        {c.lines.map((line, index) => (
-          <span key={line} className={`closing__line${index === 1 ? ' closing__line--accent' : ''}`} data-reveal="title" style={{ '--reveal-delay': `${index * 140}ms` } as CSSProperties}>
-            {line}
-          </span>
-        ))}
-      </h2>
-
-      <div className={`invite is-${phase}`} data-stage={stage}>
-        <div className="invite__group" hidden={stage !== 'ask'}>
-          <button ref={askRef} type="button" className="invite__ask" aria-disabled={busy || undefined} aria-describedby="invitacion-lugar" onClick={ask}>
-            <span className="invite__seal" aria-hidden="true">
-              <Picture name="romance-medallon" alt="" sizes="48px" />
+      <div className="closing__stage">
+        <h2 id={`${c.id}-title`} className={`closing__lines${retired ? ' is-retired' : ''}`}>
+          {c.lines.map((line, index) => (
+            <span key={line} className={`closing__line${index === 1 ? ' closing__line--accent' : ''}`} data-reveal="title" style={{ '--reveal-delay': `${index * 140}ms`, '--i': index } as CSSProperties}>
+              {line}
             </span>
-            {c.invite.ask}
-          </button>
-          <p id="invitacion-lugar" className="invite__hint">
-            {c.invite.hint}
-          </p>
-        </div>
+          ))}
+        </h2>
 
-        <div className="invite__group" hidden={stage !== 'result'}>
+        <div className={`closing__result${showResult ? ' is-shown' : ''}`} inert={!showResult}>
           <p className="invite__message">{c.invite.message}</p>
-          <button ref={replayRef} type="button" className="invite__replay" aria-disabled={busy || undefined} onClick={replay}>
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <button ref={replayRef} type="button" className="invite__replay" onClick={replay}>
+            <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
               <path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v2.8h2.8" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {c.invite.replay}
           </button>
         </div>
+      </div>
 
-        <p className="sr-only" aria-live="polite">
-          {phase === 'playing' ? c.invite.live : phase === 'done' ? c.invite.message : ''}
+      <div className={`invite${showAsk ? '' : ' is-away'}`} inert={!showAsk}>
+        <button ref={askRef} type="button" className="invite__ask" aria-describedby="invitacion-lugar" onClick={ask}>
+          <span className="invite__seal" aria-hidden="true">
+            <Picture name="romance-medallon" alt="" sizes="48px" />
+          </span>
+          {c.invite.ask}
+        </button>
+        <p id="invitacion-lugar" className="invite__hint">
+          {c.invite.hint}
         </p>
       </div>
+
+      <p className="sr-only" aria-live="polite">
+        {phase === 'playing' ? c.invite.live : phase === 'done' ? c.invite.message : ''}
+      </p>
     </Chapter>
   )
 }

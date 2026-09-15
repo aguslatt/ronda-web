@@ -442,7 +442,8 @@
 
 .info-card__status {
   color: var(--gris);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
 }
 
 .info-card--sketch .info-card__status {

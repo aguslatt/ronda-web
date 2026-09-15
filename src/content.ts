@@ -28,11 +28,12 @@ export const chapters = [
   { id: 'publico', shot: 'publico', number: '03', label: 'El público', scene: 'Los lugares alrededor de la mesa siguen libres.' },
   { id: 'insight', shot: 'insight', number: '04', label: 'El insight', scene: 'Se cierra la pantalla y el mate cruza la mesa.' },
   { id: 'estrategia', shot: 'estrategia', number: '05', label: 'La estrategia', scene: 'Romance va al centro y llega el primer mate de la ronda.' },
-  { id: 'cambio', shot: 'cambio', number: '06', label: 'Objetivos', scene: 'Se ocupan más lugares.' },
-  { id: 'activacion', shot: 'activacion', number: '07', label: 'Activación', scene: 'La ronda sigue creciendo mientras se activan los canales.' },
-  { id: 'inversion', shot: 'inversion', number: '08', label: 'Inversión', scene: 'Vista desde arriba: una mesa repartida.' },
-  { id: 'preguntas', shot: 'preguntas', number: '09', label: 'Preguntas', scene: 'Casi todos los lugares tienen su mate.' },
-  { id: 'cierre', shot: 'cierre', number: '10', label: 'La ronda', scene: 'La ronda compartida: seis mates alrededor de Romance.' },
+  { id: 'idea', shot: 'idea', number: '06', label: 'Idea de campaña', scene: 'La mesa espera mientras se ve la idea en 15 segundos.' },
+  { id: 'cambio', shot: 'cambio', number: '07', label: 'Objetivos', scene: 'Se ocupan más lugares.' },
+  { id: 'activacion', shot: 'activacion', number: '08', label: 'Activación', scene: 'La ronda sigue creciendo mientras se activan los canales.' },
+  { id: 'inversion', shot: 'inversion', number: '09', label: 'Inversión', scene: 'Vista desde arriba: una mesa repartida.' },
+  { id: 'preguntas', shot: 'preguntas', number: '10', label: 'Preguntas', scene: 'Casi todos los lugares tienen su mate.' },
+  { id: 'cierre', shot: 'cierre', number: '11', label: 'La ronda', scene: 'La ronda compartida: seis mates alrededor de Romance.' },
 ]
 
 /* 1 · Portada ------------------------------------------------------------ */
@@ -257,7 +258,7 @@ export const strategy = {
 /* 7 · El cambio que buscamos -------------------------------------------- */
 export const change = {
   id: 'cambio',
-  number: '06',
+  number: '07',
   eyebrow: 'Objetivos',
   title: 'El cambio que buscamos',
   rows: [
@@ -301,7 +302,7 @@ export const change = {
 /* 8 · Cómo se activa ----------------------------------------------------- */
 export const activation = {
   id: 'activacion',
-  number: '07',
+  number: '08',
   eyebrow: 'Cómo se activa',
   title: 'Una misma idea. Distintas ocasiones para ofrecer.',
   // Las visualizaciones son bocetos conceptuales armados con el mensaje y los recursos aprobados
@@ -497,7 +498,7 @@ export const campaign = {
 /* 9 · Inversión y calendario -------------------------------------------- */
 export const investment = {
   id: 'inversion',
-  number: '08',
+  number: '09',
   eyebrow: 'Inversión y calendario',
   title: 'Una inversión para construir marca y generar prueba.',
   totalLabel: 'Inversión estimada',
@@ -696,11 +697,12 @@ export const documents = {
 /* Idea de campaña (animación conceptual) ---------------------------------- */
 export const idea = {
   id: 'idea',
-  number: '05',
+  number: '06',
   eyebrow: 'Idea de campaña',
   title: 'La yerba que se ofrece, en un gesto.',
   text: 'Una síntesis en movimiento: el ritual de preparación, el encuentro con Romance y el gesto de ofrecer.',
   label: 'Animación conceptual de campaña',
+  detailsLabel: 'Cómo se construyó la pieza',
   cta: 'Ver la idea en 15 segundos',
   invitation: '¿Unos mates?',
   claim: 'Romance, la yerba que se ofrece.',
@@ -720,6 +722,7 @@ export const idea = {
     soundOn: 'Activar sonido',
     soundOff: 'Silenciar',
     loading: 'Preparando la animación…',
+    close: 'Cerrar',
   },
 }
 
@@ -746,7 +749,7 @@ export const assistant = {
 
 export const faqSection = {
   id: 'preguntas',
-  number: '09',
+  number: '10',
   eyebrow: 'Preguntas frecuentes',
   title: 'Lo que la tesis responde.',
   text: 'Respuestas breves con la página de la tesis donde se desarrolla cada tema.',

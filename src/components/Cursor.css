@@ -85,9 +85,21 @@
   scale: 1;
 }
 
+/* Sobre botones y enlaces solo quedan el punto y el aro: el control se ve completo */
 .brand-cursor[data-state='interactive'] .brand-cursor__body {
-  scale: 1.12;
-  translate: 4px 4px;
+  opacity: 0;
+  scale: 0.6;
+}
+
+/* Sobre texto de lectura: medallón chico, más apartado y translúcido */
+.brand-cursor[data-state='reading'] .brand-cursor__body {
+  opacity: 0.55;
+  scale: 0.72;
+  translate: 6px 10px;
+}
+
+.brand-cursor.is-flipped .brand-cursor__body {
+  left: -29px;
 }
 
 .brand-cursor.is-pressed .brand-cursor__ring {
