@@ -111,29 +111,124 @@
 }
 
 /* Escenario: medidas fijas, el boceto cambia adentro */
+/* El mazo completo (con sus controles) entra en la pantalla */
 .activation__visual {
   position: sticky;
   top: calc(var(--header-h) + 1.5rem);
+  justify-self: end;
+  width: min(100%, 37rem);
 }
 
-.channel-stage {
-  margin: 0;
+@media (min-width: 900px) and (max-height: 820px) {
+  .activation__visual {
+    width: min(100%, 31rem);
+  }
 }
 
-.channel-stage__box {
+/* --------------------------------------------------------------------------
+   Mazo de paneles: todos ocupan la misma celda; la profundidad (--depth)
+   los sube, los achica y los oscurece. El panel elegido pasa al frente.
+   -------------------------------------------------------------------------- */
+.deck {
+  --step: 2.05rem; /* cuánto asoma cada panel de atrás */
+  --tab: 2.85rem;
+  display: grid;
+  padding-top: calc((var(--count) - 1) * var(--step));
+  touch-action: pan-y;
+}
+
+.panel {
+  --k: var(--depth);
   position: relative;
-  aspect-ratio: 5 / 4;
+  z-index: calc(10 - var(--depth));
+  grid-area: 1 / 1;
   overflow: hidden;
   border-radius: var(--radio-l);
+  background: var(--claro);
+  color: var(--tinta);
+  box-shadow: var(--sombra-flotante);
+  transform-origin: 50% 0;
+  translate: 0 calc(var(--k) * var(--step) * -1);
+  scale: calc(1 - var(--k) * 0.045);
+  transition:
+    translate 700ms var(--ease),
+    scale 700ms var(--ease),
+    box-shadow 700ms var(--ease);
+}
+
+/* Velo que oscurece los paneles de atrás */
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: var(--verde-noche);
+  opacity: calc(var(--k) * 0.16 + min(var(--k), 1) * 0.12);
+  pointer-events: none;
+  transition: opacity 700ms var(--ease);
+}
+
+.panel:not(.is-front) {
+  box-shadow: 0 -10px 30px -12px rgba(0, 20, 12, 0.45);
+}
+
+.panel__tab {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  height: var(--tab);
+  /* El texto queda en la franja que asoma detrás */
+  padding: 0.5rem 1.25rem 0;
+  border-bottom: 1px solid var(--linea);
+  background: var(--blanco);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.panel.is-front .panel__tab {
+  cursor: default;
+}
+
+.panel__number {
+  color: var(--rojo);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel__name {
+  overflow: hidden;
+  font-family: var(--f-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel__tag {
+  margin-left: auto;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--niebla);
+  color: var(--verde);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.panel__screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
   background:
     radial-gradient(60% 55% at 50% 45%, rgba(255, 255, 255, 0.95), rgba(245, 247, 242, 0.9) 60%),
     var(--claro);
-  box-shadow: var(--sombra-flotante);
-  color: var(--tinta);
   container-type: size;
 }
 
-.channel-stage__glow {
+.panel__glow {
   position: absolute;
   inset: 20% 10% -30%;
   border-radius: 50%;
@@ -141,41 +236,120 @@
   pointer-events: none;
 }
 
-.channel-stage__caption {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.85rem;
-  margin-top: 1rem;
-  color: var(--blanco-suave);
-  font-size: 0.875rem;
+.panel__caption {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  gap: 0.2rem;
+  min-height: 5.25rem;
+  padding: 0.9rem 1.25rem 1rem;
+  border-top: 1px solid var(--linea);
+  background: var(--blanco);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.panel__role {
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.panel__text {
+  color: var(--gris);
 }
 
 .mock {
   position: absolute;
   inset: 0;
-  visibility: hidden;
-  transition: visibility 0s linear 450ms;
 }
 
-.mock.is-active {
-  visibility: visible;
-  transition-delay: 0s;
+/* Al pasar al frente: las piezas del boceto se acomodan de atrás hacia adelante */
+.panel.is-front .layer {
+  animation: layer-settle 650ms var(--ease) backwards;
+  animation-delay: calc(var(--d, 0) * 90ms + 160ms);
 }
 
-/* Capas: cada pieza entra con un desplazamiento corto, de atrás hacia adelante */
-.mock .layer {
-  opacity: 0;
-  translate: 0 0.9rem;
+.panel.is-front .panel__caption > * {
+  animation: caption-in 500ms var(--ease) backwards;
+}
+
+.panel.is-front .panel__text {
+  animation-delay: 80ms;
+}
+
+@keyframes layer-settle {
+  from {
+    opacity: 0.2;
+    translate: 0 1.1rem;
+    scale: 0.97;
+  }
+}
+
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+/* Controles */
+.deck__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1rem;
+}
+
+.deck__note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.85rem;
+  color: var(--blanco-suave);
+  font-size: 0.875rem;
+}
+
+.deck__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deck__count {
+  min-width: 4.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.deck__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--blanco);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
   transition:
-    opacity 300ms var(--ease),
-    translate 450ms var(--ease);
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    scale var(--t-fast) var(--ease);
 }
 
-.mock.is-active .layer {
-  opacity: 1;
-  translate: 0 0;
-  transition-delay: calc(var(--d, 0) * 90ms + 60ms);
+.deck__arrow:hover {
+  background: var(--lima);
+  color: var(--verde-noche);
+}
+
+.deck__arrow:active {
+  scale: 0.94;
 }
 
 /* --- Piezas compartidas ---------------------------------------------------- */
@@ -752,11 +926,6 @@
   padding-inline: 0.4cqw;
 }
 
-/* Detalle del canal (solo celular) */
-.channel-detail {
-  display: none;
-}
-
 .activation__note {
   display: flex;
   gap: 0.75rem;
@@ -849,24 +1018,40 @@
     display: none;
   }
 
-  .channel-stage__box {
+  .deck {
+    --step: 1.85rem;
+    --tab: 2.6rem;
+  }
+
+  .panel__screen {
     aspect-ratio: 4 / 5;
   }
 
-  .channel-detail {
-    display: grid;
-    gap: 0.35rem;
-    min-height: 6.5rem;
-    margin-top: 1.25rem;
+  .panel__tab {
+    padding-inline: 1rem;
   }
 
-  .channel-detail__role {
-    color: var(--lima);
-    font-weight: 600;
+  .panel__name {
+    font-size: 1rem;
   }
 
-  .channel-detail__text {
-    color: var(--blanco-suave);
+  .panel__caption {
+    min-height: 5.75rem;
+    padding-inline: 1rem;
+  }
+
+  .deck__controls {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .deck__nav {
+    justify-content: space-between;
+  }
+
+  .deck__arrow {
+    width: 3rem;
+    height: 3rem;
   }
 
   /* Recomposición vertical de cada boceto (unidades del escenario) */
@@ -982,7 +1167,7 @@
   }
 
   .mock-card--right {
-    right: 3%;
+    right: 6%;
     bottom: 10%;
   }
 
@@ -1082,8 +1267,10 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .mock .layer {
-    translate: none;
+/* La sección llega como una superficie que se abre hasta todo el ancho */
+@media (prefers-reduced-motion: no-preference) {
+  .activation {
+    --q: calc(1 - var(--e, 1));
+    clip-path: inset(0 calc(var(--q) * var(--gutter)) 0 round calc(var(--q) * var(--radio-l) * 1.6) calc(var(--q) * var(--radio-l) * 1.6) 0 0);
   }
 }

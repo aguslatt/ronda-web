@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { change as c } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Disclosure } from '../components/Disclosure'
@@ -17,7 +18,7 @@ export function Change() {
             <span>Cambio buscado</span>
           </li>
           {c.rows.map((row, index) => (
-            <li key={row.target} className="shift">
+            <li key={row.target} className="shift" data-reveal="rise" style={{ '--reveal-delay': `${index * 110}ms` } as CSSProperties}>
               <span className="shift__index" aria-hidden="true">
                 0{index + 1}
               </span>
@@ -34,7 +35,7 @@ export function Change() {
           ))}
         </ol>
 
-        <div className="goals">
+        <div className="goals" data-reveal="rise">
           <div className="goals__head">
             <h3 className="goals__title">{c.goalsTitle}</h3>
             <ul className="legend" aria-label="Cómo leer las cifras">

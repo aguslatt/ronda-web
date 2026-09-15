@@ -343,6 +343,8 @@ export const credits = {
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
   type: 'Tipografías: Clash Display y General Sans (Indian Type Foundry, Fontshare).',
+  yerba:
+    'Fragmentos de yerba de la portada: recortes de fotografías de Wikimedia Commons de soultea.de/André Helbig, Lucash y Mariano-J (CC BY-SA 3.0); los recortes se comparten con la misma licencia.',
   media:
     'Los logos de Luzu TV y Olga provienen de sus sitios oficiales y se usan solo para identificar medios propuestos; no implican acuerdos.',
   photos: [

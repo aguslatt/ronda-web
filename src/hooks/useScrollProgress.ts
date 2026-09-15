@@ -43,7 +43,7 @@ function subscribe(update: () => void) {
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
-export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', reducedValue = 1, distance = 1) {
+export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', reducedValue = 1, distance = 1, property = '--p') {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -60,13 +60,13 @@ export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', r
       else if (mode === 'runway') progress = clamp(-rect.top / Math.max(1, rect.height - vh))
       else if (mode === 'enter') progress = clamp((vh - rect.top) / (vh * 0.75))
       else progress = clamp((vh - rect.top) / (vh + rect.height))
-      element.style.setProperty('--p', progress.toFixed(4))
+      element.style.setProperty(property, progress.toFixed(4))
     }
 
     const apply = () => {
       unsubscribe?.()
       unsubscribe = null
-      if (reduced.matches) element.style.setProperty('--p', String(reducedValue))
+      if (reduced.matches) element.style.setProperty(property, String(reducedValue))
       else unsubscribe = subscribe(measure)
     }
 
@@ -76,7 +76,7 @@ export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', r
       unsubscribe?.()
       reduced.removeEventListener('change', apply)
     }
-  }, [mode, reducedValue, distance])
+  }, [mode, reducedValue, distance, property])
 
   return ref
 }

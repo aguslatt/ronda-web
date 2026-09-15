@@ -171,6 +171,37 @@
   outline-offset: 6px;
 }
 
+/* Ritmo: primero se construye la barra, después llegan la leyenda y el panel */
+@media (prefers-reduced-motion: no-preference) {
+  .explorer:not(.is-built) :is(.legend-list, .budget-panel) {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+
+  .explorer :is(.legend-list, .budget-panel) {
+    transition:
+      opacity 600ms var(--ease) 650ms,
+      translate 800ms var(--ease) 650ms;
+  }
+
+  .explorer .budget-panel {
+    transition-delay: 820ms;
+  }
+}
+
+/* Cambio de rubro: la cifra del panel se renueva con un desplazamiento corto */
+.budget-panel__figures,
+.budget-panel__name {
+  animation: panel-swap 380ms var(--ease);
+}
+
+@keyframes panel-swap {
+  from {
+    opacity: 0.2;
+    translate: 0 0.4rem;
+  }
+}
+
 /* Leyenda: también selecciona, y hace alcanzables los rubros chicos */
 .legend-list {
   display: grid;

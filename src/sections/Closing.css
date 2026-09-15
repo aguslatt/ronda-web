@@ -108,9 +108,30 @@
   width: clamp(7rem, 10vw, 10rem);
 }
 
-/* Entrada: superficie, envase y mano en capas */
+/* Llegada al cierre: la superficie verde se abre desde el mate, luego envase, mano y frases */
 @media (prefers-reduced-motion: no-preference) {
-  .closing__surface,
+  .closing__surface {
+    clip-path: circle(0% at 78% 12%);
+    transition: clip-path 1200ms var(--ease) 100ms;
+  }
+
+  .closing__glow {
+    opacity: 0;
+    scale: 0.7;
+    transition:
+      opacity 1200ms var(--ease),
+      scale 1400ms var(--ease);
+  }
+
+  .is-in .closing__surface {
+    clip-path: circle(150% at 78% 12%);
+  }
+
+  .is-in .closing__glow {
+    opacity: 1;
+    scale: 1;
+  }
+
   .closing__pack,
   .closing__hand,
   .closing__logo,
@@ -143,7 +164,7 @@
     transition-delay: 180ms;
   }
 
-  .is-in :is(.closing__surface, .closing__pack, .closing__hand, .closing__logo, .closing__line) {
+  .is-in :is(.closing__pack, .closing__hand, .closing__logo, .closing__line) {
     opacity: 1;
     translate: 0 0;
   }

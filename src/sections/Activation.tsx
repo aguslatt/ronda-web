@@ -1,7 +1,8 @@
-import { useState, type CSSProperties, type JSX } from 'react'
+import { useRef, useState, type CSSProperties, type JSX, type PointerEvent } from 'react'
 import { activation as a, brand } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Picture } from '../components/Picture'
+import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Activation.css'
 
 type Channel = (typeof a.channels)[number]
@@ -169,81 +170,129 @@ const mocks: Record<Channel['key'], () => JSX.Element> = {
   web: WebMock,
 }
 
+const pad = (value: number) => String(value).padStart(2, '0')
+
 /**
- * Canales como filas numeradas. Seleccionar un canal (clic, toque o teclado) cambia el
- * boceto dentro de un escenario de medidas fijas: no hay saltos de altura.
+ * Activaciones como un mazo de paneles superpuestos. El canal elegido avanza al primer
+ * plano y revela su boceto y su explicación; los demás quedan detrás, con su pestaña
+ * visible para cambiar de propuesta. Controles: lista de canales, pestañas, anterior /
+ * siguiente y deslizamiento horizontal en pantallas táctiles.
  */
 export function Activation() {
   const [active, setActive] = useState(0)
-  const current = a.channels[active]
+  const sectionRef = useScrollProgress<HTMLElement>('enter', 1, 1, '--e')
+  const swipe = useRef<{ x: number; y: number } | null>(null)
+  const count = a.channels.length
+  const go = (index: number) => setActive((index + count) % count)
+
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse') swipe.current = { x: event.clientX, y: event.clientY }
+  }
+  const onPointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const start = swipe.current
+    swipe.current = null
+    if (!start) return
+    const dx = event.clientX - start.x
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(event.clientY - start.y)) go(active + (dx < 0 ? 1 : -1))
+  }
 
   return (
-    <section id={a.id} className="section activation tone-dark" data-surface="verde" aria-labelledby={`${a.id}-title`}>
+    <section ref={sectionRef} id={a.id} className="section activation tone-dark" data-surface="verde" aria-labelledby={`${a.id}-title`}>
       <div className="wrap">
         <div className="activation__layout">
           <div className="activation__aside">
-          <SectionHead number={a.number} eyebrow={a.eyebrow} title={a.title} titleId={`${a.id}-title`} />
-          <ol className="channels" aria-label="Canales">
-            {a.channels.map((channel, index) => {
-              const selected = index === active
-              return (
-                <li key={channel.key} className={`channel${selected ? ' is-active' : ''}`}>
-                  <h3 className="channel__heading">
-                    <button
-                      type="button"
-                      className="channel__button"
-                      aria-pressed={selected}
-                      aria-controls="canal-visual"
-                      onClick={() => setActive(index)}
-                    >
-                      <span className="channel__number">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="channel__name">{channel.name}</span>
-                      <span className="channel__role">{channel.role}</span>
-                    </button>
-                  </h3>
-                  <div className="channel__body">
-                    {channel.detail && <p className="channel__detail">{channel.detail}</p>}
-                    <p className="channel__text">{channel.text}</p>
-                  </div>
-                </li>
-              )
-            })}
-          </ol>
+            <SectionHead number={a.number} eyebrow={a.eyebrow} title={a.title} titleId={`${a.id}-title`} />
+            <ol className="channels" aria-label="Canales">
+              {a.channels.map((channel, index) => {
+                const selected = index === active
+                return (
+                  <li key={channel.key} className={`channel${selected ? ' is-active' : ''}`}>
+                    <h3 className="channel__heading">
+                      <button
+                        type="button"
+                        className="channel__button"
+                        aria-pressed={selected}
+                        aria-controls="canal-visual"
+                        onClick={() => go(index)}
+                      >
+                        <span className="channel__number">{pad(index + 1)}</span>
+                        <span className="channel__name">{channel.name}</span>
+                        <span className="channel__role">{channel.role}</span>
+                      </button>
+                    </h3>
+                  </li>
+                )
+              })}
+            </ol>
           </div>
 
           <div className="activation__visual">
-            <figure id="canal-visual" className="channel-stage">
-              <div className="channel-stage__box">
-                <span className="channel-stage__glow" aria-hidden="true" />
-                {a.channels.map((channel, index) => {
-                  const Mock = mocks[channel.key]
-                  const selected = index === active
-                  return (
-                    <div
-                      key={channel.key}
-                      className={`mock mock--${channel.key}${selected ? ' is-active' : ''}`}
-                      role="img"
-                      aria-label={channel.visual}
-                      aria-hidden={!selected}
-                    >
-                      <Mock />
+            <div
+              id="canal-visual"
+              className="deck"
+              style={{ '--count': count } as CSSProperties}
+              onPointerDown={onPointerDown}
+              onPointerUp={onPointerUp}
+              onPointerCancel={() => (swipe.current = null)}
+            >
+              {a.channels.map((channel, index) => {
+                const Mock = mocks[channel.key]
+                const depth = (index - active + count) % count
+                const front = depth === 0
+                return (
+                  <article
+                    key={channel.key}
+                    className={`panel panel--${channel.key}${front ? ' is-front' : ''}`}
+                    style={{ '--depth': depth } as CSSProperties}
+                    aria-hidden={!front}
+                  >
+                    {/* Pestaña: visible también detrás, para traer el panel al frente */}
+                    <div className="panel__tab" onClick={() => go(index)}>
+                      <span className="panel__number">{pad(index + 1)}</span>
+                      <span className="panel__name">{channel.name}</span>
+                      <span className="panel__tag">{a.visualTag}</span>
                     </div>
-                  )
-                })}
-              </div>
-              <figcaption className="channel-stage__caption">
+                    <div className="panel__screen">
+                      <span className="panel__glow" aria-hidden="true" />
+                      <div className={`mock mock--${channel.key}`} role="img" aria-label={channel.visual}>
+                        <Mock />
+                      </div>
+                    </div>
+                    <div className="panel__caption">
+                      <p className="panel__role">
+                        {channel.role}
+                        {channel.detail && <span> · {channel.detail}</span>}
+                      </p>
+                      <p className="panel__text">{channel.text}</p>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+
+            <div className="deck__controls">
+              <p className="deck__note">
                 <span className="tag">{a.visualTag}</span>
                 <span>{a.visualNote}</span>
-              </figcaption>
-            </figure>
-
-            {/* En celular, el texto del canal elegido debajo del boceto */}
-            <div className="channel-detail" aria-live="polite">
-              <p className="channel-detail__role">
-                {current.role}
-                {current.detail && <span> · {current.detail}</span>}
               </p>
-              <p className="channel-detail__text">{current.text}</p>
+              <div className="deck__nav">
+                <button type="button" className="deck__arrow" aria-label="Propuesta anterior" aria-controls="canal-visual" onClick={() => go(active - 1)}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                    <path d="M11 3.5 5.5 9l5.5 5.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <p className="deck__count" aria-live="polite">
+                  <span className="sr-only">Propuesta </span>
+                  {pad(active + 1)} <span aria-hidden="true">/</span>
+                  <span className="sr-only"> de </span> {pad(count)}
+                  <span className="sr-only">: {a.channels[active].name}</span>
+                </p>
+                <button type="button" className="deck__arrow" aria-label="Propuesta siguiente" aria-controls="canal-visual" onClick={() => go(active + 1)}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                    <path d="M7 3.5 12.5 9 7 14.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

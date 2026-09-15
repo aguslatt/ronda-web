@@ -11,8 +11,11 @@ import { Activation } from './sections/Activation'
 import { Investment } from './sections/Investment'
 import { Closing } from './sections/Closing'
 import { Footer } from './components/Footer'
+import { useReveal } from './hooks/useReveal'
 
 export default function App() {
+  useReveal()
+
   return (
     <>
       <Cursor />

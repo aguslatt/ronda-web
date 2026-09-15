@@ -196,13 +196,33 @@
     transition: opacity 400ms var(--ease) 950ms;
   }
 
+  /* La ampliación nace del medallón del envase, girando apenas como un lente que se enfoca */
   .brand-stage__lens {
     opacity: 0;
     scale: 0.32;
+    rotate: -14deg;
     transform-origin: var(--lens-origin-x) var(--lens-origin-y);
     transition:
       opacity 350ms var(--ease) 950ms,
-      scale 800ms var(--ease) 950ms;
+      scale 900ms var(--ease) 950ms,
+      rotate 1100ms var(--ease) 950ms;
+  }
+
+  .brand-stage__lens img {
+    scale: 1.35;
+    filter: blur(6px);
+    transition:
+      scale 1400ms var(--ease) 1000ms,
+      filter 900ms var(--ease) 1050ms;
+  }
+
+  .is-in .brand-stage__lens {
+    rotate: 0deg;
+  }
+
+  .is-in .brand-stage__lens img {
+    scale: 1;
+    filter: none;
   }
 
   .brand__caption {

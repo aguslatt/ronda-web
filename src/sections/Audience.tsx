@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { audience as a } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Picture } from '../components/Picture'
@@ -34,15 +35,17 @@ export function Audience() {
 
         <ol className="scenes" aria-label="Escenas del público">
           {a.scenes.map((scene, index) => (
-            <li key={scene.title} className="scene">
-              <figure className="scene__photo">
+            <li key={scene.title} className="scene" style={{ '--reveal-delay': `${index * 140}ms` } as CSSProperties}>
+              <figure className="scene__photo" data-reveal="photo">
                 <Picture name={scene.image.name} alt={scene.image.alt} sizes="(min-width: 900px) 30vw, 78vw" />
               </figure>
-              <p className="scene__index" aria-hidden="true">
-                0{index + 1}
-              </p>
-              <h3 className="scene__title">{scene.title}</h3>
-              <p className="scene__text">{scene.text}</p>
+              <div data-reveal="rise">
+                <p className="scene__index" aria-hidden="true">
+                  0{index + 1}
+                </p>
+                <h3 className="scene__title">{scene.title}</h3>
+                <p className="scene__text">{scene.text}</p>
+              </div>
             </li>
           ))}
         </ol>

@@ -21,10 +21,18 @@
 }
 
 .turn__front {
+  --q: calc(1 - var(--e, 1));
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  clip-path: inset(0 calc(var(--q) * var(--gutter)) calc(var(--q) * 10%) round calc(var(--q) * var(--radio-l) * 1.6));
+}
+
+/* La frase acompaña la apertura con un leve acercamiento */
+.insight__composition {
+  scale: calc(1 - (1 - var(--e, 1)) * 0.06);
+  opacity: calc(0.4 + var(--e, 1) * 0.6);
 }
 
 .insight__panel {

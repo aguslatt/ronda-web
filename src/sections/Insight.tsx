@@ -43,11 +43,13 @@ function Composition({ decorative = false }: { decorative?: boolean }) {
  */
 export function Turn({ children }: { children: ReactNode }) {
   const ref = useScrollProgress<HTMLDivElement>('runway', 1)
+  // Llegada: la lámina roja se abre desde una tarjeta hasta ocupar la pantalla
+  const stageRef = useScrollProgress<HTMLDivElement>('enter', 1, 1, '--e')
 
   return (
     <>
       <div ref={ref} className="turn">
-        <div className="turn__stage">
+        <div ref={stageRef} className="turn__stage">
           <section id={i.id} className="turn__front tone-dark" aria-labelledby={`${i.id}-title`}>
             <div className="insight__panel insight__panel--left" data-surface="rojo">
               <Composition />

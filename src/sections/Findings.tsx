@@ -19,7 +19,7 @@ export function Findings() {
 
       <div className="findings__body" data-surface="claro">
         <div className="wrap">
-          <ol className="figures" aria-label="Resultados de la investigación">
+          <ol className="figures" aria-label="Resultados de la investigación" data-reveal="rise">
             {f.stats.map((stat, index) => (
               <li key={stat.display} className={`figure figure--${index + 1}`}>
                 <p className="figure__role">

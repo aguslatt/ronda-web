@@ -13,11 +13,11 @@ interface SectionHeadProps {
 export function SectionHead({ number, eyebrow, title, titleId, className = '' }: SectionHeadProps) {
   return (
     <div className={`section-head ${className}`}>
-      <p className="eyebrow">
+      <p className="eyebrow" data-reveal="rise">
         <span className="eyebrow__number">{number}</span>
         {eyebrow}
       </p>
-      <h2 id={titleId} className="section-head__title">
+      <h2 id={titleId} className="section-head__title" data-reveal="title">
         {title}
       </h2>
     </div>

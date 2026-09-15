@@ -1,7 +1,8 @@
-import type { CSSProperties } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import { hero } from '../content'
 import { Picture } from '../components/Picture'
 import { ArrowDownIcon } from '../components/Icons'
+import { YerbaFall } from '../components/YerbaFall'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Hero.css'
 
@@ -26,16 +27,19 @@ function Line({ text, index }: { text: string; index: number }) {
 
 /**
  * Portada como pieza de campaña: sobre la superficie clara, una mano acerca el mate
- * hacia quien mira. El mate atraviesa el borde de una superficie verde; el envase real
- * equilibra la escena con menor escala. Con el primer scroll la escena cambia de encuadre
- * y el verde se extiende hasta conectar con El hallazgo.
+ * hacia quien mira. La yerba cae en cámara lenta hasta su abertura, en tres planos
+ * de profundidad. El mate atraviesa el borde de una superficie verde; el envase real
+ * equilibra la escena. Con el primer scroll las partículas se retiran, la escena cambia
+ * de encuadre y el verde se extiende hasta conectar con El hallazgo.
  */
 export function Hero() {
   const ref = useScrollProgress<HTMLElement>('start', 0, 0.8)
+  const sceneRef = useRef<HTMLDivElement>(null)
+  const handRef = useRef<HTMLElement>(null)
 
   return (
     <section ref={ref} id="inicio" className="hero" data-surface="claro" aria-labelledby="hero-title">
-      <div className="hero__scene">
+      <div ref={sceneRef} className="hero__scene">
         <span className="hero__glow" aria-hidden="true" />
         <span className="hero__surface" aria-hidden="true" />
 
@@ -44,9 +48,11 @@ export function Hero() {
           <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 13vw, 28vw" priority />
         </div>
 
-        <figure className="hero__hand">
+        <figure ref={handRef} className="hero__hand">
           <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 34vw, 62vw" priority />
         </figure>
+
+        <YerbaFall sceneRef={sceneRef} targetRef={handRef} progressRef={ref} />
 
         <p className="hero__credit">{hero.photoCredit}</p>
       </div>

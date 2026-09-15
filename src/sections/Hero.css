@@ -61,7 +61,7 @@
   position: absolute;
   right: 0;
   top: 10%;
-  z-index: 3;
+  z-index: 4;
   height: 78%;
   aspect-ratio: 939 / 1400;
   margin: 0;
@@ -107,7 +107,7 @@
   position: absolute;
   right: var(--edge);
   bottom: 1.25rem;
-  z-index: 4;
+  z-index: 5;
   color: var(--blanco-suave);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -117,7 +117,7 @@
 /* Texto */
 .hero__copy {
   position: relative;
-  z-index: 5;
+  z-index: 7;
   display: grid;
   justify-items: start;
   align-content: start;
@@ -194,7 +194,7 @@
   position: absolute;
   top: calc(var(--header-h) + 2rem);
   right: var(--edge);
-  z-index: 4;
+  z-index: 7;
   width: clamp(8rem, 11vw, 11rem);
   opacity: calc(1 - var(--p) * 1.5);
   animation: rise-in 0.5s var(--ease) 0.7s backwards;

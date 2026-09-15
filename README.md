@@ -42,8 +42,21 @@ y la superficie clara `#F5F7F2`. Validar con la marca. Tokens, radios y sombras 
 
 ### Movimiento
 
-Una curva compartida (`--ease`): respuestas ≈ 200 ms y revelaciones ≈ 700 ms. El movimiento se concentra
-en la portada (entrada por capas y primer scroll), la marca, las activaciones y la construcción del presupuesto.
+Una curva compartida (`--ease`): respuestas ≈ 200 ms y revelaciones ≈ 700–1100 ms. Secuencia:
+
+1. **Yerba cayendo** (`src/components/YerbaFall.tsx`): canvas 2D con recortes fotográficos de yerba
+   (hojas, palitos y polvo) en un atlas (`public/yerba/`, `src/data/yerba-atlas.json`). Tres planos: fondo suave,
+   chorro en foco que cae por gravedad hasta la abertura del mate (y desaparece detrás de su borde) y primer plano
+   desenfocado. ≈ 4–5 s y termina en la composición estable. Menos partículas en celular, pausa fuera de pantalla
+   o con la pestaña oculta, sin animación con `saveData`. Con movimiento reducido se dibuja un instante detenido.
+2. **Primer scroll**: las partículas se retiran, la mano cambia de encuadre y la superficie verde se abre hasta conectar con *El hallazgo*.
+3. **Entradas por sección** (`src/hooks/useReveal.ts` + `data-reveal`): fotografías que se abren, titulares por máscara y bloques que suben.
+4. **Marca**: primero el envase, después el encuadre del medallón y la ampliación que gira y se enfoca.
+5. **Insight**: la lámina roja llega como una tarjeta que se abre a pantalla completa; luego se parte y revela la estrategia.
+6. **Activaciones**: la sección entra como una superficie que se ensancha; las propuestas son un mazo de paneles superpuestos.
+7. **Presupuesto**: la barra se construye y después llegan la leyenda y el panel.
+8. **Cierre**: la superficie verde se abre en círculo desde el mate y vuelven envase, mano y frases.
+
 Con `prefers-reduced-motion` todo aparece en su estado final.
 
 ### Cursor

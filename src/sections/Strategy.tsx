@@ -37,12 +37,17 @@ export function Strategy() {
           <h3 className="strategy__subhead">{s.supportTitle}</h3>
           <ol className="supports__list">
             {s.supports.map((support, index) => (
-              <li key={support.title} className={`support support--${index + 1}`}>
+              <li
+                key={support.title}
+                className={`support support--${index + 1}`}
+                data-reveal="rise"
+                style={{ '--reveal-delay': `${index * 120}ms` } as CSSProperties}
+              >
                 <span className="support__number" aria-hidden="true">
                   0{index + 1}
                 </span>
                 <h4 className="support__name">{support.title}</h4>
-                <div className="support__media">
+                <div className="support__media" data-reveal="photo">
                   <Picture name={support.image.name} alt={support.image.alt} sizes="(min-width: 900px) 22vw, 34vw" />
                 </div>
               </li>

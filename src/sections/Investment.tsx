@@ -43,7 +43,7 @@ export function Investment() {
       <div className="wrap">
         <div className="investment__head">
           <SectionHead number={inv.number} eyebrow={inv.eyebrow} title={inv.title} titleId={`${inv.id}-title`} />
-          <div className="total">
+          <div className="total" data-reveal="rise" style={{ '--reveal-delay': '160ms' } as CSSProperties}>
             <p className="total__label">{inv.totalLabel}</p>
             <p className="total__value">
               <span className="total__currency">ARS</span>
@@ -117,7 +117,7 @@ export function Investment() {
           </div>
         </div>
 
-        <div className="table-card">
+        <div className="table-card" data-reveal="rise">
           <table className="budget">
             <caption className="sr-only">Distribución de la inversión estimada por rubro</caption>
             <thead>
@@ -166,7 +166,12 @@ export function Investment() {
           <h3 className="investment__subhead">{inv.calendarTitle}</h3>
           <ol className="timeline">
             {inv.phases.map((phase, index) => (
-              <li key={phase.name} className={`timeline__item${phase.key ? ' is-key tone-dark' : ''}`}>
+              <li
+                key={phase.name}
+                className={`timeline__item${phase.key ? ' is-key tone-dark' : ''}`}
+                data-reveal="rise"
+                style={{ '--reveal-delay': `${index * 120}ms` } as CSSProperties}
+              >
                 <span className="timeline__index" aria-hidden="true">
                   0{index + 1}
                 </span>

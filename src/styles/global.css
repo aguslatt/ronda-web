@@ -327,6 +327,55 @@ main:focus {
   background: radial-gradient(closest-side, rgba(0, 25, 15, 0.42), rgba(0, 25, 15, 0.18) 55%, transparent);
 }
 
+/* ==========================================================================
+   Entradas al hacer scroll (useReveal)
+   Solo se ocultan cuando el observador está listo (.reveal-ready).
+   Tres ritmos: fotografías que se abren, titulares por máscara y bloques que suben.
+   ========================================================================== */
+.reveal-ready [data-reveal='rise']:not(.is-revealed) {
+  opacity: 0;
+  translate: 0 1.75rem;
+}
+
+.reveal-ready [data-reveal='rise'] {
+  transition:
+    opacity 700ms var(--ease) var(--reveal-delay, 0ms),
+    translate 900ms var(--ease) var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal='title']:not(.is-revealed) {
+  clip-path: inset(0 -0.1em 100% -0.1em);
+  translate: 0 0.4em;
+}
+
+.reveal-ready [data-reveal='title'] {
+  clip-path: inset(-0.2em -0.1em -0.3em -0.1em);
+  transition:
+    clip-path 950ms var(--ease) var(--reveal-delay, 90ms),
+    translate 950ms var(--ease) var(--reveal-delay, 90ms);
+}
+
+/* Fotografías: el encuadre se abre desde abajo y la imagen se asienta */
+.reveal-ready [data-reveal='photo']:not(.is-revealed) {
+  clip-path: inset(22% 6% 0 6% round var(--radio-l));
+  opacity: 0;
+}
+
+.reveal-ready [data-reveal='photo'] {
+  clip-path: inset(0 0 0 0 round var(--radio-l));
+  transition:
+    clip-path 1100ms var(--ease) var(--reveal-delay, 0ms),
+    opacity 450ms var(--ease) var(--reveal-delay, 0ms);
+}
+
+.reveal-ready :where([data-reveal='photo']:not(.is-revealed)) img {
+  scale: 1.22;
+}
+
+.reveal-ready :where([data-reveal='photo']) img {
+  transition: scale 1500ms var(--ease) var(--reveal-delay, 0ms);
+}
+
 /* Todo movimiento se apaga con movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   *,

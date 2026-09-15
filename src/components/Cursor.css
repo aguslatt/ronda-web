@@ -60,8 +60,34 @@
   box-shadow: 0 0 0 1.5px var(--blanco);
 }
 
+/* Aro que se abre sobre elementos interactivos (sin estela: acompaña al punto) */
+.brand-cursor__ring {
+  position: absolute;
+  top: -22px;
+  left: -22px;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--lima);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 39, 26, 0.25);
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    scale 260ms var(--ease),
+    opacity 180ms linear;
+}
+
+.brand-cursor[data-state='interactive'] .brand-cursor__ring {
+  opacity: 1;
+  scale: 1;
+}
+
+.brand-cursor.is-pressed .brand-cursor__ring {
+  scale: 0.82;
+}
+
 .brand-cursor[data-state='interactive'] .brand-cursor__body {
-  scale: 1.25;
+  scale: 1.18;
 }
 
 .brand-cursor.is-pressed .brand-cursor__body {
