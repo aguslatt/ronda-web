@@ -1,29 +1,43 @@
 import { useEffect, useRef, useState } from 'react'
 import { nav } from '../content'
-import { RondaMark } from './Icons'
 import './Header.css'
 
+/**
+ * Navegación: toma el color de la superficie que tiene debajo (data-surface)
+ * y marca la sección activa.
+ */
 export function Header() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
-  const [scrolled, setScrolled] = useState(false)
+  const [surface, setSurface] = useState('verde')
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
-  // Sección activa: la que cruza una línea imaginaria al 40% de la altura de la ventana.
   useEffect(() => {
     const ids = nav.flatMap((item) => item.sections)
     let frame = 0
 
     const update = () => {
       frame = 0
-      setScrolled(window.scrollY > 12)
       const probe = window.innerHeight * 0.4
-      const current = ids.find((id) => {
+      // Con zonas superpuestas (tramos fijos), gana la última de la lista
+      const current = [...ids].reverse().find((id) => {
         const rect = document.getElementById(id)?.getBoundingClientRect()
         return rect ? rect.top <= probe && rect.bottom > probe : false
       })
       setActive(nav.find((item) => current && item.sections.includes(current))?.href ?? null)
+
+      // La superficie más profunda (última en el documento) debajo del centro de la barra
+      const line = 34
+      const center = window.innerWidth / 2
+      let next = 'blanco'
+      document.querySelectorAll<HTMLElement>('[data-surface]').forEach((element) => {
+        const rect = element.getBoundingClientRect()
+        if (rect.top <= line && rect.bottom > line && rect.left <= center && rect.right > center) {
+          next = element.dataset.surface ?? next
+        }
+      })
+      setSurface(next)
     }
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -39,12 +53,10 @@ export function Header() {
     }
   }, [])
 
-  // Menú móvil: foco, Escape, bloqueo del fondo y cierre al pasar a escritorio.
   useEffect(() => {
     if (!open) return
     const background = [document.getElementById('contenido'), document.querySelector('.site-footer')]
     const desktop = window.matchMedia('(min-width: 900px)')
-
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false)
@@ -54,13 +66,12 @@ export function Header() {
     const onBreakpoint = () => desktop.matches && setOpen(false)
 
     firstLinkRef.current?.focus()
-    background.forEach((el) => el?.setAttribute('inert', ''))
+    background.forEach((element) => element?.setAttribute('inert', ''))
     document.body.classList.add('menu-open')
     document.addEventListener('keydown', onKey)
     desktop.addEventListener('change', onBreakpoint)
-
     return () => {
-      background.forEach((el) => el?.removeAttribute('inert'))
+      background.forEach((element) => element?.removeAttribute('inert'))
       document.body.classList.remove('menu-open')
       document.removeEventListener('keydown', onKey)
       desktop.removeEventListener('change', onBreakpoint)
@@ -70,12 +81,11 @@ export function Header() {
   const close = () => setOpen(false)
 
   return (
-    <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
-      <div className="site-header__bar wrap">
+    <header className={`site-header surface-${open ? 'verde' : surface}${open ? ' is-open' : ''}`}>
+      <div className="site-header__bar">
         <a className="site-header__brand" href="#inicio" aria-label="Proyecto Ronda, volver al inicio" onClick={close}>
-          <RondaMark />
           <span className="site-header__name">Ronda</span>
-          <span className="site-header__for">para Romance</span>
+          <span className="site-header__for">/ Romance</span>
         </a>
 
         <button
@@ -90,7 +100,7 @@ export function Header() {
           <span className="site-header__toggle-icon" aria-hidden="true" />
         </button>
 
-        <nav id="menu-principal" className="site-nav on-dark-mobile" aria-label="Secciones de la propuesta">
+        <nav id="menu-principal" className="site-nav" aria-label="Secciones de la propuesta">
           <ul className="site-nav__list">
             {nav.map((item, index) => (
               <li key={item.href}>
@@ -101,6 +111,9 @@ export function Header() {
                   aria-current={active === item.href ? 'location' : undefined}
                   onClick={close}
                 >
+                  <span className="site-nav__index" aria-hidden="true">
+                    0{index + 1}
+                  </span>
                   {item.label}
                 </a>
               </li>

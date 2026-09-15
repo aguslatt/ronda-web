@@ -1,50 +1,64 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { hero } from '../content'
 import { Picture } from '../components/Picture'
 import { ArrowDownIcon } from '../components/Icons'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Hero.css'
 
-/**
- * Apertura: una pieza editorial fija durante una pista de desplazamiento.
- * Al avanzar, el encuadre del gesto se achica, se desplaza en la dirección del ofrecimiento
- * y cruza el límite hacia “El hallazgo”. El titular se recorta en crema sobre la foto.
- */
-export function Hero() {
-  const runway = useScrollProgress<HTMLDivElement>('runway', 0)
-
-  const lines = [...hero.titleLines, hero.titleAccent].map((line, index) => (
-    <span key={line} className={`hero__line hero__line--${index + 1}`} style={{ '--i': index } as CSSProperties}>
-      <span className="hero__line-inner">{line}</span>{' '}
+/** Línea del titular con máscara. Lo que va entre asteriscos toma el color de acento. */
+function Line({ text, index }: { text: string; index: number }) {
+  return (
+    <span className="hero__line" style={{ '--i': index } as CSSProperties}>
+      <span className="hero__line-inner">
+        {text.split('*').map((part, i) =>
+          i % 2 ? (
+            <span key={i} className="hero__accent">
+              {part}
+            </span>
+          ) : (
+            part
+          ),
+        )}
+      </span>
     </span>
-  ))
+  )
+}
+
+/**
+ * Apertura: la portada queda fija. Al comenzar el scroll, el marco de la fotografía
+ * se abre hasta ocupar la pantalla y el texto sale; después, El hallazgo entra como
+ * una lámina sobre la imagen.
+ */
+export function Opening({ children }: { children: ReactNode }) {
+  const ref = useScrollProgress<HTMLDivElement>('start', 0, 0.6)
 
   return (
-    <div ref={runway} className="opening">
-      <section id="inicio" className="hero" aria-labelledby="hero-title">
-        <p className="hero__kicker kicker">{hero.kicker}</p>
+    <div ref={ref} className="opening">
+      <section id="inicio" className="hero tone-dark" data-surface="verde" aria-labelledby="hero-title">
+        <p className="hero__kicker label">{hero.kicker}</p>
+
+        <figure className="hero__photo">
+          <Picture name={hero.image.name} alt={hero.image.alt} sizes="100vw" priority />
+        </figure>
 
         <h1 id="hero-title" className="hero__title">
-          {lines}
+          <span className="sr-only">{hero.title}</span>
+          <span className="hero__lines hero__lines--wide" aria-hidden="true">
+            {hero.linesWide.map((line, index) => (
+              <Line key={line} text={line} index={index} />
+            ))}
+          </span>
+          <span className="hero__lines hero__lines--narrow" aria-hidden="true">
+            {hero.linesNarrow.map((line, index) => (
+              <Line key={line} text={line} index={index} />
+            ))}
+          </span>
         </h1>
-        {/* Copia decorativa del titular, recortada al área de la fotografía */}
-        <p className="hero__title hero__title--knock" aria-hidden="true">
-          {lines}
-        </p>
 
-        {/* Aparece durante la transición; la misma idea se lee luego en Estrategia */}
-        <p className="hero__passage" aria-hidden="true">
-          <span>{hero.passage[0]}</span> <em>{hero.passage[1]}</em>
-        </p>
-
-        <div className="hero__visual">
-          <figure className="hero__photo">
-            <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 40vw, 100vw" priority />
-          </figure>
-          <div className="hero__pack">
-            <Picture name={hero.product.name} alt={hero.product.alt} sizes="(min-width: 900px) 13vw, 30vw" priority />
-          </div>
+        <div className="hero__logo">
+          <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="220px" priority />
         </div>
+        <p className="hero__credit">{hero.photoCredit}</p>
 
         <div className="hero__foot">
           <p className="hero__lede">{hero.lede}</p>
@@ -53,10 +67,12 @@ export function Hero() {
               {hero.cta.label}
               <ArrowDownIcon />
             </a>
-            <p className="hero__meta">{hero.campaign}</p>
+            <p className="hero__meta label">{hero.campaign}</p>
           </div>
         </div>
       </section>
+
+      {children}
     </div>
   )
 }

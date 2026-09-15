@@ -5,11 +5,17 @@ import './Change.css'
 
 export function Change() {
   return (
-    <section id={c.id} className="section change" aria-labelledby={`${c.id}-title`}>
+    <section id={c.id} className="section change" data-surface="niebla" aria-labelledby={`${c.id}-title`}>
       <div className="wrap">
         <SectionHead number={c.number} eyebrow={c.eyebrow} title={c.title} titleId={`${c.id}-title`} />
 
         <ol className="shifts">
+          <li className="shifts__head" aria-hidden="true">
+            <span />
+            <span>Hoy</span>
+            <span />
+            <span>Cambio buscado</span>
+          </li>
           {c.rows.map((row, index) => (
             <li key={row.target} className="shift">
               <span className="shift__index" aria-hidden="true">
@@ -19,7 +25,7 @@ export function Change() {
                 <span className="shift__label">Hoy</span>
                 <p>{row.today}</p>
               </div>
-              <span className="shift__pass" aria-hidden="true" />
+              <span className="shift__arrow" aria-hidden="true" />
               <div className="shift__target">
                 <span className="shift__label">Cambio buscado</span>
                 <p>{row.target}</p>
@@ -33,16 +39,12 @@ export function Change() {
             <h3 className="goals__title">{c.goalsTitle}</h3>
             <ul className="legend" aria-label="Cómo leer las cifras">
               <li>
-                <span className="legend__sample legend__sample--research" aria-hidden="true">
-                  %
-                </span>
-                {c.legend.research}: cifra recta
+                <span className="legend__swatch legend__swatch--research" aria-hidden="true" />
+                {c.legend.research}: cifra verde
               </li>
               <li>
-                <span className="legend__sample legend__sample--goal" aria-hidden="true">
-                  %
-                </span>
-                {c.legend.goal}: cifra cursiva subrayada
+                <span className="legend__swatch legend__swatch--goal" aria-hidden="true" />
+                {c.legend.goal}: cifra roja con línea punteada
               </li>
             </ul>
           </div>
@@ -50,8 +52,8 @@ export function Change() {
           <ul className="goals__list">
             {c.goals.map((goal) => (
               <li key={goal.label} className="goal">
-                <p className="goal__value">{goal.display}</p>
                 <p className="goal__tag">{c.legend.goal}</p>
+                <p className="goal__value">{goal.display}</p>
                 <p className="goal__label">{goal.label}</p>
               </li>
             ))}

@@ -1,61 +1,57 @@
 /* ==========================================================================
-   La respuesta estratégica · el mate pasa, la historia avanza
+   Respuesta estratégica · continuación
    ========================================================================== */
 .strategy {
-  background: var(--papel);
+  background: var(--blanco);
 }
 
-.strategy__head {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
-}
-
-.strategy .section-head__title {
-  max-width: 11ch;
-}
-
-.strategy__text {
-  color: var(--tinta-suave);
+.strategy__lede {
+  display: none;
+  max-width: 30ch;
+  margin-bottom: 3.5rem;
   font-size: var(--fs-lede);
-  line-height: 1.45;
+  line-height: 1.35;
 }
 
-/* Tres ventanas sobre una sola fotografía */
-.passage {
-  margin-top: clamp(4.5rem, 9vw, 8rem);
+.strategy__subhead {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linea-fuerte);
+  font-family: var(--f-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
+/* Tres ventanas sobre una sola fotografía: los encuadres se abren en orden */
 .passage__list {
   --p: 0;
-  --gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  --gap: clamp(0.5rem, 1.2vw, 1rem);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: var(--gap);
   row-gap: 1.5rem;
-  margin: 1.75rem 0 0;
+  margin: 2.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .passage__step {
-  /* Cada ventana se abre en orden, de izquierda a derecha */
   --r: clamp(0, calc(var(--p) * 3.2 - var(--i) * 0.75), 1);
+  min-width: 0;
 }
 
 .passage__frame {
   position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: var(--arena);
-  clip-path: inset(0 calc((1 - var(--r)) * 100%) 0 0);
+  background: var(--niebla);
+  clip-path: inset(calc((1 - var(--r)) * 50%) 0 calc((1 - var(--r)) * 50%) 0);
 }
 
 .passage__image {
   position: absolute;
   top: 50%;
-  /* 3rem de margen para que el leve desplazamiento nunca deje bordes vacíos */
   left: calc(var(--i) * -1 * (100% + var(--gap)) - 1.5rem);
   width: calc(300% + 2 * var(--gap) + 3rem);
   max-width: none;
@@ -64,82 +60,82 @@
 }
 
 .passage__copy {
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--tinta);
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
+  padding-right: 1rem;
 }
 
 .passage__number {
   color: var(--rojo);
-  font-family: var(--f-display);
-  font-size: 1.5rem;
-  font-style: italic;
-  line-height: 1;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
+/* El tamaño se limita al ancho de columna: “Reconocimiento” entra sin chocar */
 .passage__name {
-  margin-top: 0.75rem;
-  font-size: clamp(1.75rem, 1.1rem + 2vw, 3rem);
-  letter-spacing: -0.03em;
+  margin-top: 0.5rem;
+  font-size: min(clamp(2rem, 1rem + 2.6vw, 3.5rem), 3.6vw);
+  letter-spacing: -0.025em;
 }
 
 .passage__step:last-child .passage__name {
   color: var(--rojo);
-  font-style: italic;
-  font-weight: 400;
 }
 
 .passage__text {
   max-width: 26ch;
-  margin-top: 0.6rem;
-  color: var(--tinta-suave);
+  margin-top: 0.75rem;
+  color: var(--gris);
 }
 
-/* Respaldos como filas editoriales */
+/* Respaldos */
 .supports {
   margin-top: clamp(5rem, 10vw, 9rem);
 }
 
 .supports__list {
-  margin: 1.75rem 0 0;
+  margin: 1.5rem 0 0;
   padding: 0;
-  border-top: 1px solid var(--tinta);
   list-style: none;
 }
 
 .support {
   display: grid;
-  grid-template-columns: 4rem minmax(0, 1fr) clamp(8rem, 18vw, 15rem);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  align-items: center;
-  padding-block: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: minmax(3rem, 1fr) minmax(0, 7fr) minmax(8rem, 3fr);
+  gap: var(--col-gap);
+  align-items: start;
+  padding-block: clamp(1.25rem, 2.5vw, 2rem);
   border-bottom: 1px solid var(--linea);
 }
 
 .support__number {
-  color: var(--rojo);
-  font-family: var(--f-display);
-  font-size: 1.625rem;
-  font-style: italic;
+  padding-top: 0.35rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .support__name {
-  font-size: clamp(1.75rem, 1rem + 2.6vw, 3.75rem);
-  letter-spacing: -0.03em;
-  transition: translate 0.5s var(--ease-out);
+  font-size: clamp(2rem, 1rem + 3vw, 4.5rem);
+  letter-spacing: -0.025em;
+  transition:
+    translate var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
 }
 
 .support__media {
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #fff;
+  background: var(--blanco);
 }
 
 .support__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: scale 0.7s var(--ease-out);
+  transition: scale var(--t-reveal) var(--ease);
+}
+
+.support--3 .support__media {
+  background: var(--niebla);
 }
 
 .support--3 .support__media img {
@@ -149,6 +145,7 @@
 
 .support:hover .support__name {
   translate: 0.75rem 0;
+  color: var(--rojo);
 }
 
 .support:hover .support__media img {
@@ -156,11 +153,10 @@
 }
 
 @media (max-width: 899px) {
-  .strategy__head {
-    grid-template-columns: minmax(0, 1fr);
+  .strategy__lede {
+    display: block;
   }
 
-  /* Las ventanas quedan en fila; los textos se leen debajo, en orden */
   .passage__step {
     display: contents;
   }
@@ -172,6 +168,8 @@
   .passage__copy {
     grid-column: 1 / -1;
     margin-top: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea);
   }
 
   .passage__step:nth-child(1) .passage__copy {
@@ -186,11 +184,15 @@
     grid-row: 4;
   }
 
+  .passage__name {
+    font-size: 2rem;
+  }
+
   .support {
-    grid-template-columns: 2.25rem minmax(0, 1fr) 6.5rem;
+    grid-template-columns: 2rem minmax(0, 1fr) 6.5rem;
   }
 
   .support__name {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
   }
 }

@@ -1,89 +1,101 @@
 /* ==========================================================================
-   La oportunidad de marca · el signo ya existe
+   La oportunidad de marca · bloque lima
    ========================================================================== */
 .brand {
-  background: var(--crema);
   overflow: hidden;
+  background: var(--lima);
+  color: var(--verde-noche);
+}
+
+.brand .folio {
+  border-top-color: var(--verde-noche);
+}
+
+.brand .folio__project {
+  color: var(--verde-noche);
 }
 
 .brand__grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(1rem, 2vw, 2rem);
-  row-gap: clamp(3rem, 6vw, 5rem);
+  column-gap: var(--col-gap);
+  row-gap: clamp(4rem, 8vw, 7rem);
 }
 
 .brand__head {
   display: grid;
-  grid-column: 1 / span 7;
+  grid-column: 1 / span 8;
   grid-row: 1;
-  gap: clamp(1.75rem, 3vw, 2.5rem);
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.brand__head .section-head__title {
+  max-width: 13ch;
 }
 
 .brand__text {
-  max-width: 38ch;
-  color: var(--tinta-suave);
+  max-width: 40ch;
   font-size: var(--fs-lede);
-  line-height: 1.45;
+  line-height: 1.35;
 }
 
-/* Envase real, con leve profundidad al desplazarse */
+/* Envase real, con presencia */
 .brand__pack {
   --p: 0.5;
   grid-column: 9 / span 4;
-  grid-row: 1 / span 2;
-  align-self: center;
-  max-width: 24rem;
-  rotate: 4deg;
-  translate: 0 calc((0.5 - var(--p)) * 9rem);
-  filter: drop-shadow(0 30px 34px rgba(1, 61, 38, 0.25));
+  grid-row: 1;
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 23rem);
+  translate: 0 calc((0.5 - var(--p)) * 8rem);
 }
 
+/* Tres anclas tipográficas */
 .brand__anchors {
-  grid-column: 1 / span 7;
+  display: grid;
+  grid-column: 1 / -1;
   grid-row: 2;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--col-gap);
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--tinta);
   list-style: none;
 }
 
 .brand__anchor {
   display: grid;
-  grid-template-columns: 2.25rem minmax(9rem, 13rem) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: baseline;
-  padding-block: 1.1rem;
-  border-bottom: 1px solid var(--linea);
+  align-content: start;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--verde-noche);
 }
 
 .brand__anchor-number {
-  color: var(--rojo);
-  font-family: var(--f-display);
-  font-size: 1.375rem;
-  font-style: italic;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .brand__anchor-label {
-  color: var(--verde-900);
   font-family: var(--f-display);
-  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.875rem);
+  font-size: clamp(2.25rem, 1rem + 3.6vw, 4.5rem);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
 }
 
 .brand__anchor-text {
-  color: var(--tinta-suave);
+  max-width: 24ch;
 }
 
-/* Díptico signo / gesto */
+/* Díptico: los encuadres se abren al entrar */
 .brand__diptych {
+  --p: 0;
   display: grid;
   grid-column: 1 / -1;
   grid-row: 3;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(1rem, 2vw, 2rem);
-  margin-top: clamp(1rem, 4vw, 3rem);
+  column-gap: var(--col-gap);
+  align-items: start;
 }
 
 .plate {
@@ -91,98 +103,92 @@
 }
 
 .plate--sign {
-  grid-column: 2 / span 4;
+  grid-column: 1 / span 5;
 }
 
 .plate--gesture {
-  grid-column: 7 / span 5;
-  margin-top: clamp(4rem, 12vw, 10rem);
+  grid-column: 6 / -1;
 }
 
 .plate__image {
   overflow: hidden;
-  background: #fff;
+  clip-path: inset(calc((1 - var(--p)) * 16%));
+}
+
+.plate__image img {
+  width: 100%;
+  height: 100%;
+  scale: calc(1.12 - var(--p) * 0.12);
 }
 
 .plate--sign .plate__image {
   aspect-ratio: 1;
-  padding: 8%;
+  padding: 7%;
+  background: var(--blanco);
 }
 
 .plate--sign .plate__image img {
-  width: 100%;
-  height: 100%;
   object-fit: contain;
 }
 
 .plate--gesture .plate__image {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 7 / 6;
+  background: var(--verde);
 }
 
 .plate--gesture .plate__image img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
+  object-position: 50% 40%;
 }
 
 .plate__caption {
   display: grid;
   gap: 0.35rem;
-  max-width: 34ch;
-  margin-top: 1.1rem;
-  color: var(--tinta-suave);
+  max-width: 36ch;
+  margin-top: 1.25rem;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .plate__label {
-  color: var(--verde-900);
   font-family: var(--f-display);
   font-size: 1.5rem;
-  font-style: italic;
+  font-weight: 600;
   line-height: 1.1;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .brand__diptych {
+    --p: 1;
+  }
+}
+
 @media (max-width: 899px) {
-  .brand__head,
-  .brand__anchors {
+  .brand__head {
     grid-column: 1 / -1;
   }
 
   .brand__pack {
-    grid-column: 3 / span 8;
+    grid-column: 1 / -1;
     grid-row: 2;
     justify-self: center;
-    width: min(100%, 17rem);
+    width: min(70%, 17rem);
   }
 
   .brand__anchors {
     grid-row: 3;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2rem;
   }
 
   .brand__diptych {
     grid-row: 4;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 1rem;
-    margin-top: 0;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.5rem;
   }
 
   .plate--sign,
   .plate--gesture {
-    grid-column: auto;
-  }
-
-  .plate--gesture {
-    margin-top: 3rem;
-  }
-
-  .brand__anchor {
-    grid-template-columns: 1.75rem minmax(0, 1fr);
-    row-gap: 0.25rem;
-  }
-
-  .brand__anchor-text {
-    grid-column: 2;
+    grid-column: 1;
   }
 }

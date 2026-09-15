@@ -1,34 +1,25 @@
 import type { CSSProperties } from 'react'
 import { strategy as s } from '../content'
-import { SectionHead, withAccent } from '../components/SectionHead'
 import { Picture } from '../components/Picture'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Strategy.css'
 
+/** Continuación de la respuesta estratégica (el titular se revela en la sección anterior). */
 export function Strategy() {
   const passageRef = useScrollProgress<HTMLOListElement>('enter')
 
   return (
-    <section id={s.id} className="section strategy" aria-labelledby={`${s.id}-title`}>
+    <section id="estrategia-cont" className="section strategy" data-surface="blanco" aria-label="Desarrollo de la respuesta estratégica">
       <div className="wrap">
-        <div className="strategy__head">
-          <SectionHead number={s.number} eyebrow={s.eyebrow} title={withAccent(s.title, s.titleAccent)} titleId={`${s.id}-title`} />
-          <p className="strategy__text">{s.text}</p>
-        </div>
+        <p className="strategy__lede">{s.text}</p>
 
-        {/* Una misma fotografía en tres ventanas: el mate pasa de una mano a otra */}
         <div className="passage">
-          <h3 className="kicker">{s.progressionTitle}</h3>
+          <h3 className="strategy__subhead">{s.progressionTitle}</h3>
           <ol ref={passageRef} className="passage__list">
             {s.progression.map((step, index) => (
               <li key={step.title} className="passage__step" style={{ '--i': index } as CSSProperties}>
                 <div className="passage__frame">
-                  <Picture
-                    className="passage__image"
-                    name={s.passage.name}
-                    alt={index === 0 ? s.passage.alt : ''}
-                    sizes="(min-width: 900px) 100vw, 100vw"
-                  />
+                  <Picture className="passage__image" name={s.passage.name} alt={index === 0 ? s.passage.alt : ''} sizes="100vw" />
                 </div>
                 <div className="passage__copy">
                   <p className="passage__number" aria-hidden="true">
@@ -43,7 +34,7 @@ export function Strategy() {
         </div>
 
         <div className="supports">
-          <h3 className="kicker">{s.supportTitle}</h3>
+          <h3 className="strategy__subhead">{s.supportTitle}</h3>
           <ol className="supports__list">
             {s.supports.map((support, index) => (
               <li key={support.title} className={`support support--${index + 1}`}>
@@ -52,7 +43,7 @@ export function Strategy() {
                 </span>
                 <h4 className="support__name">{support.title}</h4>
                 <div className="support__media">
-                  <Picture name={support.image.name} alt={support.image.alt} sizes="(min-width: 900px) 18vw, 30vw" />
+                  <Picture name={support.image.name} alt={support.image.alt} sizes="(min-width: 900px) 22vw, 34vw" />
                 </div>
               </li>
             ))}

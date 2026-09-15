@@ -30,7 +30,7 @@ export function Audience() {
   }, [])
 
   return (
-    <section id={a.id} className="section audience" aria-labelledby={`${a.id}-title`}>
+    <section id={a.id} className="section audience" data-surface="blanco" aria-labelledby={`${a.id}-title`}>
       <div className="wrap">
         <div className="audience__head">
           <SectionHead number={a.number} eyebrow={a.eyebrow} title={a.title} titleId={`${a.id}-title`} />
@@ -58,7 +58,7 @@ export function Audience() {
               </figure>
             ))}
             <p className="scenes__counter" aria-hidden="true">
-              <span>{String(active + 1).padStart(2, '0')}</span> / {String(a.scenes.length).padStart(2, '0')}
+              {String(active + 1).padStart(2, '0')} / {String(a.scenes.length).padStart(2, '0')}
             </p>
           </div>
 

@@ -2,13 +2,13 @@
    Inversión y calendario
    ========================================================================== */
 .investment {
-  background: var(--papel);
+  background: var(--blanco);
 }
 
 .investment__head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  gap: var(--col-gap) clamp(2rem, 5vw, 5rem);
   align-items: end;
 }
 
@@ -16,37 +16,50 @@
   max-width: 13ch;
 }
 
+.total {
+  padding-top: 1rem;
+  border-top: 2px solid var(--tinta);
+}
+
 .total__label {
-  color: var(--tinta-suave);
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .total__value {
-  margin-block: 0.5rem 0.75rem;
+  margin-block: 0.75rem 1rem;
   color: var(--rojo);
   font-family: var(--f-display);
-  font-size: max(min(clamp(2.75rem, 1.5rem + 3.6vw, 5rem), 13vw), 2rem);
+  font-size: max(min(clamp(3rem, 1.2rem + 4.2vw, 5.75rem), 13vw), 2rem);
   font-weight: 600;
-  font-variant-numeric: lining-nums;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
   white-space: nowrap;
 }
 
 .total__currency {
-  margin-right: 0.1em;
-  color: var(--verde-900);
-  font-size: 0.42em;
+  margin-right: 0.05em;
+  font-size: 0.4em;
   letter-spacing: 0;
-  vertical-align: 1.05em;
+  vertical-align: 1.1em;
+}
+
+.investment__subhead {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linea-fuerte);
+  font-family: var(--f-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 /* Paleta de rubros (siempre acompañada por texto) */
-.tone-1 { background: var(--verde-900); }
-.tone-2 { background: var(--arena); box-shadow: inset 0 0 0 1px var(--linea-fuerte); }
+.tone-1 { background: var(--verde); }
+.tone-2 { background: var(--niebla); box-shadow: inset 0 0 0 1px var(--linea-fuerte); }
 .tone-3 { background: var(--rojo); }
-.tone-4 { background: var(--hoja); }
-.tone-5 { background: var(--verde-selva); }
+.tone-4 { background: var(--lima); }
+.tone-5 { background: var(--verde-medio); }
 .tone-6 { background: var(--tinta); }
 
 .budget-layout {
@@ -57,12 +70,11 @@
   margin-top: clamp(4rem, 8vw, 6.5rem);
 }
 
-/* Bandas proporcionales */
 .bands {
   --p: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   height: clamp(26rem, 58svh, 38rem);
   margin-top: 1.5rem;
 }
@@ -71,8 +83,8 @@
   --r: clamp(0, calc(var(--p) * 2.6 - var(--i) * 0.22), 1);
   display: grid;
   flex: var(--share) 1 0;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 1rem;
   align-items: center;
   min-height: 0;
 }
@@ -81,28 +93,26 @@
   align-self: stretch;
   transform: scaleX(var(--r));
   transform-origin: left;
-  transition: filter var(--dur) var(--ease);
 }
 
 .band__label {
-  line-height: 1.2;
-  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .band__label strong {
-  margin-right: 0.35rem;
+  margin-right: 0.4rem;
   font-family: var(--f-display);
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
 .band.is-hovered .band__fill {
-  filter: brightness(1.15);
-  box-shadow: inset 0 0 0 3px var(--oro);
+  outline: 3px solid var(--tinta);
+  outline-offset: -3px;
 }
 
-/* Tabla con los valores exactos */
 .table-scroll {
+  margin-top: 3.5rem;
   overflow-x: auto;
 }
 
@@ -114,17 +124,16 @@
 
 .budget th,
 .budget td {
-  padding: 1rem 0.75rem;
+  padding: 1.05rem 0.75rem;
   border-bottom: 1px solid var(--linea);
   text-align: left;
   vertical-align: middle;
 }
 
 .budget thead th {
-  border-bottom-color: var(--tinta);
-  color: var(--tinta-suave);
-  font-size: 1rem;
-  font-weight: 600;
+  border-bottom: 2px solid var(--tinta);
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .budget .num {
@@ -133,15 +142,15 @@
 }
 
 .budget tbody th {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .budget tbody tr {
-  transition: background-color var(--dur) var(--ease);
+  transition: background-color var(--t-fast) var(--ease);
 }
 
 .budget tbody tr.is-hovered {
-  background: var(--arena-suave);
+  background: var(--niebla);
 }
 
 .budget__label {
@@ -158,88 +167,61 @@
 
 .budget tfoot th,
 .budget tfoot td {
-  border-top: 2px solid var(--tinta);
   border-bottom: 0;
-  font-size: 1.125rem;
-  font-weight: 700;
+  background: var(--tinta);
+  color: var(--blanco);
+  font-weight: 600;
 }
 
 .budget__th-short {
   display: none;
 }
 
-/* Calendario */
+/* Calendario en bloques: la campaña es el bloque rojo */
 .calendar {
   margin-top: clamp(5rem, 10vw, 8rem);
 }
 
 .timeline {
-  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1fr);
-  margin: 2.5rem 0 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2px;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0.75rem;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--linea-fuerte);
-}
-
 .timeline__item {
-  position: relative;
-  padding: 3rem 1.5rem 0 0;
+  display: grid;
+  align-content: space-between;
+  gap: 2.5rem;
+  min-height: 15rem;
+  padding: 1.5rem;
+  background: var(--niebla);
 }
 
-.timeline__item.is-key::before {
-  content: '';
-  position: absolute;
-  top: calc(0.75rem - 3px);
-  left: 0;
-  right: 0;
-  height: 8px;
+.timeline__item.is-key {
   background: var(--rojo);
+  color: var(--blanco);
 }
 
-.timeline__marker {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 2px solid var(--verde-900);
-  border-radius: 50%;
-  background: var(--papel);
-}
-
-.is-key .timeline__marker {
-  border-color: var(--rojo);
-  background: var(--rojo);
+.timeline__index {
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .timeline__name {
   font-family: var(--f-display);
-  font-size: clamp(1.625rem, 1.1rem + 1.8vw, 2.75rem);
+  font-size: clamp(2rem, 1rem + 2.4vw, 3.75rem);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 0.95;
   letter-spacing: -0.025em;
 }
 
 .timeline__when {
-  margin-top: 0.5rem;
-  color: var(--tinta-suave);
-  font-size: 1.125rem;
-}
-
-.is-key .timeline__when {
-  color: var(--rojo);
-  font-weight: 700;
+  margin-top: -1.75rem;
+  font-size: var(--fs-body);
+  font-weight: 500;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -256,6 +238,10 @@
 
   .bands {
     height: 24rem;
+  }
+
+  .table-scroll {
+    margin-top: 0;
   }
 }
 
@@ -293,8 +279,8 @@
   }
 
   .band__label {
-    white-space: normal;
     font-size: 0.9375rem;
+    white-space: normal;
   }
 
   .band__label strong {
@@ -307,33 +293,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .timeline::before {
-    top: 0;
-    bottom: 0;
-    left: calc(0.75rem - 1px);
-    right: auto;
-    width: 2px;
-    height: auto;
-  }
-
   .timeline__item {
-    padding: 0 0 2.5rem 3rem;
-  }
-
-  .timeline__item:last-child {
-    padding-bottom: 0;
-  }
-
-  .timeline__item.is-key::before {
-    top: 0;
-    bottom: 0;
-    left: calc(0.75rem - 4px);
-    right: auto;
-    width: 8px;
-    height: auto;
-  }
-
-  .timeline__marker {
-    top: 0.3rem;
+    min-height: 10rem;
   }
 }

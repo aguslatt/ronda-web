@@ -6,9 +6,10 @@ import './Brand.css'
 
 export function Brand() {
   const packRef = useScrollProgress<HTMLDivElement>('through', 0.5)
+  const diptychRef = useScrollProgress<HTMLDivElement>('enter')
 
   return (
-    <section id={b.id} className="section brand" aria-labelledby={`${b.id}-title`}>
+    <section id={b.id} className="section brand" data-surface="lima" aria-labelledby={`${b.id}-title`}>
       <div className="wrap brand__grid">
         <div className="brand__head">
           <SectionHead number={b.number} eyebrow={b.eyebrow} title={b.title} titleId={`${b.id}-title`} />
@@ -16,14 +17,14 @@ export function Brand() {
         </div>
 
         <div ref={packRef} className="brand__pack">
-          <Picture name={b.product.name} alt={b.product.alt} sizes="(min-width: 900px) 26vw, 62vw" />
+          <Picture name={b.product.name} alt={b.product.alt} sizes="(min-width: 900px) 26vw, 60vw" />
         </div>
 
         <ol className="brand__anchors">
           {b.anchors.map((anchor, index) => (
             <li key={anchor.label} className="brand__anchor">
               <span className="brand__anchor-number" aria-hidden="true">
-                {index + 1}
+                0{index + 1}
               </span>
               <p className="brand__anchor-label">{anchor.label}</p>
               <p className="brand__anchor-text">{anchor.text}</p>
@@ -31,11 +32,11 @@ export function Brand() {
           ))}
         </ol>
 
-        {/* Díptico: el signo del envase y el mismo gesto en la vida cotidiana */}
-        <div className="brand__diptych">
+        {/* El signo del envase y el mismo gesto en la vida cotidiana */}
+        <div ref={diptychRef} className="brand__diptych">
           <figure className="plate plate--sign">
             <div className="plate__image">
-              <Picture name={b.medallion.name} alt={b.medallion.alt} sizes="(min-width: 900px) 28vw, 45vw" />
+              <Picture name={b.medallion.name} alt={b.medallion.alt} sizes="(min-width: 900px) 34vw, 90vw" />
             </div>
             <figcaption className="plate__caption">
               <span className="plate__label">{b.signLabel}</span>
@@ -44,7 +45,7 @@ export function Brand() {
           </figure>
           <figure className="plate plate--gesture">
             <div className="plate__image">
-              <Picture name={b.gesture.name} alt={b.gesture.alt} sizes="(min-width: 900px) 34vw, 45vw" />
+              <Picture name={b.gesture.name} alt={b.gesture.alt} sizes="(min-width: 900px) 56vw, 90vw" />
             </div>
             <figcaption className="plate__caption">
               <span className="plate__label">{b.gestureLabel}</span>

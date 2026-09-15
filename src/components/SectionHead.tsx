@@ -9,14 +9,16 @@ interface SectionHeadProps {
   className?: string
 }
 
-/** Folio del relato (número + capítulo) y titular de sección. */
+/** Cabecera de sección: filete, folio corrido y titular. */
 export function SectionHead({ number, eyebrow, title, titleId, className = '' }: SectionHeadProps) {
   return (
     <div className={`section-head ${className}`}>
       <p className="folio">
         <span className="folio__number">{number}</span>
-        <span className="folio__rule" aria-hidden="true" />
-        <span>{eyebrow}</span>
+        <span className="folio__name">{eyebrow}</span>
+        <span className="folio__project" aria-hidden="true">
+          Ronda / Romance
+        </span>
       </p>
       <h2 id={titleId} className="section-head__title">
         {title}
@@ -25,14 +27,14 @@ export function SectionHead({ number, eyebrow, title, titleId, className = '' }:
   )
 }
 
-/** Pone en cursiva un fragmento de un título (por ejemplo, “se ofrece”). */
+/** Resalta un fragmento del título con color de acento. */
 export function withAccent(text: string, accent: string): ReactNode {
   const start = text.indexOf(accent)
   if (start < 0) return text
   return (
     <>
       {text.slice(0, start)}
-      <em>{accent}</em>
+      <span className="accent">{accent}</span>
       {text.slice(start + accent.length)}
     </>
   )

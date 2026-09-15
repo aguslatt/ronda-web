@@ -1,11 +1,11 @@
 import { credits } from '../content'
-import { ArrowUpIcon } from './Icons'
 import './Footer.css'
 
 export function Footer() {
   return (
-    <footer className="site-footer on-dark">
-      <div className="wrap site-footer__grid">
+    <footer className="site-footer tone-dark" data-surface="verde">
+      <div className="site-footer__grid">
+        <p className="site-footer__brand">Ronda / Romance</p>
         <div className="site-footer__notes">
           <p>{credits.disclaimer}</p>
           <p>
@@ -29,11 +29,8 @@ export function Footer() {
               </span>
             ))}
           </p>
+          <p>{credits.type}</p>
         </div>
-        <a className="cta site-footer__top" href="#inicio">
-          Volver al inicio
-          <ArrowUpIcon />
-        </a>
       </div>
     </footer>
   )

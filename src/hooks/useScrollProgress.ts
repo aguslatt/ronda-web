@@ -5,13 +5,14 @@ import { useEffect, useRef } from 'react'
  * Escribe una variable CSS `--p` (0 → 1) en el elemento y el CSS decide qué hacer con ella.
  * Un único listener de scroll para toda la página.
  *
- * - runway:  recorre la "pista" de un contenedor con un hijo sticky (0 al entrar, 1 al soltarse).
- * - enter:   0 cuando el elemento asoma por abajo, 1 cuando llega al 25% superior de la pantalla.
+ * - start:   0 cuando el elemento toca el borde superior; 1 tras recorrer `distance` alturas de pantalla.
+ * - runway:  recorre la "pista" de un contenedor con un hijo sticky (0 al fijarse, 1 al soltarse).
+ * - enter:   0 cuando el elemento asoma por abajo, 1 cuando llega al 25% superior.
  * - through: 0 cuando asoma por abajo, 1 cuando sale por arriba.
  *
- * Con movimiento reducido no se escucha el scroll: se fija `--p` en un estado estático.
+ * Con movimiento reducido no se escucha el scroll: `--p` queda en un estado estático.
  */
-type Mode = 'runway' | 'enter' | 'through'
+type Mode = 'start' | 'runway' | 'enter' | 'through'
 
 const updaters = new Set<() => void>()
 let frame = 0
@@ -42,7 +43,7 @@ function subscribe(update: () => void) {
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
-export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', reducedValue = 1) {
+export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', reducedValue = 1, distance = 1) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -55,7 +56,8 @@ export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', r
       const rect = element.getBoundingClientRect()
       const vh = window.innerHeight
       let progress: number
-      if (mode === 'runway') progress = clamp(-rect.top / Math.max(1, rect.height - vh))
+      if (mode === 'start') progress = clamp(-rect.top / (vh * distance))
+      else if (mode === 'runway') progress = clamp(-rect.top / Math.max(1, rect.height - vh))
       else if (mode === 'enter') progress = clamp((vh - rect.top) / (vh * 0.75))
       else progress = clamp((vh - rect.top) / (vh + rect.height))
       element.style.setProperty('--p', progress.toFixed(4))
@@ -74,7 +76,7 @@ export function useScrollProgress<T extends HTMLElement>(mode: Mode = 'enter', r
       unsubscribe?.()
       reduced.removeEventListener('change', apply)
     }
-  }, [mode, reducedValue])
+  }, [mode, reducedValue, distance])
 
   return ref
 }

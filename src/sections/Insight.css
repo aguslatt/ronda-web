@@ -1,177 +1,234 @@
 /* ==========================================================================
-   El insight · el gran momento
-   Una pista fija: la lectura marca “que alguien lo ofrezca” y, al final,
-   entra por el borde una mano que ofrece.
+   El insight como golpe gráfico → la respuesta estratégica
+   --p recorre la pista (160svh de scroll):
+   0 → 0,42  la banda verde descubre “que alguien lo ofrezca”
+   0,55 → 0,93  la lámina roja se abre en dos y revela la respuesta
    ========================================================================== */
-.insight {
+.turn {
   --p: 0;
+  --m: clamp(0, calc(var(--p) * 2.4), 1);
+  --o: clamp(0, calc((var(--p) - 0.55) * 2.6), 1);
   position: relative;
-  height: 220svh;
-  background: var(--rojo);
-  color: var(--crema);
+  height: 260svh;
 }
 
-.insight__stage {
+.turn__stage {
   position: sticky;
   top: 0;
+  height: 100svh;
+  min-height: 36rem;
+  overflow: hidden;
+}
+
+.turn__front {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.insight__panel {
+  position: absolute;
+  inset: 0;
+  background: var(--rojo);
+  color: var(--blanco);
+  pointer-events: auto;
+}
+
+.insight__panel--left {
+  clip-path: inset(0 50% 0 0);
+  translate: calc(var(--o) * -51vw) 0;
+}
+
+.insight__panel--right {
+  clip-path: inset(0 0 0 50%);
+  translate: calc(var(--o) * 51vw) 0;
+}
+
+.insight__composition {
+  position: absolute;
+  inset: 0;
   display: grid;
   align-content: center;
-  height: 100svh;
-  min-height: 34rem;
-  padding: calc(var(--header-h) + 3rem) var(--edge) 3rem;
-  overflow: hidden;
+  padding: calc(var(--header-h) + 3.5rem) var(--edge) 2.5rem;
 }
 
 .insight__folio {
   position: absolute;
-  top: calc(var(--header-h) + 4svh);
+  top: calc(var(--header-h) + 1.5rem);
   left: var(--edge);
+  right: var(--edge);
+  display: flex;
+  gap: 2.5rem;
   margin: 0;
-  flex-wrap: nowrap;
-  color: var(--crema);
-  white-space: nowrap;
-}
-
-.insight .folio__number {
-  color: var(--crema);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linea-clara);
+  font-family: var(--f-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 .insight__phrase {
-  /* Avance de cada tramo marcado */
-  --m1: clamp(0, calc(var(--p) * 2.6 - 0.25), 1);
-  --m2: clamp(0, calc(var(--p) * 2.6 - 1.25), 1);
-  position: relative;
-  z-index: 2;
   font-family: var(--f-display);
-  font-size: max(min(8.4vw, 13.5svh), 2.5rem);
   font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
-.insight__line {
+.insight__lead {
   display: block;
+  font-size: clamp(2.25rem, 1rem + 4.6vw, 6rem);
+  line-height: 0.95;
 }
 
-.mark {
+/* Cambio de escala + banda que se descubre al avanzar */
+.insight__mark {
   position: relative;
-  display: inline-block;
-  margin-right: -0.14em;
-  padding: 0 0.14em;
-  font-style: italic;
-  font-weight: 400;
+  display: block;
+  margin-top: 0.12em;
+  padding-block: 0.08em 0.12em;
+  font-size: clamp(3.25rem, 1rem + 9vw, 11rem);
+  line-height: 0.88;
 }
 
-.mark--1 {
-  --m: var(--m1);
-}
-
-.mark--2 {
-  --m: var(--m2);
-}
-
-.mark::before {
-  content: '';
+.insight__band {
   position: absolute;
-  inset: 0.12em 0 -0.02em;
-  background: var(--crema);
+  inset: 0 calc(var(--edge) * -1);
+  background: var(--verde);
   transform: scaleX(var(--m));
   transform-origin: left;
 }
 
-.mark__base {
+.insight__marked {
   position: relative;
-}
-
-.mark__fill {
-  position: absolute;
-  top: 0;
-  left: 0.14em;
-  right: 0.14em;
-  color: var(--rojo);
-  white-space: nowrap;
-  clip-path: inset(0 calc((1 - var(--m)) * 100%) 0 0);
-  user-select: none;
+  display: block;
 }
 
 .insight__note {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: clamp(2rem, 4vw, 3rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.insight__note::before {
-  content: '';
-  flex: 0 1 3.5rem;
-  min-width: 1rem;
-  height: 1px;
-  background: currentColor;
-}
-
-/* La mano que ofrece entra desde el borde, en la dirección del gesto */
-.insight__hand {
-  --h: clamp(0, calc((var(--p) - 0.58) * 3), 1);
+/* Respuesta estratégica revelada */
+.turn__back {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 1;
-  width: min(27vw, 30rem);
-  height: 64svh;
+  display: grid;
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+  background: var(--verde);
+  color: var(--blanco);
+}
+
+.strategy-cover__text {
+  display: grid;
+  align-content: center;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  padding: calc(var(--header-h) + 2.5rem) clamp(1.5rem, 4vw, 4rem) 2.5rem var(--edge);
+}
+
+.strategy-cover .section-head__title {
+  max-width: 10ch;
+}
+
+.strategy-cover__lede {
+  max-width: 34ch;
+  color: var(--blanco-suave);
+  font-size: var(--fs-lede);
+  line-height: 1.35;
+}
+
+.strategy-cover__photo {
+  position: relative;
   margin: 0;
   overflow: hidden;
-  clip-path: inset(0 0 0 calc((1 - var(--h)) * 100%));
 }
 
-.insight__hand img {
+.strategy-cover__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 44% 50%;
-  scale: calc(1.18 - var(--h) * 0.18);
+  object-position: 50% 45%;
+  scale: calc(1.14 - var(--o) * 0.14);
+}
+
+.turn__anchor {
+  position: absolute;
+  top: 150svh;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .insight {
+  .turn {
+    --m: 1;
+    --o: 0;
     height: auto;
   }
 
-  .insight__stage {
+  .turn__stage,
+  .turn__front,
+  .turn__back,
+  .insight__panel--left {
     position: relative;
+  }
+
+  .turn__stage {
     height: auto;
+  }
+
+  .insight__panel--left {
     min-height: 100svh;
+    clip-path: none;
+  }
+
+  .insight__panel--right {
+    display: none;
+  }
+
+  .turn__back {
+    min-height: 100svh;
+  }
+
+  .turn__anchor {
+    top: 50%;
   }
 }
 
 @media (max-width: 899px) {
-  .insight {
-    height: 190svh;
+  .turn {
+    height: 240svh;
   }
 
-  .insight__stage {
+  .insight__composition {
+    align-content: center;
+    padding-top: calc(var(--header-h) + 4.5rem);
+  }
+
+  .insight__folio {
+    gap: 1.5rem;
+  }
+
+  .turn__back {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .strategy-cover__text {
     align-content: start;
-    padding-top: calc(var(--header-h) + 5.5rem);
+    padding: calc(var(--header-h) + 1.5rem) var(--edge) 1.5rem;
   }
 
-  .insight__phrase {
-    font-size: 12.2vw;
+  /* En celular la bajada se lee al comienzo de la continuación */
+  .strategy-cover__lede {
+    display: none;
   }
 
-  .insight__hand {
-    position: relative;
-    justify-self: end;
-    width: 72%;
-    height: 34svh;
-    margin-top: 2rem;
-  }
-}
-
-@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
-  .insight {
-    height: auto;
+  .turn__anchor {
+    top: 140svh;
   }
 }

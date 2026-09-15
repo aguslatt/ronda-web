@@ -1,59 +1,55 @@
 /* ==========================================================================
    Proyecto Ronda para Romance · Sistema visual
-   Idea que ordena el diseño: “El mate pasa. La historia avanza.”
-   Paleta tomada del envase y del manual de marca (validar con la marca).
+   Principio de composición: la página hace lugar. Los encuadres se abren,
+   las imágenes ganan espacio y los bloques se desplazan para revelar lo siguiente.
+   Paleta derivada del envase de Romance (validar con la marca).
    ========================================================================== */
+
+/* Tipografías: Clash Display y General Sans se registran en src/fonts.ts */
+
 :root {
-  /* Verdes del envase */
-  --verde-950: #00261a;
-  --verde-900: #013d26; /* banda inferior del envase */
-  --verde-800: #0a4a31;
-  --verde-700: #14532c;
-  --verde-selva: #006456; /* versión digital del logotipo */
-  --hoja: #a6d09f;
+  /* Color: identidad del envase */
+  --verde: #013d26; /* banda inferior */
+  --verde-noche: #00271a;
+  --verde-medio: #0d5a38;
+  --lima: #b9e07f; /* claro de la hoja del medallón */
+  --rojo: #bf031b; /* banda superior */
+  --rojo-oscuro: #93021a;
+  --blanco: #ffffff;
+  --niebla: #eef1ec; /* neutro frío, no beige */
+  --tinta: #0d1a13;
+  --gris: #56625b;
 
-  /* Rojo de la banda superior */
-  --rojo: #bf031b;
-  --rojo-700: #9e0217;
+  --linea: rgba(13, 26, 19, 0.16);
+  --linea-fuerte: rgba(13, 26, 19, 0.7);
+  --linea-clara: rgba(255, 255, 255, 0.28);
+  --blanco-suave: rgba(255, 255, 255, 0.82);
 
-  /* Neutros cálidos */
-  --crema: #f4f2ea;
-  --papel: #faf8f2;
-  --arena: #e6e0cf;
-  --arena-suave: #efeadd;
-  --tinta: #12201a;
-  --tinta-suave: #45524a;
-  --oro: #e5c653;
+  --foco: var(--rojo);
 
-  --linea: rgba(18, 32, 26, 0.16);
-  --linea-fuerte: rgba(18, 32, 26, 0.55);
-  --linea-clara: rgba(244, 242, 234, 0.28);
-  --crema-suave: rgba(244, 242, 234, 0.8);
+  /* Tipografía */
+  --f-display: 'Clash Display', 'Arial Narrow', system-ui, sans-serif;
+  --f-text: 'General Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --foco: var(--verde-selva);
+  --fs-hero: clamp(3.25rem, 1rem + 8.2vw, 9.375rem); /* ≈ 150 px en escritorio grande */
+  --fs-h2: clamp(2.5rem, 1.1rem + 4.4vw, 5.5rem); /* 60–90 px en escritorio */
+  --fs-h3: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+  --fs-body: clamp(1.0625rem, 0.95rem + 0.3vw, 1.25rem); /* 18–20 px en escritorio */
+  --fs-lede: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+  --fs-small: 1rem;
 
-  /* Tipografía: Piazzolla para la voz, Source Sans 3 para la lectura */
-  --f-display: 'Piazzolla', 'Iowan Old Style', Georgia, serif;
-  --f-body: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
-
-  --fs-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --fs-lede: clamp(1.1875rem, 1rem + 0.7vw, 1.625rem);
-  --fs-h3: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
-  /* Los titulares se limitan al ancho de pantalla para no cortarse con texto ampliado */
-  --fs-h2: max(min(clamp(2.5rem, 1.1rem + 4.8vw, 6.25rem), 12.5vw), 2rem);
-
-  /* Espacio y layout */
-  --max: 1320px;
-  --gutter: clamp(1.25rem, 0.5rem + 3.2vw, 3.5rem);
-  --space-section: clamp(5rem, 3rem + 8vw, 11rem);
-  /* Borde de contenido para piezas a sangre: alinea con .wrap */
+  /* Grilla y espacio */
+  --max: 1360px;
+  --gutter: clamp(1.25rem, 0.4rem + 3.4vw, 3.75rem);
   --edge: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
-  --header-h: 4rem;
+  --col-gap: clamp(1rem, 2vw, 2rem);
+  --space-section: clamp(5rem, 3rem + 8vw, 11rem);
+  --header-h: 4.25rem;
 
-  /* Movimiento */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 220ms;
+  /* Movimiento: una curva, dos ritmos */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 200ms;
+  --t-reveal: 700ms;
 }
 
 /* ==========================================================================
@@ -67,7 +63,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--header-h) + 1.25rem);
+  scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -78,13 +74,15 @@ html {
 
 body {
   margin: 0;
-  background: var(--papel);
+  background: var(--blanco);
   color: var(--tinta);
-  font-family: var(--f-body);
+  font-family: var(--f-text);
   font-size: var(--fs-body);
-  line-height: 1.6;
+  font-weight: 400;
+  line-height: 1.5;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
 }
 
 body.menu-open {
@@ -108,10 +106,9 @@ h4 {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 600;
-  line-height: 1.02;
+  line-height: 0.95;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  overflow-wrap: break-word;
 }
 
 p {
@@ -124,23 +121,26 @@ a {
   text-underline-offset: 0.2em;
 }
 
+button {
+  font: inherit;
+}
+
 :focus-visible {
   outline: 3px solid var(--foco);
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
 main:focus {
   outline: none;
 }
 
-.on-dark {
-  --foco: var(--oro);
+.tone-dark {
+  --foco: var(--lima);
 }
 
 ::selection {
-  background: var(--rojo);
-  color: var(--crema);
+  background: var(--lima);
+  color: var(--verde-noche);
 }
 
 /* ==========================================================================
@@ -176,97 +176,109 @@ main:focus {
   left: 0.75rem;
   z-index: 100;
   padding: 0.75rem 1.25rem;
-  background: var(--verde-900);
-  color: var(--crema);
+  background: var(--rojo);
+  color: var(--blanco);
   font-weight: 600;
   transform: translateY(-160%);
-  transition: transform var(--dur) var(--ease);
+  transition: transform var(--t-fast) var(--ease);
 }
 
 .skip-link:focus {
   transform: none;
 }
 
-/* Llamado editorial: texto, subrayado que crece y flecha que avanza */
+/* Llamado principal: bloque recto con flecha que avanza */
 .cta {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  min-height: 2.75rem;
-  padding-block: 0.4rem;
-  color: var(--verde-900);
-  font-size: 1.125rem;
-  font-weight: 700;
+  gap: 1.25rem;
+  min-height: 3.5rem;
+  padding: 0 1.5rem;
+  overflow: hidden;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   text-decoration: none;
+  isolation: isolate;
+  transition: color var(--t-fast) var(--ease);
 }
 
-.cta::after {
+.cta::before {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.2rem;
-  height: 2px;
-  background: currentColor;
-  transform-origin: left;
-  transition:
-    transform 0.45s var(--ease-out),
-    background-color var(--dur) var(--ease);
+  inset: 0;
+  z-index: -1;
+  background: var(--blanco);
+  transform: translateY(101%);
+  transition: transform var(--t-fast) var(--ease);
 }
 
 .cta svg {
-  transition: transform 0.45s var(--ease-out);
+  transition: transform var(--t-fast) var(--ease);
 }
 
 .cta:hover {
   color: var(--rojo);
 }
 
-.cta:hover::after {
-  transform: scaleX(0.35);
+.cta:hover::before {
+  transform: none;
 }
 
 .cta:hover svg {
-  transform: translateY(4px);
+  transform: translateY(3px);
 }
 
-/* Etiqueta breve con filete */
-.kicker {
-  display: flex;
+/* Enlace de texto con subrayado que se completa */
+.text-link {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  margin: 0;
-  color: var(--tinta-suave);
-  font-family: var(--f-body);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 1.3;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  text-decoration: none;
 }
 
-.kicker::before {
+.text-link::after {
   content: '';
-  flex: 0 1 2.5rem;
-  min-width: 1rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.45rem;
   height: 1px;
   background: currentColor;
-  opacity: 0.6;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform var(--t-fast) var(--ease);
 }
 
-.on-dark .kicker {
-  color: var(--crema-suave);
+.text-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Etiqueta breve */
+.label {
+  margin: 0;
+  font-family: var(--f-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
 }
 
 /* Notas metodológicas */
 .note {
-  color: var(--tinta-suave);
-  font-size: 1rem;
+  color: var(--gris);
+  font-size: var(--fs-small);
   line-height: 1.55;
 }
 
-.on-dark .note {
-  color: var(--crema-suave);
+.tone-dark .note {
+  color: var(--blanco-suave);
 }
 
 /* Todo movimiento se apaga con movimiento reducido */

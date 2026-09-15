@@ -7,13 +7,13 @@ import './Investment.css'
 const number = new Intl.NumberFormat('es-AR')
 const money = (value: number) => `ARS ${number.format(value)}`
 
-/** Presupuesto como bandas proporcionales (en diálogo con las bandas del envase) + tabla exacta. */
+/** Presupuesto: bandas proporcionales + tabla con los valores exactos. */
 export function Investment() {
   const [hovered, setHovered] = useState<number | null>(null)
   const bandsRef = useScrollProgress<HTMLDivElement>('enter')
 
   return (
-    <section id={inv.id} className="section investment" aria-labelledby={`${inv.id}-title`}>
+    <section id={inv.id} className="section investment" data-surface="blanco" aria-labelledby={`${inv.id}-title`}>
       <div className="wrap">
         <div className="investment__head">
           <SectionHead number={inv.number} eyebrow={inv.eyebrow} title={inv.title} titleId={`${inv.id}-title`} />
@@ -28,7 +28,7 @@ export function Investment() {
 
         <div className="budget-layout">
           <div className="bands-block">
-            <h3 className="kicker">{inv.distributionTitle}</h3>
+            <h3 className="investment__subhead">{inv.distributionTitle}</h3>
             <div ref={bandsRef} className="bands" aria-hidden="true">
               {inv.items.map((item, index) => (
                 <div
@@ -93,11 +93,13 @@ export function Investment() {
         </div>
 
         <div className="calendar">
-          <h3 className="kicker">{inv.calendarTitle}</h3>
+          <h3 className="investment__subhead">{inv.calendarTitle}</h3>
           <ol className="timeline">
-            {inv.phases.map((phase) => (
+            {inv.phases.map((phase, index) => (
               <li key={phase.name} className={`timeline__item${phase.key ? ' is-key' : ''}`}>
-                <span className="timeline__marker" aria-hidden="true" />
+                <span className="timeline__index" aria-hidden="true">
+                  0{index + 1}
+                </span>
                 <p className="timeline__name">{phase.name}</p>
                 <p className="timeline__when">{phase.when}</p>
               </li>

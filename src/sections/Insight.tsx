@@ -1,51 +1,76 @@
-import { insight as i } from '../content'
+import type { ReactNode } from 'react'
+import { insight as i, strategy as s } from '../content'
+import { SectionHead, withAccent } from '../components/SectionHead'
 import { Picture } from '../components/Picture'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Insight.css'
 
-/** Fragmento marcado: la banda crema avanza con la lectura y el texto pasa a rojo. */
-function Mark({ text, order }: { text: string; order: number }) {
+/** Composición del insight. Se dibuja dos veces: cada copia es una mitad de la lámina roja. */
+function Composition({ decorative = false }: { decorative?: boolean }) {
+  const Folio = decorative ? 'p' : 'h2'
+  const cut = i.marked.indexOf(' lo ')
+  const marked = cut > 0 ? [i.marked.slice(0, cut), i.marked.slice(cut + 1)] : [i.marked]
+
   return (
-    <span className={`mark mark--${order}`}>
-      <span className="mark__base">{text}</span>
-      <span className="mark__fill" aria-hidden="true">
-        {text}
-      </span>
-    </span>
+    <div className="insight__composition">
+      <Folio id={decorative ? undefined : `${i.id}-title`} className="insight__folio">
+        <span>{i.number}</span>
+        <span>{i.eyebrow}</span>
+      </Folio>
+      <p className="insight__phrase">
+        <span className="insight__lead">{i.lines[0]}</span>{' '}
+        <span className="insight__lead">
+          {i.lines[1]} {i.lines[2]}
+        </span>{' '}
+        <span className="insight__mark">
+          <span className="insight__band" aria-hidden="true" />
+          {marked.map((line) => (
+            <span key={line} className="insight__marked">
+              {line}{' '}
+            </span>
+          ))}
+        </span>
+      </p>
+      <p className="insight__note">{i.clarification}</p>
+    </div>
   )
 }
 
-export function Insight() {
-  const runway = useScrollProgress<HTMLElement>('runway', 1)
+/**
+ * Necesidad → respuesta. La lámina roja del insight queda fija; una banda verde
+ * descubre “que alguien lo ofrezca” y luego la lámina se abre en dos para
+ * revelar la respuesta estratégica.
+ */
+export function Turn({ children }: { children: ReactNode }) {
+  const ref = useScrollProgress<HTMLDivElement>('runway', 1)
 
   return (
-    <section ref={runway} id={i.id} className="insight on-dark" aria-labelledby={`${i.id}-title`}>
-      <div className="insight__stage">
-        <h2 id={`${i.id}-title`} className="folio insight__folio">
-          <span className="folio__number" aria-hidden="true">
-            {i.number}
-          </span>
-          <span className="folio__rule" aria-hidden="true" />
-          <span>{i.eyebrow}</span>
-        </h2>
+    <>
+      <div ref={ref} className="turn">
+        <div className="turn__stage">
+          <section id={i.id} className="turn__front tone-dark" aria-labelledby={`${i.id}-title`}>
+            <div className="insight__panel insight__panel--left" data-surface="rojo">
+              <Composition />
+            </div>
+            <div className="insight__panel insight__panel--right" data-surface="rojo" aria-hidden="true">
+              <Composition decorative />
+            </div>
+          </section>
 
-        <p className="insight__phrase">
-          <span className="insight__line">{i.lines[0]}</span>{' '}
-          <span className="insight__line">{i.lines[1]}</span>{' '}
-          <span className="insight__line">
-            {i.lines[2]} <Mark text={i.marked[0]} order={1} />
-          </span>{' '}
-          <span className="insight__line">
-            <Mark text={i.marked[1]} order={2} />
-          </span>
-        </p>
-
-        <p className="insight__note">{i.clarification}</p>
-
-        <figure className="insight__hand">
-          <Picture name={i.image.name} alt={i.image.alt} sizes="(min-width: 900px) 28vw, 70vw" />
-        </figure>
+          <section className="turn__back strategy-cover tone-dark" data-surface="verde" aria-labelledby={`${s.id}-title`}>
+            <div className="strategy-cover__text">
+              <SectionHead number={s.number} eyebrow={s.eyebrow} title={withAccent(s.title, s.titleAccent)} titleId={`${s.id}-title`} />
+              <p className="strategy-cover__lede">{s.text}</p>
+            </div>
+            <figure className="strategy-cover__photo">
+              <Picture name={s.image.name} alt={s.image.alt} sizes="(min-width: 900px) 45vw, 100vw" />
+            </figure>
+          </section>
+        </div>
+        {/* Destino del enlace “Estrategia”: la lámina ya abierta */}
+        <div id={s.id} className="turn__anchor" aria-hidden="true" />
       </div>
-    </section>
+      {children}
+    </>
   )
 }

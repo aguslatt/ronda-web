@@ -12,7 +12,7 @@ interface ImageRef {
 
 export const nav: { label: string; href: string; sections: string[] }[] = [
   { label: 'Hallazgos', href: '#hallazgo', sections: ['hallazgo', 'marca', 'publico', 'insight'] },
-  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'cambio'] },
+  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'estrategia-cont', 'cambio'] },
   { label: 'Activación', href: '#activacion', sections: ['activacion'] },
   { label: 'Inversión', href: '#inversion', sections: ['inversion', 'cierre'] },
 ]
@@ -20,21 +20,19 @@ export const nav: { label: string; href: string; sections: string[] }[] = [
 /* 1 · Portada ------------------------------------------------------------ */
 export const hero = {
   kicker: 'Proyecto Ronda · Propuesta estratégica',
-  titleLines: ['Romance,', 'la yerba que'],
-  titleAccent: 'se ofrece.',
+  title: 'Romance, la yerba que se ofrece.',
+  // Saltos de línea por tamaño de pantalla. Entre asteriscos: color de acento.
+  linesWide: ['Romance,', 'la yerba que', '*se ofrece.*'],
+  linesNarrow: ['Romance,', 'la yerba', 'que *se*', '*ofrece.*'],
   lede: 'Una propuesta para convertir una invitación cotidiana en reconocimiento, prueba y elección de marca.',
   campaign: 'Campaña: abril–junio de 2027',
   cta: { label: 'Explorar la propuesta', href: '#hallazgo' },
-  // Frase de la transición entre la portada y El hallazgo (idea que ordena el diseño)
-  passage: ['El mate pasa.', 'La historia avanza.'],
   image: {
-    name: 'gesto-rio',
-    alt: 'Dos manos se encuentran alrededor de un mate con bombilla, sobre un río de montaña.',
+    name: 'encuentro-rio',
+    alt: 'Dos personas se pasan un mate con bombilla al borde de un río de montaña.',
   } satisfies ImageRef,
-  product: {
-    name: 'romance-tradicional',
-    alt: 'Envase de Yerba Mate Romance Tradicional de 1 kg con su medallón de dos manos que sostienen dos mates.',
-  } satisfies ImageRef,
+  photoCredit: 'Cajón del Azul, El Bolsón · Foto: Camila Seves Espasandin',
+  logo: { name: 'romance-logo-blanco', alt: 'Romance' } satisfies ImageRef,
 }
 
 /* 2 · El hallazgo -------------------------------------------------------- */
@@ -60,10 +58,6 @@ export const findings = {
       'Se complementó con una entrevista en profundidad a una psicóloga clínica.',
     ],
   },
-  image: {
-    name: 'mate-solo',
-    alt: 'Una persona sola sostiene un mate y un termo junto a un río.',
-  } satisfies ImageRef,
 }
 
 /* 3 · La oportunidad de marca ------------------------------------------- */
@@ -74,11 +68,14 @@ export const brand = {
   title: 'El vínculo ya está en la marca. Falta hacerlo visible.',
   text: 'Romance lleva el encuentro en su nombre, su historia y las dos manos de su packaging. La propuesta amplía ese significado hacia amigos, compañeros y familia, asociando la marca con un gesto concreto: ofrecer un mate.',
   anchors: [
-    { label: 'En su nombre', text: 'Una palabra que ya habla de vínculo.' },
-    { label: 'En su historia', text: 'Una empresa familiar de Misiones.' },
-    { label: 'En su packaging', text: 'Dos manos, dos mates y una hoja.' },
+    { label: 'Nombre', text: 'Una palabra que ya habla de vínculo.' },
+    { label: 'Historia', text: 'Una empresa familiar de Misiones.' },
+    { label: 'Packaging', text: 'Dos manos, dos mates y una hoja.' },
   ],
-  product: hero.product,
+  product: {
+    name: 'romance-tradicional',
+    alt: 'Envase de Yerba Mate Romance Tradicional de 1 kg con su medallón de dos manos que sostienen dos mates.',
+  } satisfies ImageRef,
   signLabel: 'En el envase',
   medallion: {
     name: 'romance-medallon',
@@ -137,12 +134,8 @@ export const insight = {
   eyebrow: 'El insight',
   // Se lee: “Lo que me falta no son ganas: es que alguien lo ofrezca.”
   lines: ['Lo que me falta', 'no son ganas:', 'es'],
-  marked: ['que alguien', 'lo ofrezca.'],
+  marked: 'que alguien lo ofrezca.',
   clarification: 'Síntesis del insight estratégico.',
-  image: {
-    name: 'oferta',
-    alt: 'Un joven extiende un mate hacia quien mira, mientras una mano se acerca a recibirlo.',
-  } satisfies ImageRef,
 }
 
 /* 6 · La respuesta estratégica ------------------------------------------ */
@@ -153,7 +146,11 @@ export const strategy = {
   title: 'Hacer de Romance la yerba que se ofrece.',
   titleAccent: 'la yerba que se ofrece.',
   text: 'Construir reconocimiento y significado en cada contacto, y facilitar que esa asociación se convierta en una prueba compartida.',
-  progressionTitle: 'El mate pasa. La historia avanza.',
+  image: {
+    name: 'oferta',
+    alt: 'Un joven extiende un mate hacia quien mira, mientras una mano se acerca a recibirlo.',
+  } satisfies ImageRef,
+  progressionTitle: 'Cómo avanza la propuesta',
   passage: {
     name: 'gesto-ofrecer',
     alt: 'Una misma fotografía dividida en tres ventanas: una mano le pasa un mate a otra.',
@@ -234,36 +231,45 @@ export const activation = {
   number: '07',
   eyebrow: 'Cómo se activa',
   title: 'Una misma idea. Distintas ocasiones para ofrecer.',
+  imageNote: 'Imagen de referencia. No es una pieza de la campaña.',
   channels: [
     {
       name: 'Streaming',
       detail: 'Luzu TV y Olga',
       role: 'Mostrar el gesto',
       text: 'Integrar el producto al gesto de ofrecer en programas y segmentos propuestos.',
+      image: {
+        name: 'gesto-rio',
+        alt: 'Dos manos se pasan un mate con bombilla.',
+      } satisfies ImageRef,
     },
     {
       name: 'Instagram',
       detail: null,
       role: 'Sostener',
       text: 'Sostener el mensaje y la relación con la comunidad.',
+      image: brand.gesture,
     },
     {
       name: 'TikTok y creadores',
       detail: null,
       role: 'Descubrir',
       text: 'Generar descubrimiento, catas y recomendación.',
+      image: audience.scenes[1].image,
     },
     {
       name: 'Activaciones y punto de venta',
       detail: null,
       role: 'Probar y comprar',
       text: 'Facilitar prueba y compra.',
+      image: strategy.supports[0].image,
     },
     {
       name: 'Web y WhatsApp',
       detail: null,
       role: 'Continuar',
       text: 'Dar continuidad a las invitaciones y promociones.',
+      image: audience.scenes[2].image,
     },
   ],
   note: 'Canales y acciones propuestos. Sujetos a evaluación y acuerdos comerciales.',
@@ -304,10 +310,8 @@ export const closing = {
     { name: 'Andrea Gutiérrez', role: 'Planificación estratégica y medios' },
     { name: 'Agustina Lattanzi', role: 'Dirección creativa y comunicación digital' },
   ],
-  image: {
-    name: 'encuentro-rio',
-    alt: 'Dos personas se pasan un mate con bombilla junto a un río de montaña.',
-  } satisfies ImageRef,
+  image: hero.image,
+  logo: hero.logo,
   // Cuando exista el brief final, agregar aquí su ruta (por ejemplo './brief-ronda.pdf')
   // y colocar el archivo en /public. El botón de descarga aparece automáticamente.
   briefUrl: null as string | null,
@@ -320,9 +324,9 @@ export const credits = {
   brandAssets:
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
+  type: 'Tipografías: Clash Display y General Sans (Indian Type Foundry, Fontshare).',
   photos: [
     { author: 'Camila Seves Espasandin', source: 'Unsplash', url: 'https://unsplash.com/@camilaespasandin' },
-    { author: 'Malen Almonacid Trossi', source: 'Unsplash', url: 'https://unsplash.com/@malentrossi' },
     { author: 'Eduard Perez', source: 'Pexels', url: 'https://www.pexels.com/photo/university-student-holding-mate-in-classroom-37795319/' },
     { author: 'Guillermo Berlin', source: 'Pexels', url: 'https://www.pexels.com/photo/33152241/' },
     { author: 'Crisher P.H.', source: 'Pexels', url: 'https://www.pexels.com/photo/couple-eating-breakfast-in-a-mountain-valley-15082054/' },

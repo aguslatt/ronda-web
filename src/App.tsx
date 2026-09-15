@@ -1,9 +1,9 @@
 import { Header } from './components/Header'
-import { Hero } from './sections/Hero'
+import { Opening } from './sections/Hero'
 import { Findings } from './sections/Findings'
 import { Brand } from './sections/Brand'
 import { Audience } from './sections/Audience'
-import { Insight } from './sections/Insight'
+import { Turn } from './sections/Insight'
 import { Strategy } from './sections/Strategy'
 import { Change } from './sections/Change'
 import { Activation } from './sections/Activation'
@@ -19,12 +19,16 @@ export default function App() {
       </a>
       <Header />
       <main id="contenido" tabIndex={-1}>
-        <Hero />
-        <Findings />
+        {/* La portada queda fija y El hallazgo entra como una lámina sobre la fotografía */}
+        <Opening>
+          <Findings />
+        </Opening>
         <Brand />
         <Audience />
-        <Insight />
-        <Strategy />
+        {/* El insight se abre para revelar la respuesta estratégica */}
+        <Turn>
+          <Strategy />
+        </Turn>
         <Change />
         <Activation />
         <Investment />

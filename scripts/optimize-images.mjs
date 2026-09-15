@@ -14,7 +14,7 @@ const MANIFEST = path.join(root, 'src', 'data', 'images.generated.json')
 const jobs = [
   // Fotografías de contexto (Unsplash y Pexels, licencias de uso libre)
   { name: 'gesto-rio', file: 'gesto-rio.jpg', widths: [640, 1080, 1600] },
-  { name: 'mate-solo', file: 'mate-solo.jpg', widths: [480, 900] },
+  { name: 'romance-logo-blanco', file: 'romance-logo-blanco.png', widths: [277], quality: 92 },
   { name: 'estudio', file: 'estudio.jpg', widths: [640, 1080, 1600] },
   { name: 'pausa', file: 'pausa.jpg', widths: [640, 1080, 1600] },
   { name: 'independencia', file: 'independencia.jpg', widths: [640, 1080, 1600] },

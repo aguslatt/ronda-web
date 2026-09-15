@@ -1,38 +1,39 @@
 import { closing as c } from '../content'
 import { Picture } from '../components/Picture'
-import { ArrowDownIcon } from '../components/Icons'
+import { ArrowDownIcon, ArrowUpIcon } from '../components/Icons'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Closing.css'
 
 /**
- * Cierre: la portada empezó con dos manos; acá el encuadre se abre
- * y aparece la escena completa del encuentro.
+ * Cierre: vuelve la composición de la portada (fotografía, titular y logo)
+ * y el encuadre se abre hasta mostrar el encuentro completo.
  */
 export function Closing() {
-  const runway = useScrollProgress<HTMLDivElement>('runway', 1)
+  const stageRef = useScrollProgress<HTMLDivElement>('enter')
 
   return (
-    <section id={c.id} className="closing on-dark" aria-labelledby={`${c.id}-title`}>
+    <section id={c.id} className="closing tone-dark" data-surface="verde" aria-labelledby={`${c.id}-title`}>
       <h2 id={`${c.id}-title`} className="sr-only">
         Cierre
       </h2>
 
-      <div ref={runway} className="closing__runway">
-        <div className="closing__stage">
-          <p className="closing__lines">
-            {c.lines.map((line) => (
-              <span key={line} className="closing__line">
-                {line}{' '}
-              </span>
-            ))}
-          </p>
-          <figure className="closing__photo">
-            <Picture name={c.image.name} alt={c.image.alt} sizes="(min-width: 900px) 60vw, 100vw" />
-          </figure>
+      <div ref={stageRef} className="closing__stage">
+        <figure className="closing__photo">
+          <Picture name={c.image.name} alt={c.image.alt} sizes="100vw" />
+        </figure>
+        <p className="closing__lines">
+          {c.lines.map((line, index) => (
+            <span key={line} className={`closing__line${index === 1 ? ' closing__line--accent' : ''}`}>
+              {line}{' '}
+            </span>
+          ))}
+        </p>
+        <div className="closing__logo">
+          <Picture name={c.logo.name} alt={c.logo.alt} sizes="200px" />
         </div>
       </div>
 
-      <div className="wrap closing__signature">
+      <div className="closing__signature">
         <p className="closing__project">{c.project}</p>
         <ul className="closing__team">
           {c.team.map((member) => (
@@ -45,12 +46,18 @@ export function Closing() {
             </li>
           ))}
         </ul>
-        {c.briefUrl && (
-          <a className="cta closing__brief" href={c.briefUrl} download>
-            Descargar el brief completo
-            <ArrowDownIcon />
+        <div className="closing__links">
+          {c.briefUrl && (
+            <a className="cta" href={c.briefUrl} download>
+              Descargar el brief completo
+              <ArrowDownIcon />
+            </a>
+          )}
+          <a className="text-link" href="#inicio">
+            Volver al inicio
+            <ArrowUpIcon />
           </a>
-        )}
+        </div>
       </div>
     </section>
   )
