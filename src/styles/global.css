@@ -45,7 +45,7 @@
 
   --fs-hero: clamp(3.25rem, 0.9rem + 7.4vw, 8.75rem);
   --fs-impact: clamp(2.5rem, 1rem + 5vw, 6.5rem); /* insight y cierre */
-  --fs-h2: clamp(2rem, 1.3rem + 2.2vw, 3.5rem); /* titulares secundarios contenidos */
+  --fs-h2: clamp(2rem, 1.4rem + 1.6vw, 3rem); /* titulares de capítulo sobre la escena */
   --fs-h3: clamp(1.3125rem, 1.1rem + 0.7vw, 1.75rem);
   --fs-body: clamp(1rem, 0.96rem + 0.15vw, 1.125rem);
   --fs-lede: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
@@ -87,7 +87,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--claro);
+  background: #03100a;
   color: var(--tinta);
   font-family: var(--f-text);
   font-size: var(--fs-body);
@@ -145,6 +145,12 @@ button {
 
 main:focus {
   outline: none;
+}
+
+/* El contenido recorre la página por delante de la escena fija */
+main {
+  position: relative;
+  z-index: 1;
 }
 
 .tone-dark {

@@ -1,271 +1,91 @@
 /* ==========================================================================
-   La oportunidad de marca · envase + ampliación del medallón
+   La oportunidad de marca · el envase en primer plano
    ========================================================================== */
-.brand {
-  overflow: hidden;
-  background: var(--claro);
-}
-
-.brand__grid {
+.anchors {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: center;
-}
-
-.brand__copy {
-  display: grid;
-  gap: clamp(1.25rem, 2.5vw, 1.75rem);
-}
-
-.brand__text {
-  max-width: 44ch;
-  font-size: var(--fs-lede);
-  line-height: 1.45;
-}
-
-.brand__anchors {
-  display: grid;
-  margin: 0.75rem 0 0;
+  margin: 0;
   padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   list-style: none;
 }
 
-.brand__anchor {
+.anchor {
   display: grid;
-  grid-template-columns: 2.25rem minmax(7rem, 0.8fr) minmax(0, 1.4fr);
-  gap: 0.25rem 1rem;
+  grid-template-columns: 2.25rem 7rem minmax(0, 1fr);
+  gap: 0.75rem;
   align-items: baseline;
-  padding-block: 0.9rem;
-  border-top: 1px solid var(--linea);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.brand__anchor-number {
-  color: var(--rojo);
+.anchor__number {
+  color: var(--lima);
   font-size: 0.8125rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
-.brand__anchor-label {
+.anchor__label {
   font-family: var(--f-display);
-  font-size: var(--fs-h3);
+  font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.1;
 }
 
-.brand__anchor-text {
-  color: var(--gris);
+.anchor__text {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.9375rem;
+  line-height: 1.4;
 }
 
-.brand__figure {
+.seal {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-self: start;
   margin: 0;
+  padding: 0.7rem 1.2rem 0.7rem 0.7rem;
 }
 
-/* Escenario cuadrado: las posiciones salen de la geometría de Brand.tsx */
-.brand-stage {
-  position: relative;
-  width: min(100%, 44rem);
-  aspect-ratio: 1;
-  margin-inline: auto;
-}
-
-/* Luz difusa detrás del envase: separa el objeto del fondo */
-.brand-stage__glow {
-  position: absolute;
-  inset: 8% 20% -2% -18%;
-  border-radius: 50%;
-  background:
-    radial-gradient(closest-side at 45% 55%, rgba(185, 224, 127, 0.75), rgba(185, 224, 127, 0.28) 55%, transparent),
-    radial-gradient(closest-side at 60% 40%, rgba(63, 143, 90, 0.22), transparent);
-  filter: blur(8px);
-}
-
-.brand-stage__pack {
-  position: absolute;
-  left: var(--pack-left);
-  bottom: var(--pack-bottom);
-  z-index: 1;
-  width: var(--pack-width);
-}
-
-.brand-stage__pack img {
-  width: 100%;
-  filter: drop-shadow(0 18px 22px rgba(0, 25, 15, 0.22));
-}
-
-.brand-stage__shadow {
-  left: calc(var(--pack-left) + 2%);
-  bottom: calc(var(--pack-bottom) - 2.2%);
-  width: calc(var(--pack-width) - 2%);
-  height: 6%;
-}
-
-.brand-stage__guides {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.guide {
-  fill: none;
-  stroke: var(--verde);
-  stroke-width: 1.5px;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.guide--ring {
-  stroke: var(--blanco);
-  stroke-width: 3px;
-  filter: drop-shadow(0 1px 2px rgba(0, 25, 15, 0.45));
-}
-
-.guide--line {
-  stroke-dasharray: 0.02 0.018;
-  opacity: 0.7;
-}
-
-/* Ampliación: círculo con aro blanco y sombra que cae hacia abajo a la derecha */
-.brand-stage__lens {
-  position: absolute;
-  top: var(--lens-top);
-  left: var(--lens-left);
-  z-index: 3;
-  width: var(--lens-size);
+.seal__lens {
+  flex: none;
+  width: 4.5rem;
   aspect-ratio: 1;
   overflow: hidden;
-  border: clamp(0.35rem, 0.8vw, 0.6rem) solid var(--blanco);
   border-radius: 50%;
-  background: var(--blanco);
-  box-shadow: var(--sombra-flotante);
+  box-shadow:
+    0 0 0 3px var(--blanco),
+    0 0 0 4px var(--linea);
 }
 
-.brand-stage__lens img {
+.seal__lens img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.brand__caption {
-  display: grid;
-  gap: 0.2rem;
-  max-width: 40ch;
-  margin: 1rem 0 0 auto;
-  color: var(--gris);
+.seal__caption {
+  max-width: 34ch;
   font-size: 0.9375rem;
-  line-height: 1.45;
-  text-align: right;
+  line-height: 1.35;
 }
 
-.brand__caption-label {
-  color: var(--tinta);
+.seal__label {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--verde);
+  font-size: 0.6875rem;
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Entrada: primero el envase, después el encuadre del medallón y la ampliación */
-@media (prefers-reduced-motion: no-preference) {
-  .brand-stage__pack {
-    opacity: 0;
-    translate: 0 2.5rem;
-    transition:
-      opacity 600ms var(--ease),
-      translate 800ms var(--ease);
-  }
-
-  .brand-stage__shadow {
-    opacity: 0;
-    scale: 0.7 1;
-    transition:
-      opacity 600ms var(--ease) 150ms,
-      scale 800ms var(--ease) 150ms;
-  }
-
-  .guide--ring {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 500ms var(--ease) 650ms;
-  }
-
-  .guide--line {
-    opacity: 0;
-    transition: opacity 400ms var(--ease) 950ms;
-  }
-
-  /* La ampliación nace del medallón del envase, girando apenas como un lente que se enfoca */
-  .brand-stage__lens {
-    opacity: 0;
-    scale: 0.32;
-    rotate: -14deg;
-    transform-origin: var(--lens-origin-x) var(--lens-origin-y);
-    transition:
-      opacity 350ms var(--ease) 950ms,
-      scale 900ms var(--ease) 950ms,
-      rotate 1100ms var(--ease) 950ms;
-  }
-
-  .brand-stage__lens img {
-    scale: 1.35;
-    filter: blur(6px);
-    transition:
-      scale 1400ms var(--ease) 1000ms,
-      filter 900ms var(--ease) 1050ms;
-  }
-
-  .is-in .brand-stage__lens {
-    rotate: 0deg;
-  }
-
-  .is-in .brand-stage__lens img {
-    scale: 1;
-    filter: none;
-  }
-
-  .brand__caption {
-    opacity: 0;
-    transition: opacity 500ms var(--ease) 1400ms;
-  }
-
-  .is-in .brand-stage__pack,
-  .is-in .brand-stage__shadow,
-  .is-in .brand-stage__lens {
-    opacity: 1;
-    translate: 0 0;
-    scale: 1;
-  }
-
-  .is-in .guide--ring {
-    stroke-dashoffset: 0;
-  }
-
-  .is-in .guide--line {
-    opacity: 0.7;
-  }
-
-  .brand__figure:has(.is-in) .brand__caption {
-    opacity: 1;
-  }
-}
-
-@media (max-width: 899px) {
-  .brand__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .brand__anchor {
+@media (max-width: 600px) {
+  .anchor {
     grid-template-columns: 2rem minmax(0, 1fr);
   }
 
-  .brand__anchor-text {
+  .anchor__text {
     grid-column: 2;
-  }
-
-  .brand__caption {
-    margin-left: 0;
-    text-align: left;
   }
 }

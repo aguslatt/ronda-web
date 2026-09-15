@@ -12,7 +12,6 @@ import './Header.css'
 export function Header() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
-  const [surface, setSurface] = useState('claro')
   const toggleRef = useRef<HTMLButtonElement>(null)
   const headerRef = useRef<HTMLElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
@@ -33,18 +32,6 @@ export function Header() {
         return rect ? rect.top <= probe && rect.bottom > probe : false
       })
       setActive(nav.find((item) => current && item.sections.includes(current))?.href ?? null)
-
-      // La superficie más profunda (última en el documento) debajo del centro de la barra
-      const line = 34
-      const center = window.innerWidth / 2
-      let next = 'claro'
-      document.querySelectorAll<HTMLElement>('[data-surface]').forEach((element) => {
-        const rect = element.getBoundingClientRect()
-        if (rect.top <= line && rect.bottom > line && rect.left <= center && rect.right > center) {
-          next = element.dataset.surface ?? next
-        }
-      })
-      setSurface(next)
     }
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -88,7 +75,7 @@ export function Header() {
   const close = () => setOpen(false)
 
   return (
-    <header ref={headerRef} className={`site-header surface-${open ? 'verde' : surface}${open ? ' is-open' : ''}`}>
+    <header ref={headerRef} className={`site-header surface-escena${open ? ' is-open' : ''}`}>
       <span className="site-header__progress" aria-hidden="true" />
       <div className="site-header__bar">
         <a

@@ -1,18 +1,13 @@
 /* ==========================================================================
    Cómo se activa · canales, función documentada y aplicación propuesta
    ========================================================================== */
+/* Sobre la mesa en penumbra: la lista de canales y el boceto propuesto van en placas */
 .activation {
-  background:
-    radial-gradient(70% 60% at 85% 20%, rgba(63, 143, 90, 0.45), transparent 70%),
-    linear-gradient(180deg, var(--verde) 0%, var(--verde-noche) 100%);
   color: var(--blanco);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .activation {
-    --q: calc(1 - var(--e, 1));
-    clip-path: inset(0 calc(var(--q) * var(--gutter)) 0 round calc(var(--q) * var(--radio-l) * 1.6) calc(var(--q) * var(--radio-l) * 1.6) 0 0);
-  }
+.activation .chapter__panel {
+  gap: 0;
 }
 
 .activation__head {
@@ -95,7 +90,12 @@
   display: grid;
   gap: 0.35rem;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
+  border-radius: var(--radio-l);
+  background: rgba(4, 22, 14, 0.64);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
   list-style: none;
 }
 
@@ -356,7 +356,9 @@
 }
 
 .info-card--sketch {
-  background: rgba(185, 224, 127, 0.06);
+  background: rgba(4, 22, 14, 0.7);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
   color: var(--blanco);
   box-shadow: inset 0 0 0 1.5px rgba(185, 224, 127, 0.35);
   outline: 1.5px dashed rgba(185, 224, 127, 0.55);
@@ -531,6 +533,36 @@
   border: 0;
 }
 
+/* Cerrar siempre visible, arriba a la derecha, además del botón del panel */
+.lightbox__x {
+  position: fixed;
+  top: clamp(0.75rem, 2vw, 1.25rem);
+  right: clamp(0.75rem, 2vw, 1.25rem);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--blanco);
+  color: var(--verde-noche);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    scale var(--t-fast) var(--ease);
+}
+
+.lightbox__x:hover {
+  background: var(--lima);
+}
+
+.lightbox__x:active {
+  scale: 0.94;
+}
+
 .lightbox__close {
   min-height: 2.75rem;
   margin-left: auto;
@@ -568,6 +600,11 @@
     margin-inline: calc(var(--gutter) * -1);
     padding: 0.25rem var(--gutter) 0.5rem;
     overflow-x: auto;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     scrollbar-width: none;
   }
 

@@ -1,18 +1,22 @@
 .section-head {
   display: grid;
   justify-items: start;
-  gap: clamp(1rem, 2vw, 1.5rem);
+  gap: clamp(0.85rem, 1.8vw, 1.25rem);
 }
 
-/* Etiqueta: número en una píldora + nombre del capítulo */
+.chapter--center .section-head {
+  justify-items: center;
+}
+
+/* Etiqueta de capítulo: número en una píldora + nombre, en lima sobre la escena */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
   margin: 0;
-  color: var(--verde);
+  color: var(--lima);
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.2;
 }
@@ -23,18 +27,23 @@
   min-width: 2.25rem;
   height: 1.625rem;
   padding-inline: 0.5rem;
-  border: 1px solid currentColor;
+  border: 1px solid rgba(185, 224, 127, 0.55);
   border-radius: 999px;
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
 
-.tone-dark .eyebrow {
-  color: var(--lima);
+.eyebrow::after {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
 }
 
 .section-head__title {
-  max-width: 19ch;
+  max-width: 18ch;
+  color: var(--blanco);
   font-size: var(--fs-h2);
   font-weight: 600;
   line-height: 1;
@@ -42,9 +51,5 @@
 }
 
 .section-head__title .accent {
-  color: var(--rojo);
-}
-
-.tone-dark .section-head__title .accent {
   color: var(--lima);
 }

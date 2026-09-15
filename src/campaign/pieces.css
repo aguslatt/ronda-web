@@ -26,6 +26,101 @@
   object-fit: cover;
 }
 
+/* Cierre de marca: logotipo auténtico + claim, siempre en ese orden y con la misma jerarquía */
+.cp-signoff {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  line-height: 1.1;
+}
+
+.cp-signoff__logo {
+  flex: none;
+  width: 4.6em;
+  height: auto;
+}
+
+.cp-signoff__claim {
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Historia: placa final blanca sobre el degradado inferior */
+.cp-signoff--story {
+  position: absolute;
+  left: 6cqw;
+  right: 6cqw;
+  bottom: 4cqh;
+  z-index: 3;
+  padding: 1.6cqh 3.5cqw;
+  border-radius: 4cqw;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 4.4cqw;
+  box-shadow: 0 1cqh 3cqh rgba(0, 0, 0, 0.3);
+}
+
+.cp-signoff--story .cp-signoff__logo {
+  width: 30cqw;
+}
+
+/* Streaming: placa de marca a la derecha del zócalo, alineada a su base */
+.cp-signoff--stream {
+  position: absolute;
+  right: 4cqw;
+  bottom: 3.5cqw;
+  z-index: 2;
+  padding: 0.9cqw 1.6cqw;
+  border-radius: 1.4cqw;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--verde);
+  font-size: 1.7cqw;
+  box-shadow: 0 1cqw 3cqw rgba(0, 0, 0, 0.35);
+}
+
+.cp-signoff--stream .cp-signoff__logo {
+  width: 9cqw;
+}
+
+/* TikTok: cierre sobre el degradado, antes de la barra de progreso */
+.cp-signoff--tiktok {
+  justify-self: start;
+  padding: 1cqh 3cqw;
+  border-radius: 3cqw;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--verde);
+  font-size: 3.6cqw;
+}
+
+.cp-signoff--tiktok .cp-signoff__logo {
+  width: 22cqw;
+}
+
+/* Góndola: el zócalo del estante firma con logotipo y claim */
+.cp-signoff--shelf {
+  gap: 2cqw;
+  color: var(--blanco);
+  font-size: 2.5cqw;
+}
+
+.cp-signoff--shelf .cp-signoff__logo {
+  width: 13cqw;
+}
+
+/* Invitación: cierre dentro de la tarjeta, separado por una línea */
+.cp-signoff--invite {
+  margin: 0.8cqh 2cqw 0;
+  padding-top: 1.4cqh;
+  border-top: 1px solid var(--linea);
+  color: var(--verde);
+  font-size: 3.6cqw;
+}
+
+.cp-signoff--invite .cp-signoff__logo {
+  width: 22cqw;
+}
+
 /* Envase apoyado: la base coincide con la superficie; dos sombras (contacto y proyectada) */
 .cp-pack {
   position: absolute;
@@ -208,7 +303,7 @@
   position: absolute;
   left: 6cqw;
   right: 6cqw;
-  bottom: 4cqh;
+  bottom: 12.5cqh;
   z-index: 3;
   color: var(--lima);
   font-family: var(--f-display);

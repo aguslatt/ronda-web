@@ -1,5 +1,5 @@
 import type { JSX } from 'react'
-import { activation, brand, campaign as c } from '../content'
+import { activation, brand, campaign as c, hero } from '../content'
 import { Picture } from '../components/Picture'
 import './pieces.css'
 
@@ -13,6 +13,19 @@ function Seal({ className = '' }: { className?: string }) {
   return (
     <span className={`cp-seal ${className}`}>
       <Picture name={brand.medallion.name} alt="" sizes="64px" />
+    </span>
+  )
+}
+
+/**
+ * Cierre de marca de cada pieza: logotipo auténtico de Romance + claim. Es la última
+ * lectura de todas las piezas, con la misma jerarquía en cada soporte.
+ */
+function SignOff({ className = '' }: { className?: string }) {
+  return (
+    <span className={`cp-signoff ${className}`}>
+      <Picture name={hero.logo.name} alt={hero.logo.alt} sizes="160px" className="cp-signoff__logo" />
+      <span className="cp-signoff__claim">{c.claim}</span>
     </span>
   )
 }
@@ -47,11 +60,8 @@ function StoryPiece() {
           <em>Publicidad</em>
         </span>
         <p className="cp-story__question">¿Unos mates?</p>
-        <span className="cp-story__sticker">
-          <Seal className="cp-seal--sticker" />
-          <span>{c.claim}</span>
-        </span>
         <p className="cp-story__idea">{c.idea}</p>
+        <SignOff className="cp-signoff--story" />
       </div>
     </div>
   )
@@ -68,8 +78,8 @@ function StreamingPiece() {
         <span className="cp-stream__lower">
           <Seal />
           <strong>¿Unos mates?</strong>
-          <span>{c.claim}</span>
         </span>
+        <SignOff className="cp-signoff--stream" />
       </div>
       <span className="cp-monitor__stand" />
       <span className="cp-media">
@@ -117,6 +127,7 @@ function TikTokPiece() {
           </span>
           <strong className="cp-tiktok__question">¿Unos mates?</strong>
           <span className="cp-tiktok__caption">Creador/a invitado/a · #Publicidad</span>
+          <SignOff className="cp-signoff--tiktok" />
           <span className="cp-tiktok__progress" />
         </div>
       </div>
@@ -144,7 +155,7 @@ function PdvPiece() {
           <Pack className="cp-pack--shelf" />
         </div>
         <span className="cp-shelf__plank">
-          <span>{c.claim}</span>
+          <SignOff className="cp-signoff--shelf" />
         </span>
         <span className="cp-shelf__wobbler">
           Un gesto
@@ -176,7 +187,7 @@ function InvitePiece() {
             <strong className="cp-invite__question">¿Unos mates?</strong>
             <span className="cp-invite__text">Yo llevo la Romance.</span>
             <span className="cp-invite__button">Me sumo</span>
-            <span className="cp-invite__claim">{c.claim}</span>
+            <SignOff className="cp-signoff--invite" />
           </div>
           <span className="cp-chat__reply">¡Dale! Llevo el termo.</span>
         </div>

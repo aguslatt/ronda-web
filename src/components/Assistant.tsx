@@ -68,7 +68,7 @@ export function Assistant() {
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
     const selectors =
-      '.closing__signature, .site-footer, .budget-panel, .legend-list, .table-card, .timeline, .channel-cards, .stage__bar, .faq__ask, .explore__panel, .explore__foot, .total'
+      '.closing__signature, .site-footer, .budget-panel, .legend-list, .table-card, .timeline, .channel-cards, .stage__bar, .faq__ask, .explore__panel, .explore__foot, .total, .sheet, .channels, .opening__actions'
     let observer: IntersectionObserver | null = null
     const visible = new Set<Element>()
     const setup = () => {

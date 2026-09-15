@@ -1,0 +1,69 @@
+/* La escena queda fija detrás del contenido */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(90% 70% at 55% 60%, #0b2a1b 0%, #03100a 70%);
+  pointer-events: none;
+}
+
+.scene__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1000ms var(--ease);
+}
+
+.scene.is-ready .scene__canvas {
+  opacity: 1;
+}
+
+.scene.is-fallback .scene__canvas {
+  display: none;
+}
+
+.scene__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 700ms var(--ease);
+}
+
+.scene__poster.is-current {
+  opacity: 1;
+}
+
+/* Contraste para leer: el lado del texto se oscurece según el encuadre (lo calcula la escena) */
+.scene__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(2, 10, 6, calc(0.8 * var(--scrim-left, 0))) 0%, rgba(2, 10, 6, calc(0.55 * var(--scrim-left, 0))) 34%, transparent 60%),
+    linear-gradient(270deg, rgba(2, 10, 6, calc(0.8 * var(--scrim-right, 0))) 0%, rgba(2, 10, 6, calc(0.55 * var(--scrim-right, 0))) 34%, transparent 60%),
+    linear-gradient(0deg, rgba(2, 10, 6, calc(0.88 * var(--scrim-bottom, 0))) 0%, rgba(2, 10, 6, calc(0.62 * var(--scrim-bottom, 0))) 46%, transparent 66%),
+    linear-gradient(180deg, rgba(2, 10, 6, calc(0.75 * var(--scrim-top, 0))) 0%, rgba(2, 10, 6, calc(0.45 * var(--scrim-top, 0))) 40%, transparent 62%),
+    radial-gradient(125% 95% at 50% 45%, transparent 55%, rgba(0, 6, 3, 0.55) 100%),
+    rgba(2, 10, 6, calc(0.72 * var(--scene-dim, 0)));
+}
+
+/* Grano fotográfico fijo, muy sutil */
+.scene__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Modo render fijo (?shot=clave): solo la escena, para generar los renders de respaldo */
+.scene-poster :is(.site-header, main, .site-footer, .assistant-launcher, .chapter-rail, .chapter-sheet, .scene-caption, .brand-cursor, .skip-link),
+.scene-poster .scene__scrim,
+.scene-poster .scene__grain {
+  visibility: hidden;
+}

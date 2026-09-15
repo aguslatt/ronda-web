@@ -16,6 +16,7 @@ export function Footer() {
             </a>
             .
           </p>
+          <p>{credits.scene}</p>
           <p>{credits.media}</p>
           <p>{credits.yerba}</p>
           <p>

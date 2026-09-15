@@ -1,4 +1,6 @@
 .site-footer {
+  position: relative;
+  z-index: 1;
   padding: clamp(2.5rem, 5vw, 3.5rem) var(--edge);
   background: var(--verde-noche);
   color: var(--blanco-suave);

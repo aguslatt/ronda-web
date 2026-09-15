@@ -12,9 +12,27 @@ interface ImageRef {
 
 export const nav: { label: string; href: string; sections: string[] }[] = [
   { label: 'Hallazgos', href: '#hallazgo', sections: ['hallazgo', 'marca', 'publico', 'insight'] },
-  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'estrategia-cont', 'cambio'] },
+  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'cambio'] },
   { label: 'Activación', href: '#activacion', sections: ['activacion'] },
   { label: 'Inversión', href: '#inversion', sections: ['inversion', 'preguntas', 'cierre'] },
+]
+
+/*
+ * Capítulos del recorrido y lo que cambia en la mesa en cada uno.
+ * La escena empieza con una persona sola y termina en una ronda compartida.
+ */
+export const chapters = [
+  { id: 'inicio', shot: 'apertura', number: '00', label: 'Apertura', scene: 'Una persona sola: un mate, el termo y la notebook abierta.' },
+  { id: 'hallazgo', shot: 'hallazgo', number: '01', label: 'El hallazgo', scene: 'La mesa es grande y está casi vacía.' },
+  { id: 'marca', shot: 'marca', number: '02', label: 'La marca', scene: 'El envase de Romance: dos manos que sostienen dos mates.' },
+  { id: 'publico', shot: 'publico', number: '03', label: 'El público', scene: 'Los lugares alrededor de la mesa siguen libres.' },
+  { id: 'insight', shot: 'insight', number: '04', label: 'El insight', scene: 'Se cierra la pantalla y el mate cruza la mesa.' },
+  { id: 'estrategia', shot: 'estrategia', number: '05', label: 'La estrategia', scene: 'Romance va al centro y llega el primer mate de la ronda.' },
+  { id: 'cambio', shot: 'cambio', number: '06', label: 'Objetivos', scene: 'Se ocupan más lugares.' },
+  { id: 'activacion', shot: 'activacion', number: '07', label: 'Activación', scene: 'La ronda sigue creciendo mientras se activan los canales.' },
+  { id: 'inversion', shot: 'inversion', number: '08', label: 'Inversión', scene: 'Vista desde arriba: una mesa repartida.' },
+  { id: 'preguntas', shot: 'preguntas', number: '09', label: 'Preguntas', scene: 'Casi todos los lugares tienen su mate.' },
+  { id: 'cierre', shot: 'cierre', number: '10', label: 'La ronda', scene: 'La ronda compartida: seis mates alrededor de Romance.' },
 ]
 
 /* 1 · Portada ------------------------------------------------------------ */
@@ -479,7 +497,7 @@ export const campaign = {
 /* 9 · Inversión y calendario -------------------------------------------- */
 export const investment = {
   id: 'inversion',
-  number: '09',
+  number: '08',
   eyebrow: 'Inversión y calendario',
   title: 'Una inversión para construir marca y generar prueba.',
   totalLabel: 'Inversión estimada',
@@ -673,7 +691,7 @@ export const assistant = {
 
 export const faqSection = {
   id: 'preguntas',
-  number: '10',
+  number: '09',
   eyebrow: 'Preguntas frecuentes',
   title: 'Lo que la tesis responde.',
   text: 'Respuestas breves con la página de la tesis donde se desarrolla cada tema.',
@@ -690,6 +708,8 @@ export const credits = {
     'Romance, su logotipo, su packaging y sus fotografías de producto pertenecen a Gerula S.A. y se reproducen desde su sitio oficial con fines académicos.',
   brandUrl: 'https://yerbamateromance.com.ar/',
   type: 'Tipografías: Clash Display y General Sans (Indian Type Foundry, Fontshare).',
+  scene:
+    'Escena 3D en tiempo real construida para este proyecto: mesa, mates, termo, bombillas y notebook son modelos hechos en código; el envase de Romance usa la imagen oficial con corrección de perspectiva (esa imagen muestra solo el frente y un lateral: el dorso y el otro lateral los repiten).',
   yerba:
     'Fragmentos de yerba de la portada: recortes de fotografías de Wikimedia Commons de soultea.de/André Helbig, Lucash y Mariano-J (CC BY-SA 3.0); los recortes se comparten con la misma licencia.',
   media:

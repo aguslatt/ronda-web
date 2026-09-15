@@ -1,15 +1,28 @@
 /* ==========================================================================
    Inversión y calendario · presupuesto explorable
    ========================================================================== */
-.investment {
-  background: var(--claro);
-}
-
+/* Vista cenital de la mesa a la derecha; título y total sobre la escena, módulo en una hoja */
 .investment__head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 2rem clamp(2rem, 5vw, 5rem);
+  gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
   align-items: end;
+}
+
+.total .note {
+  color: var(--gris);
+}
+
+.investment__sheet {
+  padding: clamp(1.1rem, 2.6vw, 2rem);
+}
+
+.investment__sheet .table-card {
+  box-shadow: 0 0 0 1px var(--linea);
+}
+
+.investment__sheet .timeline__item:not(.is-key) {
+  box-shadow: 0 0 0 1px var(--linea);
 }
 
 /* Total: el tamaño depende del ancho de su tarjeta, nunca se corta */
@@ -75,7 +88,6 @@
   grid-template-columns: minmax(0, 8fr) minmax(17rem, 4fr);
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: stretch;
-  margin-top: clamp(3rem, 6vw, 4.5rem);
 }
 
 .explorer__main {

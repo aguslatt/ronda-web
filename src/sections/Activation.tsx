@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { activation as a, campaign } from '../content'
 import { SectionHead } from '../components/SectionHead'
+import { Chapter } from '../components/Chapter'
 import { PIECES, pieceInfo, type PieceKey } from '../campaign/pieces'
-import { useScrollProgress } from '../hooks/useScrollProgress'
 import './Activation.css'
 
 const pad = (value: number) => String(value).padStart(2, '0')
@@ -25,7 +26,6 @@ function Arrow({ direction }: { direction: 'prev' | 'next' }) {
 export function Activation() {
   const [active, setActive] = useState(0)
   const [zoom, setZoom] = useState(false)
-  const sectionRef = useScrollProgress<HTMLElement>('enter', 1, 1, '--e')
   const swipe = useRef<number | null>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
   const zoomButton = useRef<HTMLButtonElement>(null)
@@ -70,8 +70,62 @@ export function Activation() {
   }
 
   return (
-    <section ref={sectionRef} id={a.id} className="section activation tone-dark" data-surface="verde" aria-labelledby={`${a.id}-title`}>
-      <div className="wrap">
+    <Chapter
+      id={a.id}
+      shot="activacion"
+      layout="wide"
+      flow
+      className="activation tone-dark"
+      labelledBy={`${a.id}-title`}
+      after={
+        zoom &&
+        piece &&
+        // La pieza ampliada se monta al final del documento: queda por encima de toda la interfaz fija
+        createPortal(
+          <div
+            ref={dialogRef}
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${piece.name}: ${a.sketchTag}`}
+            tabIndex={-1}
+            onClick={(event) => event.target === event.currentTarget && setZoom(false)}
+          >
+            <button type="button" className="lightbox__x" aria-label={campaign.close} onClick={() => setZoom(false)}>
+              <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+            <div key={channel.key} className={`lightbox__piece${PIECES[channel.piece as PieceKey].wide ? ' is-wide' : ''}`} style={{ '--ratio': PIECES[channel.piece as PieceKey].ratio } as CSSProperties}>
+              <div className="stage__support" role="img" aria-label={piece.alt}>
+                {renderPiece(channel.piece as PieceKey)}
+              </div>
+            </div>
+            <div className="lightbox__info">
+              <p className="source-chip source-chip--sketch">{a.sketchTag}</p>
+              <h3 className="info-card__title">
+                {piece.name}
+                <span>{channel.name}</span>
+              </h3>
+              <p className="info-card__lead">“{piece.message}”</p>
+              <p className="info-card__status">{a.sketchNote}</p>
+              <div className="stage__bar">
+                <button type="button" className="round-button" aria-label="Canal anterior" onClick={() => go(active - 1)}>
+                  <Arrow direction="prev" />
+                </button>
+                <button type="button" className="round-button" aria-label="Canal siguiente" onClick={() => go(active + 1)}>
+                  <Arrow direction="next" />
+                </button>
+                <button type="button" className="lightbox__close" onClick={() => setZoom(false)}>
+                  {campaign.close}
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      }
+    >
         <div className="activation__head">
           <SectionHead number={a.number} eyebrow={a.eyebrow} title={a.title} titleId={`${a.id}-title`} />
           <div className="activation__intro">
@@ -203,45 +257,6 @@ export function Activation() {
         </div>
 
         <p className="activation__note">{a.note}</p>
-      </div>
-
-      {zoom && piece && (
-        <div
-          ref={dialogRef}
-          className="lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${piece.name}: ${a.sketchTag}`}
-          tabIndex={-1}
-          onClick={(event) => event.target === event.currentTarget && setZoom(false)}
-        >
-          <div key={channel.key} className={`lightbox__piece${PIECES[channel.piece as PieceKey].wide ? ' is-wide' : ''}`} style={{ '--ratio': PIECES[channel.piece as PieceKey].ratio } as CSSProperties}>
-            <div className="stage__support" role="img" aria-label={piece.alt}>
-              {renderPiece(channel.piece as PieceKey)}
-            </div>
-          </div>
-          <div className="lightbox__info">
-            <p className="source-chip source-chip--sketch">{a.sketchTag}</p>
-            <h3 className="info-card__title">
-              {piece.name}
-              <span>{channel.name}</span>
-            </h3>
-            <p className="info-card__lead">“{piece.message}”</p>
-            <p className="info-card__status">{a.sketchNote}</p>
-            <div className="stage__bar">
-              <button type="button" className="round-button" aria-label="Canal anterior" onClick={() => go(active - 1)}>
-                <Arrow direction="prev" />
-              </button>
-              <button type="button" className="round-button" aria-label="Canal siguiente" onClick={() => go(active + 1)}>
-                <Arrow direction="next" />
-              </button>
-              <button type="button" className="lightbox__close" onClick={() => setZoom(false)}>
-                {campaign.close}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
+    </Chapter>
   )
 }

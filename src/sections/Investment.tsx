@@ -1,6 +1,7 @@
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { investment as inv } from '../content'
 import { SectionHead } from '../components/SectionHead'
+import { Chapter } from '../components/Chapter'
 import { useInView } from '../hooks/useInView'
 import { openAssistant } from '../assistant/bus'
 import './Investment.css'
@@ -50,8 +51,7 @@ export function Investment() {
   }
 
   return (
-    <section id={inv.id} className="section investment" data-surface="claro" aria-labelledby={`${inv.id}-title`}>
-      <div className="wrap">
+    <Chapter id={inv.id} shot="inversion" layout="left-wide" flow className="investment" labelledBy={`${inv.id}-title`}>
         <div className="investment__head">
           <SectionHead number={inv.number} eyebrow={inv.eyebrow} title={inv.title} titleId={`${inv.id}-title`} />
           <div className="total" data-reveal="rise" style={{ '--reveal-delay': '160ms' } as CSSProperties}>
@@ -64,6 +64,7 @@ export function Investment() {
           </div>
         </div>
 
+        <div className="investment__sheet sheet">
         <div ref={chartRef} className={`explorer${built ? ' is-built' : ''}`}>
           <div className="explorer__main">
             <h3 className="investment__subhead">{inv.distributionTitle}</h3>
@@ -211,7 +212,7 @@ export function Investment() {
             ))}
           </ol>
         </div>
-      </div>
-    </section>
+        </div>
+    </Chapter>
   )
 }

@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Capítulos sobre la mesa
+   La escena 3D queda fija detrás. Cada capítulo reserva un espacio de lectura
+   estable y deja un tramo libre para que la cámara cambie de encuadre antes
+   del capítulo siguiente. Dos soportes de lectura: la hoja (papel claro) para
+   datos y la placa translúcida para textos sobre la escena.
+   ========================================================================== */
+.chapter {
+  --panel-top: calc(var(--header-h) + clamp(1.25rem, 4svh, 2.75rem));
+  --foco: var(--lima);
+  position: relative;
+  min-height: 205svh;
+  color: var(--blanco);
+}
+
+.chapter__inner {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--panel-top) var(--gutter) clamp(1.5rem, 5svh, 3rem);
+}
+
+.chapter.is-fit > .chapter__inner {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  align-content: center;
+}
+
+.chapter__panel {
+  grid-column: 7 / -1;
+  display: grid;
+  align-content: start;
+  gap: clamp(1rem, 2.6svh, 1.6rem);
+  min-width: 0;
+}
+
+.chapter--left .chapter__panel {
+  grid-column: 1 / span 6;
+}
+
+.chapter--narrow-left .chapter__panel {
+  grid-column: 1 / span 5;
+}
+
+.chapter--left-wide .chapter__panel {
+  grid-column: 1 / span 9;
+}
+
+.chapter--narrow-right .chapter__panel {
+  grid-column: 8 / -1;
+}
+
+.chapter--center .chapter__panel {
+  grid-column: 2 / -2;
+  justify-items: center;
+  text-align: center;
+}
+
+.chapter--wide .chapter__panel {
+  grid-column: 1 / -1;
+}
+
+.chapter--flow {
+  min-height: 0;
+  padding-bottom: 85svh;
+}
+
+/* Texto directo sobre la escena */
+.chapter .section-head__title,
+.chapter-lede {
+  text-shadow: 0 2px 28px rgba(0, 8, 4, 0.55);
+}
+
+.chapter-lede {
+  max-width: 46ch;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--fs-lede);
+  line-height: 1.45;
+}
+
+/* Hoja: papel claro, apoyada con sombra profunda */
+.sheet {
+  --foco: var(--rojo);
+  border-radius: var(--radio-l);
+  background: linear-gradient(180deg, #f8f6ef 0%, #efece2 100%);
+  color: var(--tinta);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.28),
+    0 44px 90px -34px rgba(0, 0, 0, 0.8);
+}
+
+/* Placa translúcida: deja ver la mesa detrás */
+.sheet--glass {
+  --foco: var(--lima);
+  background: rgba(4, 22, 14, 0.64);
+  color: var(--blanco);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 40px 90px -34px rgba(0, 0, 0, 0.75);
+}
+
+.sheet__subhead {
+  color: var(--gris);
+  font-family: var(--f-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.sheet--glass .sheet__subhead {
+  color: var(--lima);
+}
+
+@media (max-width: 899px) {
+  .chapter {
+    min-height: 185svh;
+  }
+
+  /* En celular la escena ocupa la parte superior y el panel se apoya abajo */
+  .chapter__inner {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: calc(var(--header-h) + 40svh);
+    padding-bottom: 5.5rem;
+  }
+
+  .chapter .chapter__panel {
+    grid-column: 1 / -1;
+  }
+
+  .chapter.is-fit > .chapter__inner {
+    align-content: end;
+  }
+
+  .chapter--flow {
+    padding-bottom: 65svh;
+  }
+}

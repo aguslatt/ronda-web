@@ -39,6 +39,23 @@
   --foco: var(--lima);
 }
 
+/* Sobre la escena de la mesa: vidrio oscuro, texto claro */
+.surface-escena {
+  --h-bg: rgba(3, 16, 10, 0.55);
+  --h-fg: var(--blanco);
+  --h-line: rgba(255, 255, 255, 0.08);
+  --foco: var(--lima);
+}
+
+.surface-escena .site-header__ask {
+  background: var(--lima);
+  color: var(--verde-noche);
+}
+
+.surface-escena .site-header__progress {
+  background: var(--lima);
+}
+
 .surface-rojo {
   --h-bg: rgba(191, 3, 27, 0.85);
   --h-fg: var(--blanco);
