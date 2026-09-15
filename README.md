@@ -49,6 +49,50 @@ Entre capítulos la cámara orbita alrededor de la mesa (interpolación cilíndr
 y los objetos se mueven con curvas suaves. El panel de navegación lateral (escritorio) y el selector de
 capítulos (celular) permiten ir directo a cualquier capítulo; una leyenda breve indica qué cambió en la mesa.
 
+### Cierre: la invitación a la ronda
+
+Debajo de “Una invitación. Una prueba compartida. Una próxima elección.” aparece **“¿Unos mates?”** con
+“Hay lugar para vos.”. Al activarlo (`src/sections/Closing.tsx`, secuencia en `src/components/SceneCanvas.tsx`):
+
+1. La cámara baja en 3,2 s, con aceleración y desaceleración suaves, hasta la altura de alguien sentado a la mesa (encuadre `invitacion`).
+2. El mismo mate que cruzó la mesa en el insight se levanta, viaja y se apoya frente a quien visita (0,5 a 3,1 s):
+   la altura adelanta al traslado, se inclina apenas hacia quien lo recibe y gira la bombilla hacia su lugar;
+   la sombra de contacto se abre al levantarse y la luz se entibia sobre ese lugar (`carry` en `src/scene/motion.ts`).
+3. A los 3,3 s aparece “La próxima ronda empieza con vos.” y un control discreto para **Repetir**.
+
+La escena solo acepta un inicio desde el reposo y una repetición al terminar, así los clics repetidos no acumulan
+animaciones. Al salir del cierre, volver al inicio o navegar a otro capítulo, la mesa vuelve a su estado.
+Con movimiento reducido o sin WebGL, la misma idea se resuelve como cambio de estado (render fijo del encuadre sentado).
+
+### Idea de campaña en 15 segundos
+
+Bloque compacto después de la respuesta estratégica (`src/sections/Idea.tsx`). No hay clips de campaña en el
+repositorio, así que la pieza es una **animación conceptual de campaña** hecha en tiempo real con los mismos modelos,
+materiales y luz de la mesa (`src/film/ConceptFilm.ts`, guion en `src/film/timeline.ts`), de 14,5 s:
+
+| Plano | Tiempo | Qué muestra |
+| --- | --- | --- |
+| Inicio | 0–3,6 s | Detalle: yerba procesada (polvo, hojas y palitos de escalas variadas) cae en cámara lenta dentro del mate |
+| Desarrollo | 3,6–7,2 s | El mate, ya con bombilla, se desliza hasta quedar junto al envase de Romance |
+| Momento central | 7,2–11,2 s | El mate se levanta y se ofrece a quien mira: “¿Unos mates?” |
+| Cierre | 11,2–14,5 s | Placa con el logotipo auténtico y “Romance, la yerba que se ofrece.” |
+
+- Reproducir, pausar y repetir; progreso y guion en texto (se entiende sin sonido ni imagen).
+- **Sonido** sintetizado con Web Audio (`src/film/sound.ts`): solo se activa si la persona lo pide.
+- La escena de la animación se carga recién al tocar “Ver la idea en 15 segundos”; se pausa fuera de pantalla o con la pestaña oculta.
+- Con movimiento reducido cada plano se muestra como cuadro fijo; sin WebGL se usan renders de la misma pieza (`public/film/`).
+- Portada y cuadros se regeneran desde la propia animación con `?filmframe=segundos`.
+
+### Documentos y referencias
+
+- La tesis final está en `public/docs/tesis-ronda.pdf` (56 páginas). Configuración en `documents` dentro de `src/content.ts`.
+- **Leer la tesis** abre el PDF en otra pestaña y **Descargar** baja el archivo; están en la firma del cierre,
+  en “¿Tenés otra pregunta?” y en el pie. El brief es el apartado 6.3 (pág. 44–53).
+- Cada referencia “pág. N” del sitio (hallazgos, canales, preguntas frecuentes, asistente, modo presentación y nota
+  de la animación) abre el PDF en esa página. Las cifras citadas se contrastaron con el texto de cada página del PDF.
+- Para reemplazar la tesis, colocar el nuevo PDF con el mismo nombre. Si `documents.thesis.url` es `null`,
+  los accesos y enlaces de página no se muestran (las referencias quedan como texto).
+
 ### Accesibilidad y rendimiento
 
 - **Movimiento reducido**: los encuadres cambian por corte, sin estados intermedios.
@@ -79,8 +123,10 @@ La escena es una dirección de arte funcional, no una pieza cinematográfica ter
 - **Objetos**: modelado 3D profesional o fotogrametría de mates, bombillas y termo reales (hoy son modelos procedurales).
 - **Personas**: la ronda se representa con objetos. Un rodaje con manos y personas reales (el gesto de ofrecer, la ronda)
   es necesario para piezas audiovisuales; no se simuló con personas generadas.
-- **Video y sonido**: no hay rodaje ni diseño sonoro. Un plano secuencia filmado de la mesa y sonido de cebado
-  y bombilla completarían la experiencia.
+- **Video y sonido**: no hay rodaje ni sonido grabado. La idea de campaña se presenta como animación conceptual con
+  sonido sintético. Para una pieza audiovisual real faltan: un clip de 10–15 s filmado (detalle de yerba, mate con el
+  envase, gesto de ofrecer; por ejemplo `public/film/idea-campana.mp4`, 1920×1080, H.264) y un registro de foley
+  (cebado, yerba, bombilla, apoyo del mate).
 - **Paleta y uso de marca**: validar con Romance.
 - **Bocetos de activación**: son propuestas visuales; reemplazar por piezas reales cuando existan.
 - **Logos de medios**: tomados de luzutv.com.ar y olgaenvivo.com; confirmar versiones vigentes y permisos de uso.
@@ -118,6 +164,9 @@ npm run preview    # revisa localmente la versión final
 | Textos, cifras, porcentajes, montos, fechas, nombres, imágenes | `src/content.ts` |
 | Capítulos y lo que cambia en la mesa | `chapters` en `src/content.ts` |
 | Encuadres y estado de la escena por capítulo | `src/scene/shots.ts` |
+| Invitación del cierre (tiempos, textos) | `INVITE` en `src/components/SceneCanvas.tsx` · `closing.invite` en `src/content.ts` |
+| Animación conceptual (guion, planos, textos) | `src/film/timeline.ts`, `src/film/ConceptFilm.ts` · `idea` en `src/content.ts` |
+| Tesis y brief | `documents` en `src/content.ts` · archivo en `public/docs/` |
 | Objetos, materiales y luces | `src/scene/objects.ts` y `src/scene/RondaScene.ts` |
 | Diseño de capítulos (paneles, hojas y placas) | `src/styles/chapters.css` y `src/components/Chapter.tsx` |
 | Colores, tipografías, tamaños, radios, sombras | `src/styles/global.css` (bloque `:root`) |
@@ -136,6 +185,8 @@ Colocar el PDF final en `public/` (por ejemplo `public/brief-ronda.pdf`) y compl
 
 ## Créditos
 
+- **Andrea Gutiérrez Pinzón** (planificación estratégica y medios) y **Agustina Lattanzi** (dirección creativa y comunicación digital).
+- Licenciatura en Publicidad · Universidad Argentina de la Empresa — UADE · 2026. Contacto: romanceyerba@gmail.com.
 - **Gerula S.A.** (sitio oficial de Romance): logotipos, envase Tradicional, medallón, fotografía de cebado y cosecha.
 - **Unsplash y Pexels**: fotografías de contexto del público, los respaldos y los bocetos (detalle en el pie de la web).
 - **Wikimedia Commons**: recortes de yerba usados en la textura de la yerba (CC BY-SA 3.0).

@@ -315,6 +315,58 @@ main {
   background: var(--rojo);
 }
 
+/* Referencias a páginas de la tesis: discretas, se leen como parte del texto */
+.page-ref {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.page-ref:hover {
+  text-decoration-style: solid;
+}
+
+/* Accesos al documento completo */
+.thesis-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.1rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.thesis-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  color: var(--verde);
+  text-decoration: none;
+}
+
+.thesis-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.tone-dark .thesis-links a {
+  color: var(--lima);
+}
+
+.thesis-links__meta {
+  color: var(--gris);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.tone-dark .thesis-links__meta {
+  color: rgba(255, 255, 255, 0.62);
+}
+
 /* Notas metodológicas */
 .note {
   color: var(--gris);

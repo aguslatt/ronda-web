@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { activation as a, campaign } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Chapter } from '../components/Chapter'
+import { PageRefs } from '../components/ThesisRef'
 import { PIECES, pieceInfo, type PieceKey } from '../campaign/pieces'
 import './Activation.css'
 
@@ -206,7 +207,7 @@ export function Activation() {
               {/* Documentado en la tesis */}
               <article className="info-card info-card--docs">
                 <p className="source-chip source-chip--docs">
-                  {a.docsTag} · pág. {channel.docs.pages.join(', ')}
+                  {a.docsTag} · <PageRefs prefix="pág." pages={channel.docs.pages} />
                 </p>
                 <h3 className="info-card__title">
                   {channel.name}

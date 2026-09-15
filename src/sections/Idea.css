@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Idea de campaña · bloque compacto con la animación conceptual
+   ========================================================================== */
+.idea {
+  min-height: 170svh;
+}
+
+.idea .section-head__title {
+  max-width: 20ch;
+}
+
+.idea__sheet {
+  padding: clamp(0.75rem, 1.6vw, 1.1rem);
+}

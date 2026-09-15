@@ -2,6 +2,7 @@ import { contact, faqSection as f } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Disclosure } from '../components/Disclosure'
 import { Chapter } from '../components/Chapter'
+import { PageRefs, ThesisLinks } from '../components/ThesisRef'
 import { byId, suggestions, source } from '../assistant/match'
 import { openAssistant } from '../assistant/bus'
 import kb from '../data/ronda-kb.json'
@@ -22,7 +23,7 @@ export function Faq() {
           <Disclosure key={item.id} summary={item.question}>
             <p className="faq__answer">{item.answer}</p>
             <p className="note">
-              Fuente: tesis, pág. {item.pages.join(', ')} · {source.label}
+              Fuente: <PageRefs prefix="tesis, pág." pages={item.pages} /> · {source.label}
             </p>
           </Disclosure>
         ))}
@@ -42,6 +43,8 @@ export function Faq() {
         <p className="faq__mail">
           {contact.label}: <a href={`mailto:${contact.email}`}>{contact.email}</a>
         </p>
+        <ThesisLinks />
+
       </aside>
     </Chapter>
   )

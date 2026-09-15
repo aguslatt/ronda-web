@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { activation, change, closing, contact, findings, hero, insight, investment, presentation as p, strategy } from '../content'
 import { Picture } from './Picture'
+import { PageRefs } from './ThesisRef'
 import { onOpenPresentation } from '../presentation/bus'
 import './Presentation.css'
 
@@ -249,7 +250,9 @@ export function Presentation() {
               {scene.notes.map((note) => (
                 <p key={note}>{note}</p>
               ))}
-              <p className="presentation__pages">Tesis, pág. {scene.pages.join(', ')}</p>
+              <p className="presentation__pages">
+                <PageRefs pages={scene.pages} />
+              </p>
             </div>
           )}
         </div>

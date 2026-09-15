@@ -1,0 +1,368 @@
+/* ==========================================================================
+   Reproductor de la animación conceptual
+   ========================================================================== */
+.film {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.film__screen {
+  --super: 0;
+  --end: 0;
+  --shade: 0;
+  --dip: 0;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radio-m);
+  background: #03100a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  isolation: isolate;
+}
+
+.film__poster,
+.film__canvas,
+.film__still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.film__canvas {
+  opacity: 0;
+  transition: opacity 500ms var(--ease);
+}
+
+.film:is(.is-playing, .is-paused, .is-ended):not(.is-stills) .film__canvas {
+  opacity: 1;
+}
+
+.film__still {
+  opacity: 0;
+  transition: opacity 500ms var(--ease);
+}
+
+.film__still.is-current {
+  opacity: 1;
+}
+
+/* Capas de interfaz: texto del gesto, placa final, oscurecimiento y cortes */
+.film__shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(90% 90% at 50% 50%, rgba(2, 16, 10, calc(var(--shade) * 0.7)), rgba(2, 12, 7, var(--shade)));
+  pointer-events: none;
+}
+
+.film__dip {
+  position: absolute;
+  inset: 0;
+  background: #020a06;
+  opacity: var(--dip);
+  pointer-events: none;
+}
+
+.film.is-poster .film__dip,
+.film.is-loading .film__dip {
+  opacity: 0;
+}
+
+.film__super {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  margin: 0;
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: clamp(1.4rem, 5.5cqi, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+  opacity: var(--super);
+  translate: -50% calc((1 - var(--super)) * 0.5rem);
+}
+
+.film__end {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(0.5rem, 2cqi, 1rem);
+  padding: 1rem;
+  color: var(--blanco);
+  text-align: center;
+  opacity: var(--end);
+}
+
+.film__logo {
+  width: clamp(7rem, 30cqi, 12rem);
+  height: auto;
+}
+
+.film__end p {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: clamp(1.15rem, 4.6cqi, 2.2rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.film__screen {
+  container-type: inline-size;
+}
+
+/* Identificación permanente: no es una pieza producida */
+.film__label {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem 0.28rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(2, 12, 7, 0.72);
+  color: var(--lima);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  box-shadow: inset 0 0 0 1px rgba(185, 224, 127, 0.4);
+}
+
+.film__label::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px dashed currentColor;
+  border-radius: 50%;
+}
+
+.film__start {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.4rem 1.35rem 0.4rem 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blanco);
+  color: var(--verde-noche);
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  translate: -50% -50%;
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    scale var(--t-fast) var(--ease);
+}
+
+.film__start:hover {
+  background: var(--lima);
+}
+
+.film__start:active {
+  scale: 0.97;
+}
+
+.film__start-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: var(--rojo);
+}
+
+.film__start-icon::after {
+  content: '';
+  margin-left: 0.18rem;
+  border-top: 0.42rem solid transparent;
+  border-bottom: 0.42rem solid transparent;
+  border-left: 0.68rem solid var(--blanco);
+}
+
+.film__loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(2, 12, 7, 0.8);
+  color: var(--blanco);
+  font-size: 0.875rem;
+  translate: -50% -50%;
+}
+
+/* Controles */
+.film__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.film__bar[hidden] {
+  display: none;
+}
+
+.film__control {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--blanco);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+.film__control:hover:not(:disabled) {
+  background: var(--lima);
+  color: var(--verde-noche);
+}
+
+.film__control:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.film__progress {
+  --progress: 0;
+  position: relative;
+  flex: 1;
+  height: 0.3rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.film__progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--lima);
+  transform: scaleX(var(--progress));
+  transform-origin: left;
+}
+
+.film__clock {
+  flex: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.film__sound {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+}
+
+.film__sound[aria-pressed='true'] {
+  background: rgba(185, 224, 127, 0.16);
+  color: var(--lima);
+}
+
+/* Guion en texto: la pieza se entiende también sin imagen ni sonido */
+.film__caption {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.film__beats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.film__beats li {
+  padding-left: 0.6rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.14);
+  transition:
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.film__beats li.is-current {
+  border-left-color: var(--lima);
+  color: var(--blanco);
+}
+
+.film__beat-number {
+  margin-right: 0.35rem;
+  color: var(--lima);
+  font-variant-numeric: tabular-nums;
+}
+
+.film__beats strong {
+  font-weight: 600;
+}
+
+.film__note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* En reproductores angostos el texto del gesto baja para no cruzarse con la etiqueta */
+@container (max-width: 560px) {
+  .film__super {
+    top: 24%;
+  }
+
+  .film__label {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .film__beats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .film__clock {
+    display: none;
+  }
+
+  .film__sound {
+    padding-inline: 0.7rem;
+  }
+
+  .film__start {
+    font-size: 0.9375rem;
+  }
+}

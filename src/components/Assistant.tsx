@@ -3,6 +3,7 @@ import { assistant as copy, contact } from '../content'
 import { ask, byId, suggestions, source, type KbAnswer, type Reply } from '../assistant/match'
 import { onOpenAssistant } from '../assistant/bus'
 import { Picture } from './Picture'
+import { PageRefs } from './ThesisRef'
 import './Assistant.css'
 
 type Message = { id: number; from: 'user'; text: string } | { id: number; from: 'ronda'; reply: Reply }
@@ -10,7 +11,7 @@ type Message = { id: number; from: 'user'; text: string } | { id: number; from: 
 function Pages({ item }: { item: KbAnswer }) {
   return (
     <p className="assistant__source">
-      {copy.pagesLabel} {item.pages.join(', ')} · {source.label}
+      <PageRefs prefix={copy.pagesLabel} pages={item.pages} /> · {source.label}
     </p>
   )
 }

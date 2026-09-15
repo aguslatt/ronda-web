@@ -3,6 +3,7 @@ import { findings as f } from '../content'
 import { SectionHead } from '../components/SectionHead'
 import { Disclosure } from '../components/Disclosure'
 import { Chapter } from '../components/Chapter'
+import { PageRefs } from '../components/ThesisRef'
 import { useInView } from '../hooks/useInView'
 import './Findings.css'
 
@@ -75,7 +76,9 @@ export function Findings() {
             </p>
             <p className="explore__explanation">{stat.explanation}</p>
             <p className="explore__base">{stat.base}</p>
-            <p className="explore__pages">Tesis, pág. {stat.pages.join(', ')}</p>
+            <p className="explore__pages">
+              <PageRefs pages={stat.pages} />
+            </p>
           </div>
         </div>
 

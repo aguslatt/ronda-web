@@ -12,7 +12,7 @@ interface ImageRef {
 
 export const nav: { label: string; href: string; sections: string[] }[] = [
   { label: 'Hallazgos', href: '#hallazgo', sections: ['hallazgo', 'marca', 'publico', 'insight'] },
-  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'cambio'] },
+  { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'idea', 'cambio'] },
   { label: 'Activación', href: '#activacion', sections: ['activacion'] },
   { label: 'Inversión', href: '#inversion', sections: ['inversion', 'preguntas', 'cierre'] },
 ]
@@ -374,7 +374,7 @@ export const activation = {
         kpi: '3 millones de visualizaciones acumuladas.',
         budget: '10% creadores + parte de la pauta digital',
         status: 'La tesis no nombra creadores.' as string | null,
-        pages: [23, 50, 53],
+        pages: [23, 50, 52, 53],
       },
       name: 'TikTok y creadores',
       detail: null,
@@ -557,8 +557,16 @@ export const closing = {
   id: 'cierre',
   lines: ['Una invitación.', 'Una prueba compartida.', 'Una próxima elección.'],
   project: 'Proyecto Ronda',
+  // Invitación final: la escena acerca un mate al lugar de quien visita
+  invite: {
+    ask: '¿Unos mates?',
+    hint: 'Hay lugar para vos.',
+    message: 'La próxima ronda empieza con vos.',
+    replay: 'Repetir',
+    live: 'Un mate llega a tu lugar en la mesa.',
+  },
   team: [
-    { name: 'Andrea Gutiérrez', role: 'Planificación estratégica y medios' },
+    { name: 'Andrea Gutiérrez Pinzón', role: 'Planificación estratégica y medios' },
     { name: 'Agustina Lattanzi', role: 'Dirección creativa y comunicación digital' },
   ],
   image: hero.image,
@@ -668,6 +676,53 @@ export const presentation = {
   ],
 }
 
+/* Documentos -------------------------------------------------------------- */
+// Tesis final en PDF. Para reemplazarla, colocar el archivo en public/docs/ con el mismo nombre.
+// Si `url` es null, los accesos “Leer la tesis” y los enlaces de página no se muestran.
+// Las páginas citadas en el sitio usan la numeración del PDF (verificada contra este archivo, 56 páginas).
+export const documents = {
+  thesis: {
+    url: './docs/tesis-ronda.pdf' as string | null,
+    fileName: 'Tesis Ronda · Gutiérrez Pinzón y Lattanzi · UADE 2026.pdf',
+    size: '16,4 MB',
+    read: 'Leer la tesis',
+    download: 'Descargar',
+    // El brief es el apartado 6.3 de la tesis (pág. 44 a 53)
+    briefPage: 44,
+    briefLabel: 'Ver el brief (pág. 44–53)',
+  },
+}
+
+/* Idea de campaña (animación conceptual) ---------------------------------- */
+export const idea = {
+  id: 'idea',
+  number: '05',
+  eyebrow: 'Idea de campaña',
+  title: 'La yerba que se ofrece, en un gesto.',
+  text: 'Una síntesis en movimiento: el ritual de preparación, el encuentro con Romance y el gesto de ofrecer.',
+  label: 'Animación conceptual de campaña',
+  cta: 'Ver la idea en 15 segundos',
+  invitation: '¿Unos mates?',
+  claim: 'Romance, la yerba que se ofrece.',
+  beats: [
+    { title: 'Se prepara', text: 'La yerba cae en el mate.' },
+    { title: 'Con Romance', text: 'El mate llega junto al envase.' },
+    { title: 'Se ofrece', text: 'El mate se acerca a quien mira: “¿Unos mates?”.' },
+    { title: 'La idea', text: 'Romance, la yerba que se ofrece.' },
+  ],
+  note: 'Animación hecha con los modelos y materiales de la escena; no es una pieza producida. La tesis prevé producir una pieza central de campaña',
+  notePages: [53],
+  soundNote: 'El sonido es sintético y se activa solo si lo pedís.',
+  controls: {
+    play: 'Reproducir',
+    pause: 'Pausar',
+    replay: 'Repetir',
+    soundOn: 'Activar sonido',
+    soundOff: 'Silenciar',
+    loading: 'Preparando la animación…',
+  },
+}
+
 /* Contacto --------------------------------------------------------------- */
 export const contact = {
   email: 'romanceyerba@gmail.com',
@@ -702,6 +757,12 @@ export const faqSection = {
 
 /* Créditos --------------------------------------------------------------- */
 export const credits = {
+  academic: {
+    authors: ['Andrea Gutiérrez Pinzón', 'Agustina Lattanzi'],
+    program: 'Licenciatura en Publicidad',
+    university: 'Universidad Argentina de la Empresa — UADE',
+    year: '2026',
+  },
   disclaimer:
     'Proyecto académico (Trabajo Integrador Final, Licenciatura en Publicidad, UADE). No es una comunicación oficial de Yerba Mate Romance.',
   brandAssets:

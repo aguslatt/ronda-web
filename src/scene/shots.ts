@@ -26,9 +26,11 @@ export interface Shot {
   gather: number
   /** Oscurecimiento para leer módulos extensos. */
   dim: number
+  /** Invitación del cierre: 0 a 1, el mate llega al lugar de quien visita. */
+  invite: number
 }
 
-type ShotInput = Shot & { mobile?: Partial<Shot> }
+type ShotInput = Omit<Shot, 'invite'> & { invite?: number; mobile?: Partial<Shot> }
 
 export const SHOTS: Record<string, ShotInput> = {
   // Situación individual: una persona, un mate, el termo y la pantalla encendida
@@ -97,6 +99,12 @@ export const SHOTS: Record<string, ShotInput> = {
     light: 1, lid: 0, offer: 1, ronda: 5, gather: 1, dim: 0,
     mobile: { cam: [0, 2.1, -2.35], target: [0, 0.02, 0], fov: 44, fx: 0, fy: -0.02 },
   },
+  // Invitación: a la altura de alguien sentado a la mesa; el mate llega a su lugar
+  invitacion: {
+    cam: [0.02, 0.4, -1.02], target: [-0.02, 0.06, -0.12], fov: 40, fx: 0, fy: -0.12,
+    light: 1, lid: 0, offer: 1, ronda: 5, gather: 1, dim: 0, invite: 1,
+    mobile: { cam: [0.02, 0.46, -1.22], target: [-0.02, 0.05, -0.18], fov: 52, fx: 0, fy: 0.02 },
+  },
 }
 
 export const SHOT_KEYS = Object.keys(SHOTS)
@@ -104,13 +112,17 @@ export const SHOT_KEYS = Object.keys(SHOTS)
 export function shotFor(key: string, mobile: boolean): Shot {
   const input = SHOTS[key] ?? SHOTS.apertura
   const { mobile: override, ...desktop } = input
-  return mobile && override ? { ...desktop, ...override } : desktop
+  return { invite: 0, ...desktop, ...(mobile && override ? override : {}) }
 }
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
-/** Interpolación entre encuadres: la cámara orbita alrededor del punto de mira. */
-export function blend(a: Shot, b: Shot, t: number): Shot {
+/**
+ * Interpolación entre encuadres: la cámara orbita alrededor del punto de mira.
+ * `arc` agrega una leve elevación a mitad de camino (travelling entre capítulos);
+ * sin ella, el acercamiento es directo (invitación del cierre).
+ */
+export function blend(a: Shot, b: Shot, t: number, arc = true): Shot {
   if (t <= 0) return a
   if (t >= 1) return b
   const target: V3 = [lerp(a.target[0], b.target[0], t), lerp(a.target[1], b.target[1], t), lerp(a.target[2], b.target[2], t)]
@@ -127,7 +139,7 @@ export function blend(a: Shot, b: Shot, t: number): Shot {
   const angle = pa.angle + delta * t
   const r = lerp(pa.r, pb.r, t)
   // Leve elevación a mitad de camino: el movimiento se lee como un travelling, no como un salto
-  const h = lerp(pa.h, pb.h, t) + Math.sin(Math.PI * t) * 0.08 * Math.hypot(pb.r - pa.r, pb.h - pa.h, delta)
+  const h = lerp(pa.h, pb.h, t) + (arc ? Math.sin(Math.PI * t) * 0.08 * Math.hypot(pb.r - pa.r, pb.h - pa.h, delta) : 0)
   return {
     cam: [target[0] + Math.sin(angle) * r, target[1] + h, target[2] + Math.cos(angle) * r],
     target,
@@ -140,11 +152,12 @@ export function blend(a: Shot, b: Shot, t: number): Shot {
     ronda: lerp(a.ronda, b.ronda, t),
     gather: lerp(a.gather, b.gather, t),
     dim: lerp(a.dim, b.dim, t),
+    invite: lerp(a.invite, b.invite, t),
   }
 }
 
 export const flatten = (s: Shot) =>
-  Float32Array.from([...s.cam, ...s.target, s.fov, s.fx, s.fy, s.light, s.lid, s.offer, s.ronda, s.gather, s.dim])
+  Float32Array.from([...s.cam, ...s.target, s.fov, s.fx, s.fy, s.light, s.lid, s.offer, s.ronda, s.gather, s.dim, s.invite])
 
 export const unflatten = (v: Float32Array): Shot => ({
   cam: [v[0], v[1], v[2]],
@@ -158,4 +171,5 @@ export const unflatten = (v: Float32Array): Shot => ({
   ronda: v[12],
   gather: v[13],
   dim: v[14],
+  invite: v[15],
 })

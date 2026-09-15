@@ -1,11 +1,34 @@
-import { credits } from '../content'
+import { closing, contact, credits } from '../content'
+import { ThesisLinks } from './ThesisRef'
 import './Footer.css'
 
 export function Footer() {
+  const { academic } = credits
   return (
     <footer className="site-footer tone-dark" data-surface="verde">
       <div className="site-footer__grid">
-        <p className="site-footer__brand">Ronda / Romance</p>
+        <div className="site-footer__credit">
+          <p className="site-footer__brand">Ronda / Romance</p>
+          <ul className="site-footer__authors">
+            {closing.team.map((member) => (
+              <li key={member.name}>
+                <strong>{member.name}</strong>
+                <span>{member.role}</span>
+              </li>
+            ))}
+          </ul>
+          <p>
+            {academic.program}
+            <br />
+            {academic.university}
+            <br />
+            {academic.year}
+          </p>
+          <p>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </p>
+          <ThesisLinks />
+        </div>
         <div className="site-footer__notes">
           <p>{credits.disclaimer}</p>
           <p>

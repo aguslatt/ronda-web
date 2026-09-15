@@ -33,6 +33,8 @@
 .chapter__panel {
   grid-column: 7 / -1;
   display: grid;
+  /* Columna que no crece con el contenido: tablas y cifras largas se desplazan dentro de su tarjeta */
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: clamp(1rem, 2.6svh, 1.6rem);
   min-width: 0;

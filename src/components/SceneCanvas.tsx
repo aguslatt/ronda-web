@@ -1,13 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
 import { blend, flatten, shotFor, SHOT_KEYS, unflatten, type Shot } from '../scene/shots'
 import type { RondaScene } from '../scene/RondaScene'
+import { announceInvite, onInviteAction, type InvitePhase } from '../scene/invite'
+import { HOME_EVENT } from '../navigation'
+import { supportsWebGL } from '../scene/webgl'
 import './SceneCanvas.css'
 
 export const CHAPTER_EVENT = 'ronda:capitulo'
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 const smoothstep = (t: number) => t * t * (3 - 2 * t)
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2)
 const poster = (key: string, mobile: boolean) => `./scene/posters/${key}-${mobile ? 'm' : 'd'}.webp`
+
+/*
+ * Invitación del cierre (segundos): la cámara baja a la altura de alguien sentado durante 3,2 s;
+ * el mate sale a los 0,5 s y se apoya a los 3,1 s; el mensaje final aparece a los 3,3 s.
+ * Al repetir, la escena vuelve en 1 s y la secuencia empieza de nuevo.
+ */
+const INVITE = { camera: 3.2, mateStart: 0.5, mate: 2.6, total: 3.3, rewind: 1 }
 
 type Mode = 'loading' | 'ready' | 'fallback'
 
@@ -34,8 +45,10 @@ export function SceneCanvas() {
     if (forced !== null) html.classList.add('scene-poster')
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
     const isMobile = () => window.innerWidth < 760 || window.innerWidth / window.innerHeight < 0.85
-    const probe = window as unknown as { __ronda?: { ready: boolean; frames: number; key: string; moving: boolean } }
-    probe.__ronda = { ready: false, frames: 0, key: '', moving: false }
+    const probe = window as unknown as {
+      __ronda?: { ready: boolean; frames: number; key: string; moving: boolean; invite: InvitePhase; inviteTime: number; scene?: RondaScene }
+    }
+    probe.__ronda = { ready: false, frames: 0, key: '', moving: false, invite: 'idle', inviteTime: 0 }
 
     let mobile = isMobile()
     let scene: RondaScene | null = null
@@ -44,7 +57,29 @@ export function SceneCanvas() {
     let last = 0
     let current: Float32Array | null = null
     let currentKey = ''
+    let currentPoster = ''
     let marks: { key: string; top: number }[] = []
+
+    /* Invitación */
+    let inviteTime = 0
+    let inviteDirection = 0
+    let invitePhase: InvitePhase = 'idle'
+    let replayAfterRewind = false
+
+    const setPhase = (phase: InvitePhase) => {
+      if (phase === invitePhase) return
+      invitePhase = phase
+      probe.__ronda!.invite = phase
+      announceInvite(phase)
+    }
+    const resetInvite = () => {
+      inviteTime = 0
+      inviteDirection = 0
+      replayAfterRewind = false
+      setPhase('idle')
+    }
+    // Sin animación (movimiento reducido o sin escena 3D): la misma idea como cambio de estado
+    const instant = () => reduced.matches || scene === null
 
     const measure = () => {
       marks = [...document.querySelectorAll<HTMLElement>('[data-shot]')].map((element) => ({
@@ -66,7 +101,14 @@ export function SceneCanvas() {
       if (reduced.matches) t = t < 0.5 ? 0 : 1
       const to = shotFor(marks[j].key, mobile)
       const from = j > 0 ? shotFor(marks[j - 1].key, mobile) : to
-      return { shot: blend(from, to, t), key: t >= 0.5 || j === 0 ? marks[j].key : marks[j - 1].key }
+      const key = t >= 0.5 || j === 0 ? marks[j].key : marks[j - 1].key
+      let shot = blend(from, to, t)
+      if (inviteTime > 0 && key === 'cierre') {
+        // Acercamiento directo (sin arco) hasta la altura de quien se sienta a la mesa
+        shot = blend(shot, shotFor('invitacion', mobile), easeInOutCubic(clamp01(inviteTime / INVITE.camera)), false)
+        shot.invite = clamp01((inviteTime - INVITE.mateStart) / INVITE.mate)
+      }
+      return { shot, key }
     }
 
     const publish = (shot: Shot, key: string) => {
@@ -75,11 +117,18 @@ export function SceneCanvas() {
       html.style.setProperty('--scrim-right', clamp01(-shot.fx / 0.18).toFixed(3))
       html.style.setProperty('--scrim-bottom', clamp01(shot.fy / 0.15).toFixed(3))
       html.style.setProperty('--scrim-top', clamp01(-shot.fy / 0.12).toFixed(3))
+
+      const posterKey = key === 'cierre' && invitePhase === 'done' ? 'invitacion' : key
+      if (posterKey !== currentPoster) {
+        currentPoster = posterKey
+        root.querySelectorAll<HTMLImageElement>('.scene__poster').forEach((image) => image.classList.toggle('is-current', image.dataset.key === posterKey))
+      }
       if (key === currentKey) return
       currentKey = key
       root.dataset.chapter = key
       probe.__ronda!.key = key
-      root.querySelectorAll<HTMLImageElement>('.scene__poster').forEach((image) => image.classList.toggle('is-current', image.dataset.key === key))
+      // Al salir del cierre, la mesa vuelve a su estado: la invitación se puede vivir otra vez
+      if (key !== 'cierre' && invitePhase !== 'idle') resetInvite()
       window.dispatchEvent(new CustomEvent(CHAPTER_EVENT, { detail: key }))
     }
 
@@ -87,10 +136,27 @@ export function SceneCanvas() {
       frame = 0
       const dt = last ? Math.min(0.1, (now - last) / 1000) : 1 / 60
       last = now
+
+      if (inviteDirection !== 0) {
+        inviteTime += inviteDirection * dt * (inviteDirection < 0 ? INVITE.total / INVITE.rewind : 1)
+        if (inviteDirection > 0 && inviteTime >= INVITE.total) {
+          inviteTime = INVITE.total
+          inviteDirection = 0
+          setPhase('done')
+        } else if (inviteDirection < 0 && inviteTime <= 0) {
+          inviteTime = 0
+          inviteDirection = replayAfterRewind ? 1 : 0
+          if (!replayAfterRewind) setPhase('idle')
+          replayAfterRewind = false
+        }
+      }
+      probe.__ronda!.inviteTime = inviteTime
+
       const { shot, key } = desired()
       const goal = flatten(shot)
-      if (!current || capture || reduced.matches) current = goal.slice()
-      let moving = false
+      // Durante la invitación la secuencia sigue su propia curva (sin amortiguación del scroll)
+      if (!current || capture || reduced.matches || inviteDirection !== 0) current = goal.slice()
+      let moving = inviteDirection !== 0
       const k = 1 - Math.exp(-dt * 6)
       for (let i = 0; i < goal.length; i++) {
         const d = goal[i] - current[i]
@@ -121,6 +187,38 @@ export function SceneCanvas() {
       kick()
     }
 
+    const stopInviteActions = onInviteAction((action) => {
+      if (action === 'reset') resetInvite()
+      else if (action === 'play' && invitePhase === 'idle') {
+        if (instant()) {
+          inviteTime = INVITE.total
+          setPhase('done')
+        } else {
+          inviteDirection = 1
+          setPhase('playing')
+        }
+      } else if (action === 'replay' && invitePhase === 'done') {
+        if (instant()) {
+          // Cambio de estado sencillo: se vuelve a anunciar el final sin movimiento
+          setPhase('playing')
+          requestAnimationFrame(() => {
+            inviteTime = INVITE.total
+            setPhase('done')
+            kick()
+          })
+        } else {
+          inviteDirection = -1
+          replayAfterRewind = true
+          setPhase('playing')
+        }
+      }
+      kick()
+    })
+    const onHome = () => {
+      resetInvite()
+      kick()
+    }
+
     measure()
     const observer = new ResizeObserver(() => {
       measure()
@@ -129,12 +227,13 @@ export function SceneCanvas() {
     observer.observe(document.body)
     window.addEventListener('scroll', kick, { passive: true })
     window.addEventListener('resize', onResize)
+    window.addEventListener(HOME_EVENT, onHome)
     document.addEventListener('visibilitychange', kick)
     reduced.addEventListener('change', kick)
     kick()
 
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
-    if (saveData && !capture) setMode('fallback')
+    if ((saveData && !capture) || !supportsWebGL()) setMode('fallback')
     else
       import('../scene/RondaScene')
         .then(({ RondaScene }) => {
@@ -150,7 +249,7 @@ export function SceneCanvas() {
             })
             scene.resize(window.innerWidth, window.innerHeight)
             // Solo en modo captura: acceso a la escena para las verificaciones automáticas
-            if (capture) (probe.__ronda as Record<string, unknown>).scene = scene
+            if (capture) probe.__ronda!.scene = scene
             kick()
           } catch {
             setMode('fallback')
@@ -162,8 +261,10 @@ export function SceneCanvas() {
       disposed = true
       cancelAnimationFrame(frame)
       observer.disconnect()
+      stopInviteActions()
       window.removeEventListener('scroll', kick)
       window.removeEventListener('resize', onResize)
+      window.removeEventListener(HOME_EVENT, onHome)
       document.removeEventListener('visibilitychange', kick)
       reduced.removeEventListener('change', kick)
       scene?.dispose()

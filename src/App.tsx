@@ -8,6 +8,7 @@ import { Brand } from './sections/Brand'
 import { Audience } from './sections/Audience'
 import { Insight } from './sections/Insight'
 import { Strategy } from './sections/Strategy'
+import { Idea } from './sections/Idea'
 import { Change } from './sections/Change'
 import { Activation } from './sections/Activation'
 import { Investment } from './sections/Investment'
@@ -42,6 +43,7 @@ export default function App() {
         <Audience />
         <Insight />
         <Strategy />
+        <Idea />
         <Change />
         <Activation />
         <Investment />

@@ -76,6 +76,9 @@ export interface MateStyle {
   rim: number | null
 }
 
+/** El mate de la apertura: el que cruza la mesa, llega a quien visita y protagoniza la animación. */
+export const MAIN_MATE_STYLE: MateStyle = { profile: 'calabaza', color: 0x6b4630, roughness: 0.62, clearcoat: 0.25, textured: true, rim: 0xd9d9d6 }
+
 const PROFILES: Record<MateStyle['profile'], [number, number][]> = {
   calabaza: [[0, 0], [0.02, 0.001], [0.034, 0.009], [0.044, 0.024], [0.048, 0.042], [0.047, 0.058], [0.042, 0.073], [0.036, 0.084], [0.0335, 0.091]],
   torpedo: [[0, 0], [0.026, 0.001], [0.035, 0.01], [0.04, 0.035], [0.042, 0.07], [0.04, 0.097], [0.037, 0.108]],
@@ -146,6 +149,10 @@ export function createMate(style: MateStyle, textures: { gourd: THREE.Texture; y
   mouth.position.copy(curve.getPoint(1))
   straw.add(mouth)
   group.add(straw)
+
+  // Referencias para animar la preparación (la yerba sube, la bombilla entra después)
+  group.userData.yerba = yerba
+  group.userData.straw = straw
 
   return shadows(group)
 }

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+import { FilmFrame } from './film/FilmFrame'
 import { loadFonts } from './fonts'
 import './styles/global.css'
 
@@ -15,8 +16,9 @@ Promise.race([loadFonts(), new Promise((resolve) => setTimeout(resolve, 1500))])
   root.classList.remove('fonts-pending'),
 )
 
+// ?filmframe=segundos: un cuadro fijo de la animación conceptual (para generar portada y respaldos)
+const filmFrame = new URLSearchParams(window.location.search).get('filmframe')
+
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+  <StrictMode>{filmFrame !== null ? <FilmFrame time={Number(filmFrame)} /> : <App />}</StrictMode>,
 )

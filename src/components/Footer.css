@@ -23,6 +23,33 @@
   font-weight: 600;
 }
 
+.site-footer__credit {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.site-footer__authors {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__authors li {
+  display: grid;
+}
+
+.site-footer__authors strong {
+  color: var(--blanco);
+  font-weight: 600;
+}
+
+.site-footer__credit a {
+  color: var(--blanco);
+}
+
 .site-footer__notes {
   display: grid;
   gap: 0.6rem;
