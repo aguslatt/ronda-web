@@ -3,26 +3,23 @@ import atlas from '../data/yerba-atlas.json'
 import './YerbaFall.css'
 
 /* ==========================================================================
-   Yerba cayendo en cámara lenta
+   Secuencia de portada: se vierte → se prepara → se ofrece
    Sistema de partículas en canvas 2D con recortes fotográficos de yerba mate
    (hojas, palitos y polvo) empaquetados en un único atlas.
 
-   Secuencia (≈ 6 s): entrada (primeros fragmentos) → momento de mayor caída
-   (chorro denso y rebotes en el borde del mate) → cierre tranquilo (polvo fino
-   que baja lento) → composición estable.
+   1. Se vierte (≈ 0–3,8 s): la yerba cae por gravedad hasta la abertura del mate
+      y se va acumulando en un colmo que asoma por encima del borde.
+   2. Se prepara (≈ 3,8–5,2 s): la bombilla entra en el mate (capa propia del recorte,
+      animada en CSS) mientras baja polvo fino.
+   3. Se ofrece (desde ≈ 5,2 s): la mano acerca el mate; la escena queda estable.
 
-   Tres planos con luz propia:
-   - fondo: fragmentos chicos, suaves y más claros (perspectiva atmosférica)
-   - chorro: en foco, cae por gravedad hasta la abertura del mate y desaparece
-     detrás de su borde (se dibuja detrás de la mano)
-   - frente: pocos fragmentos grandes, desenfocados y a contraluz
-
-   Cada partícula es una función del tiempo: no se integra cuadro a cuadro,
-   la escena se recalcula si cambia el tamaño y se puede pausar o repetir.
+   Tres planos de partículas con luz propia: fondo suave y más claro, chorro en foco
+   (detrás de la mano) y primer plano desenfocado a contraluz.
    ========================================================================== */
 
 type Kind = 'leaf' | 'stick' | 'dust'
 type Plane = 'back' | 'stream' | 'front'
+export type Phase = 'vierte' | 'prepara' | 'ofrece'
 
 interface Frame {
   x: number
@@ -36,32 +33,45 @@ interface Particle {
   frame: number
   plane: Plane
   born: number
-  size: number // px en pantalla (lado mayor), para una escena de 1440 px
-  x0: number // fracción del ancho (fondo/frente) o desvío respecto de la abertura (chorro)
-  y0: number // fracción del alto
-  vx: number // fracción del ancho por segundo
-  vy: number // fracción del alto por segundo
-  g: number // multiplicador de gravedad
-  aim: number // punto de llegada dentro de la abertura (-1 … 1)
+  size: number
+  x0: number
+  y0: number
+  vx: number
+  vy: number
+  g: number
+  aim: number
   rot: number
   spin: number
   tumble: number
   phase: number
   flutter: number
   alpha: number
-  bounce: number // velocidad lateral del rebote en el borde (0: entra sin rebotar)
+  bounce: number
+}
+
+interface Grain {
+  frame: number
+  x: number // posición dentro de la abertura (-1 … 1)
+  h: number // altura relativa en el colmo (0 … 1)
+  size: number
+  rot: number
+  order: number // momento en que aparece (0 … 1 del vertido)
 }
 
 type Status = 'idle' | 'playing' | 'paused' | 'done' | 'still'
 
 const frames = atlas.frames as Frame[]
 const ATLAS_URL = './yerba/yerba-atlas.webp'
-const EMIT = 3.6 // segundos de caída principal
-const CALM = 2.2 // segundos de cierre tranquilo
+const EMIT = 3.6
+const CALM = 2.2
+const PHASES: { id: Phase; label: string; from: number }[] = [
+  { id: 'vierte', label: 'Se vierte', from: -Infinity },
+  { id: 'prepara', label: 'Se prepara', from: EMIT + 0.2 },
+  { id: 'ofrece', label: 'Se ofrece', from: EMIT + 1.6 },
+]
 // Abertura del mate dentro del recorte mano-mate (fracciones de la imagen)
 const MOUTH = { x: 0.48, y: 0.45, half: 0.2 }
 
-/** Aleatorio con semilla: la coreografía es siempre la misma. */
 function random(seed: number) {
   let s = seed >>> 0
   return () => {
@@ -73,7 +83,7 @@ function random(seed: number) {
   }
 }
 
-function build(mobile: boolean): Particle[] {
+function build(mobile: boolean) {
   const rnd = random(20270401)
   const between = (a: number, b: number) => a + rnd() * (b - a)
   const byKind = (kind: Kind) => frames.map((f, i) => (f.type === kind ? i : -1)).filter((i) => i >= 0)
@@ -106,9 +116,8 @@ function build(mobile: boolean): Particle[] {
   })
 
   const particles: Particle[] = []
-  const count = mobile ? { stream: 120, back: 14, front: 3, calm: 14 } : { stream: 240, back: 28, front: 9, calm: 30 }
+  const count = mobile ? { stream: 120, back: 14, front: 3, calm: 14, grains: 22 } : { stream: 240, back: 28, front: 9, calm: 30, grains: 36 }
 
-  // Chorro: columna compacta, más densa en el centro de la emisión (entrada → pico → final)
   for (let i = 0; i < count.stream; i++) {
     const kind = kindFor([0.62, 0.14, 0.24])
     const u = rnd()
@@ -129,8 +138,6 @@ function build(mobile: boolean): Particle[] {
       bounce: rim ? Math.sign(aim) * between(40, 120) : 0,
     })
   }
-
-  // Fondo: pocos fragmentos chicos y suaves detrás del producto
   for (let i = 0; i < count.back; i++) {
     const kind = kindFor([0.6, 0.18, 0.22])
     particles.push({
@@ -146,8 +153,6 @@ function build(mobile: boolean): Particle[] {
       alpha: between(0.32, 0.58),
     })
   }
-
-  // Frente: pocos, grandes, desenfocados; algunos cruzan el borde de la escena
   for (let i = 0; i < count.front; i++) {
     const kind: Kind = i % 3 === 2 ? 'stick' : 'leaf'
     particles.push({
@@ -163,8 +168,6 @@ function build(mobile: boolean): Particle[] {
       alpha: 0.92,
     })
   }
-
-  // Cierre tranquilo: polvo fino y alguna hoja pequeña que bajan despacio
   for (let i = 0; i < count.calm; i++) {
     const kind: Kind = rnd() < 0.7 ? 'dust' : 'leaf'
     particles.push({
@@ -180,15 +183,29 @@ function build(mobile: boolean): Particle[] {
       alpha: between(0.28, 0.55),
     })
   }
-  return particles
+
+  // Colmo: fragmentos que quedan asentados en la abertura (se ven solo por encima del borde)
+  const grains: Grain[] = []
+  for (let i = 0; i < count.grains; i++) {
+    const x = between(-0.85, 0.85)
+    grains.push({
+      frame: pick(rnd() < 0.8 ? 'leaf' : 'stick'),
+      x,
+      h: (1 - x * x) * between(0.35, 1),
+      size: between(8, 15),
+      rot: between(0, Math.PI * 2),
+      order: rnd(),
+    })
+  }
+  grains.sort((a, b) => a.order - b.order)
+  return { particles, grains }
 }
 
-/** Versiones desenfocadas y con luz propia de cada recorte (se generan una sola vez). */
 function planeSprites(image: HTMLImageElement, look: 'back' | 'front') {
   const probe = document.createElement('canvas').getContext('2d')
   if (!probe) return null
   probe.filter = 'blur(2px)'
-  if (probe.filter !== 'blur(2px)') return null // Safari antiguo: sin desenfoque
+  if (probe.filter !== 'blur(2px)') return null
   return frames.map((f) => {
     const blur = Math.max(2, Math.round(Math.max(f.w, f.h) / (look === 'front' ? 22 : 28)))
     const pad = blur * 3
@@ -196,24 +213,20 @@ function planeSprites(image: HTMLImageElement, look: 'back' | 'front') {
     canvas.width = f.w + pad * 2
     canvas.height = f.h + pad * 2
     const ctx = canvas.getContext('2d')!
-    // Fondo: más claro y apagado. Frente: a contraluz, más oscuro y contrastado.
     ctx.filter = look === 'front' ? `blur(${blur}px) brightness(0.78) contrast(1.08)` : `blur(${blur}px) brightness(1.12) saturate(0.85)`
     ctx.drawImage(image, f.x, f.y, f.w, f.h, pad, pad, f.w, f.h)
     return { canvas, pad }
   })
 }
 
-interface Controls {
-  toggle: () => void
-}
-
 interface YerbaFallProps {
-  /** Escena que contiene los canvas */
   sceneRef: RefObject<HTMLElement | null>
-  /** Recorte de la mano con el mate: define dónde está la abertura */
   targetRef: RefObject<HTMLElement | null>
-  /** Elemento que lleva el progreso de scroll (--p) */
   progressRef: RefObject<HTMLElement | null>
+  /** Aviso de cada momento de la secuencia (la portada anima la bombilla y la mano) */
+  onPhase?: (phase: Phase) => void
+  /** Cambia para volver a reproducir la secuencia (por ejemplo, al regresar al inicio) */
+  replayKey?: number
 }
 
 const LABELS: Record<Status, string> = {
@@ -224,12 +237,18 @@ const LABELS: Record<Status, string> = {
   still: 'Reproducir escena',
 }
 
-export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) {
+export function YerbaFall({ sceneRef, targetRef, progressRef, onPhase, replayKey = 0 }: YerbaFallProps) {
   const backRef = useRef<HTMLCanvasElement>(null)
   const frontRef = useRef<HTMLCanvasElement>(null)
-  const controls = useRef<Controls | null>(null)
+  const controls = useRef<{ toggle: () => void; replay: () => void } | null>(null)
+  const phaseRef = useRef(onPhase)
   const [status, setStatus] = useState<Status>('idle')
+  const [phase, setPhase] = useState<Phase>('ofrece')
   const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    phaseRef.current = onPhase
+  }, [onPhase])
 
   useEffect(() => {
     const scene = sceneRef.current
@@ -241,7 +260,7 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const mobile = window.matchMedia('(max-width: 899px)').matches
-    const particles = build(mobile)
+    const { particles, grains } = build(mobile)
     const end = EMIT + CALM + 1.2
     const bctx = back.getContext('2d')
     const fctx = front.getContext('2d')
@@ -259,10 +278,19 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
     let inView = true
     let started = false
     let state: Status = reduced ? 'still' : 'idle'
+    let current: Phase | null = null
     let disposed = false
+
     const report = (next: Status) => {
       state = next
       setStatus(next)
+    }
+    const announce = (time: number) => {
+      const next = [...PHASES].reverse().find((item) => time >= item.from)?.id ?? 'vierte'
+      if (next === current) return
+      current = next
+      setPhase(next)
+      phaseRef.current?.(next)
     }
 
     const resize = () => {
@@ -287,6 +315,17 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       }
     }
 
+    const sprite = (ctx: CanvasRenderingContext2D, f: Frame, index: number, set: ReturnType<typeof planeSprites>, x: number, y: number, size: number, angle: number, flip: number, alpha: number) => {
+      const scale = size / Math.max(f.w, f.h)
+      const cos = Math.cos(angle)
+      const sin = Math.sin(angle)
+      ctx.globalAlpha = alpha
+      ctx.setTransform(cos * scale * dpr, sin * scale * dpr, -sin * scale * flip * dpr, cos * scale * flip * dpr, x * dpr, y * dpr)
+      const soft = set ? set[index] : null
+      if (soft) ctx.drawImage(soft.canvas, -f.w / 2 - soft.pad, -f.h / 2 - soft.pad)
+      else if (image) ctx.drawImage(image, f.x, f.y, f.w, f.h, -f.w / 2, -f.h / 2, f.w, f.h)
+    }
+
     const draw = (time: number) => {
       bctx.setTransform(1, 0, 0, 1, 0, 0)
       fctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -294,12 +333,22 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       fctx.clearRect(0, 0, front.width, front.height)
       if (!image) return
 
-      const progress = Number.parseFloat(progressRef.current?.style.getPropertyValue('--p') || '0') || 0
-      const exit = Math.min(1, Math.max(0, 1 - progress * 2.4)) // se retiran con el scroll
-      if (exit <= 0) return
-
       const m = mouth()
-      const gravity = height * 0.34 // px/s²: cámara lenta
+      // El colmo acompaña al mate (también cuando se acerca con el scroll)
+      const fill = Math.min(1, Math.max(0, (time - 0.9) / (EMIT - 0.4)))
+      const moundHeight = m.half * 0.2
+      const grainScale = m.half / Math.max(1, (mobile ? 0.86 : 0.78) * height * 0.6707 * MOUTH.half)
+      for (const grain of grains) {
+        if (grain.order > fill) break
+        const f = frames[grain.frame]
+        sprite(bctx, f, grain.frame, null, m.x + grain.x * m.half * 0.9, m.y + 3 - grain.h * moundHeight, grain.size * grainScale, grain.rot, 0.55, 1)
+      }
+
+      const progress = Number.parseFloat(progressRef.current?.style.getPropertyValue('--p') || '0') || 0
+      const exit = Math.min(1, Math.max(0, 1 - progress * 2.4))
+      if (exit <= 0 || !Number.isFinite(time)) return
+
+      const gravity = height * 0.34
       const unit = Math.min(1.15, Math.max(0.62, width / 1440)) * (mobile ? 1.25 : 1)
 
       for (const p of particles) {
@@ -312,7 +361,6 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
         let plane = p.plane
 
         if (p.plane === 'stream') {
-          // Resuelve la llegada exacta a la abertura con gravedad
           const g = gravity * p.g
           const startY = p.y0 * height
           const drop = m.y - startY
@@ -321,11 +369,10 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
           const tx = m.x + p.aim * m.half
           if (age > hit) {
             if (!p.bounce) {
-              if (age > hit + 0.04) continue // ya cayó dentro del mate
+              if (age > hit + 0.04) continue
               x = tx
               y = m.y + (age - hit) * (vy + g * hit)
             } else {
-              // Rebote en el borde: sale hacia afuera, cae por delante del mate y se desvanece
               const t = age - hit
               if (t > 0.9) continue
               plane = 'front'
@@ -345,26 +392,14 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
           x = p.x0 * width + p.vx * width * age + Math.sin(age * 2.6 + p.phase) * p.flutter * width
           y = p.y0 * height + p.vy * height * age + 0.5 * g * age * age
           if (y - p.size * 3 > height) continue
-          // El polvo del cierre aparece y se apaga suave
           fade = p.y0 > -0.1 ? Math.min(1, age / 0.6) * Math.max(0, 1 - Math.max(0, age - 1.6) / 1.2) : 1
           if (fade <= 0) continue
         }
 
-        const size = p.size * unit
-        const scale = size / Math.max(f.w, f.h)
-        const angle = p.rot + p.spin * age
-        // Giro en profundidad: el fragmento se “aplana” al dar vuelta
         const flip = 0.35 + 0.65 * Math.abs(Math.cos(p.tumble * age + p.phase))
-        const cos = Math.cos(angle)
-        const sin = Math.sin(angle)
         const ctx = plane === 'front' ? fctx : bctx
-        ctx.globalAlpha = p.alpha * fade * exit
-        ctx.setTransform(cos * scale * dpr, sin * scale * dpr, -sin * scale * flip * dpr, cos * scale * flip * dpr, x * dpr, y * dpr)
-
         const set = p.plane === 'front' ? softFront : p.plane === 'back' ? softBack : null
-        const sprite = set ? set[p.frame] : null
-        if (sprite) ctx.drawImage(sprite.canvas, -f.w / 2 - sprite.pad, -f.h / 2 - sprite.pad)
-        else ctx.drawImage(image, f.x, f.y, f.w, f.h, -f.w / 2, -f.h / 2, f.w, f.h)
+        sprite(ctx, f, p.frame, set, x, y, p.size * unit, p.rot + p.spin * age, flip, p.alpha * fade * exit)
       }
     }
 
@@ -372,7 +407,6 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       frame = 0
       if (disposed || !inView || document.visibilityState !== 'visible' || state !== 'playing') return
       if (!started) {
-        // Acompaña la entrada de la portada: espera a las tipografías
         if (document.documentElement.classList.contains('fonts-pending')) {
           frame = requestAnimationFrame(loop)
           return
@@ -382,6 +416,7 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       }
       clock += Math.min(0.05, (now - last) / 1000)
       last = now
+      announce(clock)
       draw(clock)
       if (clock > end) {
         report('done')
@@ -400,6 +435,15 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       cancelAnimationFrame(frame)
       frame = 0
     }
+    const replay = () => {
+      if (!image) return
+      stop()
+      clock = -0.25
+      started = true
+      announce(clock)
+      report('playing')
+      run()
+    }
 
     controls.current = {
       toggle: () => {
@@ -409,14 +453,9 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
         } else if (state === 'paused') {
           report('playing')
           run()
-        } else {
-          // Repetir (o reproducir a pedido con movimiento reducido)
-          clock = -0.2
-          started = true
-          report('playing')
-          run()
-        }
+        } else replay()
       },
+      replay,
     }
 
     const load = new Image()
@@ -429,11 +468,13 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
       resize()
       setReady(true)
       if (reduced) {
-        // Composición estática: un instante detenido de la caída
-        draw(2.05)
+        // Composición estática: el mate ya preparado y ofrecido
+        announce(Infinity)
+        draw(Infinity)
         report('still')
       } else {
         clock = -0.35
+        announce(clock)
         report('playing')
         run()
       }
@@ -441,9 +482,8 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
     load.src = ATLAS_URL
 
     const redraw = () => {
-      if (state === 'still') draw(2.05)
-      else if (state === 'paused') draw(clock)
-      else if (state === 'done') draw(Infinity)
+      if (state === 'paused') draw(clock)
+      else if (state === 'done' || state === 'still') draw(Infinity)
     }
     const onResize = () => {
       resize()
@@ -475,15 +515,32 @@ export function YerbaFall({ sceneRef, targetRef, progressRef }: YerbaFallProps) 
     }
   }, [sceneRef, targetRef, progressRef])
 
+  // Volver a reproducir al regresar al inicio (salvo movimiento reducido: la escena queda quieta)
+  useEffect(() => {
+    if (replayKey > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) controls.current?.replay()
+  }, [replayKey])
+
+  const active = PHASES.findIndex((item) => item.id === phase)
+
   return (
     <>
       <canvas ref={backRef} className="yerba-fall yerba-fall--back" aria-hidden="true" />
       <canvas ref={frontRef} className="yerba-fall yerba-fall--front" aria-hidden="true" />
       {ready && (
-        <button type="button" className={`yerba-control is-${status}`} onClick={() => controls.current?.toggle()}>
-          <span className="yerba-control__icon" aria-hidden="true" />
-          {LABELS[status]}
-        </button>
+        <div className="yerba-ui">
+          <button type="button" className={`yerba-control is-${status}`} aria-label={LABELS[status]} onClick={() => controls.current?.toggle()}>
+            <span className="yerba-control__icon" aria-hidden="true" />
+            <span className="yerba-control__label">{LABELS[status]}</span>
+          </button>
+          <ol className="yerba-steps" aria-label="Secuencia de la portada">
+            {PHASES.map((item, index) => (
+              <li key={item.id} className={`yerba-steps__item${index < active ? ' is-done' : ''}${index === active ? ' is-current' : ''}`} aria-current={index === active ? 'step' : undefined}>
+                <span className="yerba-steps__dot" aria-hidden="true" />
+                {item.label}
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
     </>
   )

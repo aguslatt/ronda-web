@@ -1,9 +1,10 @@
-import { useRef, type CSSProperties } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { hero } from '../content'
 import { Picture } from '../components/Picture'
 import { ArrowDownIcon } from '../components/Icons'
-import { YerbaFall } from '../components/YerbaFall'
+import { YerbaFall, type Phase } from '../components/YerbaFall'
 import { useScrollProgress } from '../hooks/useScrollProgress'
+import { HOME_EVENT } from '../navigation'
 import './Hero.css'
 
 /** Línea del titular con máscara. Lo que va entre asteriscos toma el color de acento. */
@@ -27,32 +28,48 @@ function Line({ text, index }: { text: string; index: number }) {
 
 /**
  * Portada + gesto de ofrecer.
- * 1. Escena publicitaria: la yerba cae en cámara lenta hasta el mate; el envase real equilibra la escena.
- * 2. Firma del sitio: con el scroll (tramo breve, desplazamiento nativo) el mate se acerca a quien mira,
- *    el verde ocupa la pantalla y aparece la idea “Un gesto empieza una ronda”, que desemboca en El hallazgo.
+ * 1. Secuencia publicitaria: la yerba se vierte en el mate, la bombilla entra (se prepara)
+ *    y la mano lo acerca (se ofrece). El envase real acompaña la escena.
+ * 2. Firma del sitio: con el scroll (tramo breve, desplazamiento nativo) el mate y el envase
+ *    se acercan a quien mira, el verde ocupa la pantalla y aparece “Un gesto empieza una ronda”.
  */
 export function Hero() {
   const offerRef = useScrollProgress<HTMLDivElement>('runway', 0)
   const sceneRef = useRef<HTMLDivElement>(null)
   const handRef = useRef<HTMLElement>(null)
+  const [phase, setPhase] = useState<Phase | null>(null)
+  const [replay, setReplay] = useState(0)
+
+  const onPhase = useCallback((next: Phase) => setPhase(next), [])
+
+  useEffect(() => {
+    const onHome = () => setReplay((value) => value + 1)
+    window.addEventListener(HOME_EVENT, onHome)
+    return () => window.removeEventListener(HOME_EVENT, onHome)
+  }, [])
 
   return (
-    <div ref={offerRef} className="offer">
-      <section id="inicio" className="hero" data-surface="claro" aria-labelledby="hero-title">
+    // El destino del logo y de “Volver al inicio” es el comienzo del tramo, no la portada fija:
+    // así el regreso siempre muestra la portada completa.
+    <div ref={offerRef} id="inicio" className="offer" tabIndex={-1}>
+      <section className="hero" data-surface="claro" data-phase={phase ?? undefined} aria-labelledby="hero-title">
         <div ref={sceneRef} className="hero__scene">
           <span className="hero__glow" aria-hidden="true" />
           <span className="hero__surface" aria-hidden="true" />
 
           <div className="hero__pack">
             <span className="hero__pack-shadow contact-shadow" aria-hidden="true" />
-            <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 13vw, 28vw" priority />
+            <Picture name={hero.pack.name} alt={hero.pack.alt} sizes="(min-width: 900px) 18vw, 32vw" priority />
           </div>
 
           <figure ref={handRef} className="hero__hand">
-            <Picture name={hero.image.name} alt={hero.image.alt} sizes="(min-width: 900px) 40vw, 62vw" priority />
+            <div className="hero__hand-inner">
+              <Picture name="mano-mate-bombilla" alt="" sizes="(min-width: 900px) 44vw, 70vw" priority className="hero__layer hero__layer--bombilla" />
+              <Picture name="mano-mate-cuerpo" alt={hero.image.alt} sizes="(min-width: 900px) 44vw, 70vw" priority className="hero__layer hero__layer--cuerpo" />
+            </div>
           </figure>
 
-          <YerbaFall sceneRef={sceneRef} targetRef={handRef} progressRef={offerRef} />
+          <YerbaFall sceneRef={sceneRef} targetRef={handRef} progressRef={offerRef} onPhase={onPhase} replayKey={replay} />
 
           <p className="hero__gesture">
             {hero.gesture.map((line) => (
@@ -63,7 +80,7 @@ export function Hero() {
           <p className="hero__credit">{hero.photoCredit}</p>
         </div>
 
-        <div className="hero__copy">
+        <div key={replay} className="hero__copy">
           <p className="hero__kicker label">{hero.kicker}</p>
 
           <h1 id="hero-title" className="hero__title">

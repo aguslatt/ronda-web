@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { nav } from '../content'
 import { openPresentation } from '../presentation/bus'
+import { openAssistant } from '../assistant/bus'
+import { goHome } from '../navigation'
 import './Header.css'
 
 /**
@@ -12,6 +14,7 @@ export function Header() {
   const [active, setActive] = useState<string | null>(null)
   const [surface, setSurface] = useState('claro')
   const toggleRef = useRef<HTMLButtonElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
@@ -20,6 +23,9 @@ export function Header() {
 
     const update = () => {
       frame = 0
+      // Progreso de lectura: línea fina bajo la barra
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      headerRef.current?.style.setProperty('--read', String(scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0))
       const probe = window.innerHeight * 0.4
       // Con zonas superpuestas (tramos fijos), gana la última de la lista
       const current = [...ids].reverse().find((id) => {
@@ -82,9 +88,18 @@ export function Header() {
   const close = () => setOpen(false)
 
   return (
-    <header className={`site-header surface-${open ? 'verde' : surface}${open ? ' is-open' : ''}`}>
+    <header ref={headerRef} className={`site-header surface-${open ? 'verde' : surface}${open ? ' is-open' : ''}`}>
+      <span className="site-header__progress" aria-hidden="true" />
       <div className="site-header__bar">
-        <a className="site-header__brand" href="#inicio" aria-label="Proyecto Ronda, volver al inicio" onClick={close}>
+        <a
+          className="site-header__brand"
+          href="#inicio"
+          aria-label="Proyecto Ronda, volver al inicio"
+          onClick={() => {
+            close()
+            goHome()
+          }}
+        >
           <span className="site-header__name">Ronda</span>
           <span className="site-header__for">/ Romance</span>
         </a>
@@ -133,6 +148,19 @@ export function Header() {
               <path d="M8 11.5v2.5M5 14h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
             Modo presentación
+          </button>
+          <button
+            type="button"
+            className="site-header__ask"
+            onClick={() => {
+              close()
+              openAssistant()
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+            Preguntale a Ronda
           </button>
         </nav>
       </div>

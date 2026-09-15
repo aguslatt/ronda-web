@@ -157,6 +157,69 @@
   opacity: 1;
 }
 
+.site-header__ask {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  margin-left: -1.25rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--verde);
+  color: var(--blanco);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.site-header__ask:hover {
+  background: var(--verde-medio);
+}
+
+.surface-verde .site-header__ask,
+.surface-rojo .site-header__ask {
+  background: var(--lima);
+  color: var(--verde-noche);
+}
+
+/* Progreso de lectura */
+.site-header__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--lima);
+  transform: scaleX(var(--read, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.surface-claro .site-header__progress,
+.surface-blanco .site-header__progress,
+.surface-niebla .site-header__progress {
+  background: var(--verde-hoja);
+}
+
+@media (min-width: 900px) and (max-width: 1180px) {
+  .site-header__present,
+  .site-header__ask {
+    padding-inline: 0.7rem;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .site-header__present svg,
+  .site-header__ask svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 @keyframes header-in {
   from {
     transform: translateY(-100%);
@@ -231,6 +294,15 @@
   .is-open .site-nav {
     display: block;
     animation: menu-in 0.35s var(--ease);
+  }
+
+  .site-header__ask {
+    margin: 0.75rem 0 0;
+    min-height: 3rem;
+    padding: 0 1.25rem;
+    background: var(--lima);
+    color: var(--verde-noche);
+    font-size: 1rem;
   }
 
   .site-header__present {

@@ -1,24 +1,28 @@
 /* ==========================================================================
-   Portada · escena publicitaria + gesto de ofrecer
+   Portada · secuencia publicitaria + gesto de ofrecer
    Capas (de atrás hacia adelante): luz difusa, superficie verde, envase,
-   yerba de fondo, mano con el mate, yerba de primer plano, texto.
+   yerba de fondo y colmo, bombilla, mano con el mate, yerba de primer plano, texto.
    La luz llega desde arriba a la izquierda: las sombras caen abajo a la derecha.
+
+   data-phase (lo marca la secuencia): vierte → prepara → ofrece
 
    .offer es un tramo breve de scroll (90svh) con la portada fija:
    --p  0 → 1  avance del tramo
    --s         la superficie verde se abre a pantalla completa
-   --o         el mate se acerca a quien mira (va al centro y crece)
+   --o         el mate y el envase se acercan a quien mira
    --g         aparece “Un gesto empieza una ronda”
    ========================================================================== */
 .offer {
   --p: 0;
-  --q: calc(1 - var(--p));
-  /* El verde se abre recién cuando el titular ya se retiró */
   --s: clamp(0, calc((var(--p) - 0.13) * 2.2), 1);
   --o: clamp(0, calc((var(--p) - 0.08) * 1.4), 1);
   --g: clamp(0, calc((var(--p) - 0.55) * 3), 1);
   position: relative;
   height: calc(max(100svh, 42rem) + 90svh);
+}
+
+.offer:focus {
+  outline: none;
 }
 
 .hero {
@@ -65,7 +69,8 @@
   animation: surface-in 0.8s var(--ease) both;
 }
 
-/* Mano y mate: entra desde el borde derecho; con el scroll se acerca al centro */
+/* Mano y mate: entra desde el borde derecho; con el scroll se acerca al centro.
+   El acercamiento se limita (×1,3) para no ampliar el recorte más allá de su resolución. */
 .hero__hand {
   position: absolute;
   right: 0;
@@ -74,13 +79,12 @@
   height: 78%;
   aspect-ratio: 939 / 1400;
   margin: 0;
-  translate: calc(var(--o) * -33vw) calc(var(--o) * 4svh);
-  scale: calc(1 + var(--o) * 0.6);
+  translate: calc(var(--o) * -30vw) calc(var(--o) * 5svh);
+  scale: calc(1 + var(--o) * 0.3);
   transform-origin: 48% 45%;
   animation: hand-in 0.9s var(--ease) 0.12s both;
 }
 
-/* Halo propio del mate: acompaña al objeto cuando se acerca */
 .hero__hand::before {
   content: '';
   position: absolute;
@@ -92,27 +96,66 @@
   pointer-events: none;
 }
 
-.hero__hand img {
+/* Gesto de ofrecer: durante el vertido la mano sostiene el mate un poco más atrás */
+.hero__hand-inner {
+  position: absolute;
+  inset: 0;
+  transform-origin: 70% 80%;
+  transition:
+    translate 1300ms var(--ease),
+    scale 1300ms var(--ease),
+    rotate 1300ms var(--ease);
+}
+
+.hero[data-phase='vierte'] .hero__hand-inner,
+.hero[data-phase='prepara'] .hero__hand-inner {
+  translate: 2.5% 3%;
+  scale: 0.95;
+  rotate: 2deg;
+}
+
+.hero__layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: right bottom;
-  filter: brightness(1.1) contrast(1.06) saturate(1.08) drop-shadow(22px 34px 26px rgba(0, 20, 12, 0.4));
+  filter: brightness(1.08) contrast(1.05) saturate(1.06) drop-shadow(18px 28px 22px rgba(0, 20, 12, 0.38));
+}
+
+.hero__layer--cuerpo {
   /* El corte de la muñeca se disuelve: nunca se lee como una mano recortada */
   -webkit-mask-image: linear-gradient(to left, transparent 0, #000 16%);
   mask-image: linear-gradient(to left, transparent 0, #000 16%);
 }
 
-/* Envase real: menor escala; al acercarse el mate se retira */
+/* Se prepara: la bombilla entra en el mate cuando termina el vertido */
+.hero__layer--bombilla {
+  filter: brightness(1.08) contrast(1.05) drop-shadow(10px 16px 14px rgba(0, 20, 12, 0.3));
+  transform-origin: 38% 45%;
+  transition:
+    translate 1100ms var(--ease),
+    rotate 1100ms var(--ease),
+    opacity 450ms var(--ease);
+}
+
+.hero[data-phase='vierte'] .hero__layer--bombilla {
+  translate: -2% -12%;
+  rotate: -5deg;
+  opacity: 0;
+}
+
+/* Envase real: con el gesto avanza junto al mate y gana protagonismo */
 .hero__pack {
   position: absolute;
   left: calc(var(--surface-left) - 5.5%);
   bottom: 7%;
   z-index: 2;
   width: clamp(8.5rem, 12vw, 13.5rem);
-  translate: calc(var(--o) * -10vw) calc(var(--o) * 3svh);
-  scale: calc(1 - var(--o) * 0.18);
-  opacity: clamp(0, calc(1 - var(--o) * 1.4), 1);
+  translate: calc(var(--o) * -24vw) calc(var(--o) * -6svh);
+  scale: calc(1 + var(--o) * 0.38);
+  transform-origin: 50% 100%;
   animation: pack-in 0.8s var(--ease) 0.25s both;
 }
 
@@ -132,8 +175,8 @@
 /* La idea que conecta todo el sitio */
 .hero__gesture {
   position: absolute;
+  top: calc(var(--header-h) + 7svh);
   left: var(--edge);
-  bottom: 11svh;
   z-index: 7;
   display: grid;
   margin: 0;
@@ -164,7 +207,6 @@
 .hero__credit {
   position: absolute;
   right: var(--edge);
-  /* Por encima del acceso a “Preguntale a Ronda” */
   bottom: 5rem;
   z-index: 5;
   color: var(--blanco-suave);
@@ -185,7 +227,6 @@
   min-height: max(100svh, 42rem);
   padding: calc(var(--header-h) + clamp(2rem, 6svh, 4.5rem)) 0 3rem var(--edge);
   translate: 0 calc(var(--p) * -10svh);
-  /* El texto se retira antes de que el verde lo alcance */
   opacity: clamp(0, calc(1 - var(--p) * 7), 1);
 }
 
@@ -263,7 +304,6 @@
   animation: rise-in 0.5s var(--ease) 0.7s backwards;
 }
 
-/* La entrada no empieza hasta que las fuentes están listas */
 .fonts-pending .hero__glow,
 .fonts-pending .hero__surface,
 .fonts-pending .hero__hand,
@@ -316,7 +356,6 @@
   }
 }
 
-/* Pantallas bajas de escritorio */
 @media (min-width: 900px) and (max-height: 760px) {
   .hero__copy {
     gap: 1.1rem;
@@ -327,7 +366,7 @@
   }
 }
 
-/* Movimiento reducido: sin tramo fijo; la portada queda en su composición estática */
+/* Movimiento reducido: sin tramo fijo; la portada queda en su composición final */
 @media (prefers-reduced-motion: reduce) {
   .offer {
     height: auto;
@@ -359,7 +398,6 @@
     min-height: 0;
   }
 
-  /* En celular el texto se lee mientras se desplaza: no se desvanece */
   .hero__copy {
     order: 1;
     width: auto;
@@ -402,24 +440,26 @@
   }
 
   .hero__hand {
-    top: 0;
-    height: 86%;
-    translate: calc(var(--o) * -16vw) calc(var(--o) * 3%);
-    scale: calc(1 + var(--o) * 0.22);
+    top: 4%;
+    height: 84%;
+    translate: calc(var(--o) * -12vw) calc(var(--o) * 3%);
+    scale: calc(1 + var(--o) * 0.12);
   }
 
   .hero__pack {
     left: 7%;
     bottom: 8%;
     width: 27vw;
+    translate: calc(var(--o) * 4vw) calc(var(--o) * -2%);
+    scale: calc(1 + var(--o) * 0.15);
   }
 
   .hero__gesture {
+    top: auto;
     bottom: 1.5rem;
     font-size: clamp(1.625rem, 8vw, 2.25rem);
   }
 
-  /* Logo en el ángulo superior izquierdo de la escena, sobre la luz clara */
   .hero__logo {
     top: auto;
     right: auto;

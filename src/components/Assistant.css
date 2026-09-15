@@ -279,11 +279,23 @@
 }
 
 @media (max-width: 599px) {
+  /* En celular, solo el medallón: ocupa menos pantalla sobre la escena y el contenido */
   .assistant-launcher {
     right: 0.75rem;
     bottom: 0.75rem;
-    min-height: 2.75rem;
+    min-height: 3rem;
+    padding: 0.3rem;
     font-size: 0.875rem;
+    box-shadow: 0 0 0 2px var(--lima), 0 10px 24px rgba(0, 25, 15, 0.3);
+  }
+
+  .assistant-launcher__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .assistant {

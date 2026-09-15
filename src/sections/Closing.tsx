@@ -5,6 +5,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '../components/Icons'
 import { useInView } from '../hooks/useInView'
 import { openAssistant } from '../assistant/bus'
 import { openPresentation } from '../presentation/bus'
+import { goHome } from '../navigation'
 import './Closing.css'
 
 /*
@@ -104,7 +105,7 @@ export function Closing() {
             <button type="button" className="text-link closing__present" onClick={() => openPresentation()}>
               Modo presentación
             </button>
-            <a className="text-link" href="#inicio">
+            <a className="text-link" href="#inicio" onClick={goHome}>
               Volver al inicio
               <ArrowUpIcon />
             </a>

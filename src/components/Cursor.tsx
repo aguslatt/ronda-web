@@ -72,6 +72,7 @@ export function Cursor() {
   return (
     <div ref={ref} className="brand-cursor" data-state="hidden" aria-hidden="true">
       <span className="brand-cursor__ring" />
+      <span className="brand-cursor__dot" />
       <span className="brand-cursor__body">
         <img
           src={`./img/cursor-medallon-${widths[1]}.webp`}

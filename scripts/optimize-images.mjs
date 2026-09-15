@@ -16,6 +16,9 @@ const jobs = [
   { name: 'gesto-rio', file: 'gesto-rio.jpg', widths: [640, 1080, 1600] },
   // Recorte de la mano que ofrece el mate (a partir de oferta.jpg, fondo transparente)
   { name: 'mano-mate', file: 'mano-mate.png', widths: [480, 720, 939], quality: 86 },
+  // Capas de la secuencia de portada: mano con el mate y bombilla por separado (mismo encuadre)
+  { name: 'mano-mate-cuerpo', file: 'mano-mate-cuerpo.png', widths: [480, 720, 939], quality: 88 },
+  { name: 'mano-mate-bombilla', file: 'mano-mate-bombilla.png', widths: [480, 720, 939], quality: 88 },
   { name: 'romance-logo-blanco', file: 'romance-logo-blanco.png', widths: [277], quality: 92 },
   // El público (Pexels): mismo tratamiento de luz natural cálida
   { name: 'publico-estudio', file: 'publico-estudio.jpg', widths: [480, 800, 1200] },

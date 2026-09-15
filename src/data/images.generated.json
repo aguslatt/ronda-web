@@ -17,6 +17,24 @@
       939
     ]
   },
+  "mano-mate-cuerpo": {
+    "width": 939,
+    "height": 1400,
+    "widths": [
+      480,
+      720,
+      939
+    ]
+  },
+  "mano-mate-bombilla": {
+    "width": 939,
+    "height": 1400,
+    "widths": [
+      480,
+      720,
+      939
+    ]
+  },
   "romance-logo-blanco": {
     "width": 277,
     "height": 122,

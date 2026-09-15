@@ -47,13 +47,16 @@ Una curva compartida (`--ease`): respuestas ≈ 200 ms y revelaciones ≈ 700–
 1. **Yerba cayendo** (`src/components/YerbaFall.tsx`): canvas 2D con recortes fotográficos de yerba
    (hojas, palitos y polvo) en un atlas (`public/yerba/`, `src/data/yerba-atlas.json`). Tres planos: fondo suave,
    chorro en foco que cae por gravedad hasta la abertura del mate (y desaparece detrás de su borde) y primer plano
-   desenfocado. ≈ 4–5 s y termina en la composición estable. Menos partículas en celular, pausa fuera de pantalla
-   o con la pestaña oculta, sin animación con `saveData`. Con movimiento reducido se dibuja un instante detenido.
-2. **Primer scroll**: las partículas se retiran, la mano cambia de encuadre y la superficie verde se abre hasta conectar con *El hallazgo*.
+   desenfocado. Es una secuencia con principio y fin en tres fases (`data-phase` en `.hero`): **se vierte**
+   (la mano inclina el mate, sin bombilla), **se prepara** (el colmo de yerba se asienta y entra la bombilla) y
+   **se ofrece** (composición estable). Un indicador de pasos junto al control de pausa muestra la fase.
+   Menos partículas en celular, pausa fuera de pantalla o con la pestaña oculta, sin animación con `saveData`.
+   Con movimiento reducido se muestra la composición final y se puede reproducir a pedido.
+2. **Primer scroll**: las partículas se retiran, la mano y el envase avanzan (el envase gana protagonismo, zoom de la mano limitado a ×1,3 para no perder definición) y la superficie verde se abre hasta conectar con *El hallazgo*.
 3. **Entradas por sección** (`src/hooks/useReveal.ts` + `data-reveal`): fotografías que se abren, titulares por máscara y bloques que suben.
 4. **Marca**: primero el envase, después el encuadre del medallón y la ampliación que gira y se enfoca.
 5. **Insight**: la lámina roja llega como una tarjeta que se abre a pantalla completa; luego se parte y revela la estrategia.
-6. **Activaciones**: la sección entra como una superficie que se ensancha; las propuestas son un mazo de paneles superpuestos.
+6. **Activación**: la sección entra como una superficie que se ensancha; al elegir un canal cambian el boceto (carrusel con profundidad) y sus fichas.
 7. **Presupuesto**: la barra se construye y después llegan la leyenda y el panel.
 8. **Cierre**: la superficie verde se abre en círculo desde el mate y vuelven envase, mano y frases.
 
@@ -61,16 +64,23 @@ Con `prefers-reduced-motion` todo aparece en su estado final.
 
 ### Cursor
 
-`src/components/Cursor.tsx`: el medallón del envase (recortado en círculo) sigue al mouse sin retraso,
-con el punto de selección en el centro y un leve aumento sobre enlaces y botones. Solo con mouse; ignora los clics;
-se desactiva con alto contraste o colores forzados y, si la imagen no carga, queda el cursor nativo.
+`src/components/Cursor.tsx`: un punto de selección exacto (6 px, doble contorno) y el medallón del envase como
+insignia pequeña (18 px) desplazada abajo a la derecha, para que no tape el texto que se lee o se selecciona.
+Sobre enlaces y botones aparece un aro lima. Solo con mouse; ignora los clics; se desactiva con alto contraste
+o colores forzados y, si la imagen no carga, queda el cursor nativo.
+
+### Navegación y controles
+
+- **Regreso al inicio**: el logo del encabezado y “Volver al inicio” del cierre apuntan a `#inicio` (en el contenedor `.offer`, no en la escena fija) y disparan `ronda:inicio` (`src/navigation.ts`), que muestra la portada completa y reinicia su animación.
+- **Encabezado**: barra de progreso de lectura y acceso directo a “Preguntale a Ronda” y al modo presentación.
+- **Botón flotante del asistente**: se oculta cuando debajo hay controles o textos (presupuesto, activación, preguntas frecuentes, cierre); en celular queda solo el medallón.
 
 ### Experiencias (idea que conecta todo: “Un gesto empieza una ronda”)
 
-- **Portada**: escena de yerba con entrada, momento de mayor caída y cierre tranquilo; control para pausar o repetir. Con movimiento reducido se muestra un instante detenido y se puede reproducir a pedido.
-- **Gesto de ofrecer** (`src/sections/Hero.tsx`, `.offer`): tramo breve con scroll nativo en el que el mate se acerca a quien mira y desemboca en *El hallazgo*.
+- **Portada**: secuencia de yerba en tres fases (se vierte → se prepara → se ofrece) con control para pausar o repetir y el texto siempre legible. El recorte de la mano está en dos capas (`mano-mate-cuerpo` y `mano-mate-bombilla`) generadas con máscara endurecida, descontaminación de color en el borde y nitidez suave.
+- **Gesto de ofrecer** (`src/sections/Hero.tsx`, `.offer`): tramo breve con scroll nativo en el que el mate y el envase de Romance se acercan a quien mira y desembocan en *El hallazgo*.
 - **Hallazgos explorables** (`src/sections/Findings.tsx`): tres entradas con cifra, anillo proporcional sobre su propia base, explicación y páginas de la tesis.
-- **La propuesta toma forma** (`src/sections/Campaign.tsx`): cuatro bocetos de aplicación (historia de Instagram, streaming, punto de venta e invitación digital) con profundidad y ampliación. Se identifican como “Boceto de aplicación propuesto”: la tesis no incluye piezas (pág. 53).
+- **Cómo se activa** (`src/sections/Activation.tsx`, piezas en `src/campaign/`): une canales y bocetos en una sola experiencia. Al elegir uno de los cinco canales (streaming, Instagram, TikTok y creadores, activaciones y punto de venta, web y WhatsApp) se ven, por separado, la ficha **“Documentado en la tesis”** (acciones, KPI, presupuesto, estado y páginas) y la ficha **“Boceto de aplicación propuesto”** (soporte y mensaje), con carrusel, deslizamiento y ampliación. En cada montaje el envase se apoya en una superficie de la foto (mesa, manta, pasto, góndola) con perspectiva, luz y sombra de contacto. La tesis no incluye piezas (pág. 53).
 - **Presupuesto**: función de cada rubro según la tesis y “Consultar sobre esta inversión”, que abre el asistente con la respuesta verificada.
 - **Preguntale a Ronda** (`src/components/Assistant.tsx`, `src/assistant/`): no usa inteligencia artificial. Busca entre respuestas redactadas a partir de la tesis (`src/data/ronda-kb.json`, con páginas) y deriva a romanceyerba@gmail.com cuando la información no está.
 - **Preguntas frecuentes** (`src/sections/Faq.tsx`): selección de la misma base.

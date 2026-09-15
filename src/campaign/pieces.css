@@ -1,0 +1,723 @@
+/* ==========================================================================
+   Bocetos de aplicación · soportes y montajes
+   Unidades del contenedor (.stage__support): todo escala con el soporte.
+   ========================================================================== */
+.cp-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cp-seal {
+  display: block;
+  flex: none;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 2px solid var(--blanco);
+  border-radius: 50%;
+  background: var(--blanco);
+}
+
+.cp-seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Envase apoyado: la base coincide con la superficie; dos sombras (contacto y proyectada) */
+.cp-pack {
+  position: absolute;
+  aspect-ratio: 620 / 900;
+}
+
+.cp-pack img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cp-pack__contact,
+.cp-pack__cast {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Contacto: línea oscura y apretada justo en la base */
+.cp-pack__contact {
+  left: 2%;
+  right: 2%;
+  bottom: 1%;
+  height: 5%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(20, 10, 2, 0.75), rgba(20, 10, 2, 0.25) 60%, transparent);
+}
+
+/* Proyectada: más larga y difusa, en la dirección opuesta a la luz */
+.cp-pack__cast {
+  left: 10%;
+  right: -70%;
+  bottom: -2%;
+  height: 11%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(20, 10, 2, 0.4), transparent);
+  filter: blur(2px);
+  transform: skewX(-35deg);
+  transform-origin: 0 100%;
+}
+
+/* ----- Teléfono ----------------------------------------------------------- */
+.cp-phone {
+  position: absolute;
+  inset: 0;
+  padding: 2.4cqw;
+  border-radius: 11cqw;
+  background: linear-gradient(145deg, #2a302c, #0b0f0c 40%);
+  box-shadow:
+    inset 0 0 0 0.6cqw rgba(255, 255, 255, 0.06),
+    var(--sombra-flotante);
+}
+
+.cp-phone__screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 9cqw;
+  background: var(--blanco);
+}
+
+/* ----- Historia de Instagram ---------------------------------------------- */
+.cp-story__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 28%, transparent 58%, rgba(0, 25, 15, 0.7) 100%);
+}
+
+/* Pasto a la derecha, detrás del termo: escala de plano medio y leve desenfoque de profundidad */
+.cp-pack--grass {
+  left: 66%;
+  bottom: 21%;
+  z-index: 1;
+  width: 25%;
+}
+
+.cp-pack--grass img {
+  filter: blur(0.35cqw) brightness(1.04) saturate(1.05) sepia(0.08);
+}
+
+.cp-pack--grass .cp-pack__cast {
+  left: -60%;
+  right: 20%;
+  transform: skewX(40deg);
+  transform-origin: 100% 100%;
+}
+
+.cp-story__bars {
+  position: absolute;
+  top: 3cqh;
+  left: 5cqw;
+  right: 5cqw;
+  z-index: 3;
+  display: flex;
+  gap: 1.5cqw;
+}
+
+.cp-story__bars span {
+  flex: 1;
+  height: 0.5cqh;
+  border-radius: 1cqw;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.cp-story__bars span:first-child {
+  background: var(--blanco);
+}
+
+.cp-story__head {
+  position: absolute;
+  top: 5.5cqh;
+  left: 5cqw;
+  right: 5cqw;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  color: var(--blanco);
+  font-size: 4.2cqw;
+}
+
+.cp-story__head .cp-seal {
+  width: 10cqw;
+}
+
+.cp-story__head em {
+  margin-left: auto;
+  padding: 0.3cqh 2.4cqw;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  font-style: normal;
+  font-size: 3.4cqw;
+}
+
+.cp-story__question {
+  position: absolute;
+  top: 15cqh;
+  left: 6cqw;
+  right: 6cqw;
+  z-index: 3;
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: 19cqw;
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0.4cqh 2cqh rgba(0, 0, 0, 0.35);
+}
+
+.cp-story__sticker {
+  position: absolute;
+  left: 6cqw;
+  right: 20cqw;
+  bottom: 11cqh;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 2cqh 4cqw 2cqh 2.5cqw;
+  border-radius: 6cqw;
+  background: var(--blanco);
+  color: var(--verde);
+  font-family: var(--f-display);
+  font-size: 5.6cqw;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 1cqh 3cqh rgba(0, 0, 0, 0.3);
+  rotate: -3deg;
+}
+
+.cp-seal--sticker {
+  width: 13cqw;
+  border-color: var(--rojo);
+}
+
+.cp-story__idea {
+  position: absolute;
+  left: 6cqw;
+  right: 6cqw;
+  bottom: 4cqh;
+  z-index: 3;
+  color: var(--lima);
+  font-family: var(--f-display);
+  font-size: 5.2cqw;
+  font-weight: 600;
+}
+
+/* ----- Streaming ---------------------------------------------------------- */
+.cp-monitor {
+  position: absolute;
+  inset: 0;
+}
+
+.cp-monitor__screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1.2cqw solid #0f1411;
+  border-radius: 2cqw;
+  background: #0f1411;
+  box-shadow: var(--sombra-flotante);
+}
+
+.cp-monitor__stand {
+  position: absolute;
+  top: calc(100cqw * 9 / 16);
+  left: 42%;
+  width: 16%;
+  height: 4cqw;
+  border-radius: 0 0 1cqw 1cqw;
+  background: linear-gradient(180deg, #2a302c, #0f1411);
+}
+
+/* Mesa redonda del set: centro de la tapa en (53%, 69%) de la foto */
+.cp-pack--table {
+  left: 50.3%;
+  bottom: 31%;
+  width: 5.4%;
+}
+
+.cp-pack--table img {
+  filter: brightness(0.9) contrast(0.95) saturate(0.9) sepia(0.2);
+}
+
+/* Luz cálida desde la lámpara de la izquierda: sombra hacia la derecha sobre la tapa */
+.cp-pack--table .cp-pack__cast {
+  right: -95%;
+  height: 9%;
+}
+
+.cp-stream__live {
+  position: absolute;
+  top: 3cqw;
+  left: 3cqw;
+  z-index: 2;
+  padding: 0.6cqw 1.6cqw;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--verde);
+  font-size: 1.7cqw;
+  font-weight: 600;
+}
+
+.cp-stream__lower {
+  position: absolute;
+  left: 4cqw;
+  bottom: 3.5cqw;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1.5cqw;
+  padding: 1cqw 2.5cqw 1cqw 1cqw;
+  border-radius: 1.4cqw;
+  background: linear-gradient(90deg, var(--verde) 0%, var(--verde-medio) 100%);
+  color: var(--blanco);
+  font-size: 1.9cqw;
+  box-shadow: 0 1cqw 3cqw rgba(0, 0, 0, 0.35);
+}
+
+.cp-stream__lower .cp-seal {
+  width: 5.5cqw;
+}
+
+.cp-stream__lower strong {
+  padding-right: 1.5cqw;
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+  font-family: var(--f-display);
+  font-size: 3cqw;
+  font-weight: 600;
+}
+
+.cp-media {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1cqw 3cqw;
+  padding: 1.6cqw 2.5cqw;
+  border-radius: 1.6cqw;
+  background: var(--verde-noche);
+  color: var(--blanco-suave);
+  font-size: 1.6cqw;
+}
+
+.cp-media__label {
+  color: var(--lima);
+  font-weight: 600;
+}
+
+.cp-media__logo {
+  width: auto;
+}
+
+.cp-media__logo--medio-luzu-tv {
+  height: 3.6cqw;
+}
+
+.cp-media__logo--medio-olga {
+  height: 2.8cqw;
+}
+
+/* ----- TikTok y creadores ------------------------------------------------- */
+.cp-tiktok {
+  background: #0b0f0c;
+}
+
+.cp-tiktok__photo {
+  object-position: 48% 64%;
+}
+
+.cp-tiktok__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 22%, transparent 50%, rgba(0, 0, 0, 0.78) 100%);
+}
+
+.cp-tiktok__top {
+  position: absolute;
+  top: 5cqh;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5cqw;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 4.2cqw;
+}
+
+.cp-tiktok__top strong {
+  color: var(--blanco);
+  border-bottom: 0.5cqw solid var(--blanco);
+}
+
+.cp-tiktok__rail {
+  position: absolute;
+  right: 4cqw;
+  bottom: 30cqh;
+  display: grid;
+  justify-items: center;
+  gap: 4cqh;
+  color: var(--blanco);
+}
+
+.cp-tiktok__rail svg {
+  width: 9cqw;
+  height: 9cqw;
+  filter: drop-shadow(0 0.3cqh 0.8cqh rgba(0, 0, 0, 0.4));
+}
+
+.cp-seal--rail {
+  width: 11cqw;
+}
+
+.cp-tiktok__bottom {
+  position: absolute;
+  left: 5cqw;
+  right: 18cqw;
+  bottom: 4cqh;
+  display: grid;
+  gap: 1.4cqh;
+  color: var(--blanco);
+}
+
+.cp-tiktok__card {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  justify-self: start;
+  padding: 1cqh 4cqw 1cqh 1.5cqw;
+  border-radius: 3cqw;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--verde-noche);
+  box-shadow: 0 1cqh 2.5cqh rgba(0, 0, 0, 0.35);
+  rotate: -2deg;
+}
+
+.cp-tiktok__pack {
+  display: block;
+  width: 11cqw;
+}
+
+.cp-tiktok__pack img {
+  width: 100%;
+  filter: drop-shadow(0.5cqw 0.8cqw 0.8cqw rgba(0, 0, 0, 0.3));
+}
+
+.cp-tiktok__card em {
+  display: block;
+  color: var(--rojo);
+  font-size: 3.2cqw;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.cp-tiktok__card strong {
+  font-family: var(--f-display);
+  font-size: 4.6cqw;
+  line-height: 1.05;
+}
+
+.cp-tiktok__question {
+  font-family: var(--f-display);
+  font-size: 11cqw;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.cp-tiktok__caption {
+  font-size: 3.6cqw;
+  opacity: 0.9;
+}
+
+.cp-tiktok__progress {
+  height: 0.5cqh;
+  border-radius: 1cqw;
+  background: linear-gradient(90deg, var(--blanco) 42%, rgba(255, 255, 255, 0.3) 42%);
+}
+
+/* ----- Punto de venta ----------------------------------------------------- */
+.cp-store {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2.4cqw;
+  box-shadow: var(--sombra-flotante);
+}
+
+.cp-store__bg {
+  filter: blur(3px) brightness(0.72) saturate(0.9);
+  scale: 1.06;
+}
+
+.cp-store__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 20, 12, 0.55));
+}
+
+/* Luz de atardecer desde la derecha, la misma que baña la vereda de la foto */
+.cp-store__light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 80% at 100% 30%, rgba(255, 196, 120, 0.28), transparent 65%);
+  mix-blend-mode: soft-light;
+}
+
+.cp-shelf {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 10%;
+  bottom: 8%;
+}
+
+.cp-shelf__header {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  gap: 0.6cqw;
+  height: 34%;
+  padding: 0 22cqw 0 4cqw;
+  border-radius: 2cqw;
+  background:
+    radial-gradient(80% 90% at 90% 0%, rgba(255, 255, 255, 0.22), transparent 60%),
+    var(--rojo);
+  color: var(--blanco);
+  box-shadow: 0 2cqw 4cqw rgba(0, 0, 0, 0.35);
+}
+
+.cp-shelf__question {
+  font-family: var(--f-display);
+  font-size: 7.4cqw;
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.cp-shelf__claim {
+  font-size: 2.6cqw;
+  font-weight: 600;
+}
+
+.cp-seal--shelf {
+  position: absolute;
+  top: 50%;
+  right: 4cqw;
+  width: 14cqw;
+  border-width: 0.6cqw;
+  translate: 0 -50%;
+}
+
+/* Fondo del mueble: da profundidad detrás de los envases */
+.cp-shelf__back {
+  position: absolute;
+  left: 1%;
+  right: 1%;
+  top: 36%;
+  bottom: 6%;
+  border-radius: 1cqw;
+  background: linear-gradient(180deg, rgba(20, 28, 22, 0.55), rgba(20, 28, 22, 0.25));
+  box-shadow: inset 0 2cqw 3cqw rgba(0, 0, 0, 0.35);
+}
+
+.cp-shelf__row {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 13%;
+  height: 46%;
+}
+
+.cp-pack--shelf {
+  bottom: 0;
+  width: 21%;
+}
+
+.cp-pack--shelf img {
+  filter: brightness(0.97) saturate(0.95) sepia(0.06);
+}
+
+.cp-pack--shelf:nth-child(1) {
+  left: 0;
+}
+
+.cp-pack--shelf:nth-child(2) {
+  left: 25%;
+}
+
+.cp-pack--shelf:nth-child(3) {
+  left: 50%;
+}
+
+.cp-pack--shelf:nth-child(4) {
+  left: 75%;
+}
+
+/* La luz llega desde la derecha: las sombras se proyectan hacia la izquierda */
+.cp-pack--shelf .cp-pack__cast {
+  left: -55%;
+  right: 25%;
+  transform: skewX(35deg);
+  transform-origin: 100% 100%;
+}
+
+.cp-shelf__plank {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  height: 13%;
+  border-radius: 0.8cqw;
+  background: linear-gradient(180deg, #2a7a4a 0%, var(--verde-medio) 18%, var(--verde) 100%);
+  color: var(--blanco);
+  font-family: var(--f-display);
+  font-size: 2.6cqw;
+  font-weight: 600;
+  box-shadow:
+    inset 0 0.4cqw 0 rgba(255, 255, 255, 0.25),
+    0 2cqw 3cqw rgba(0, 0, 0, 0.4);
+}
+
+.cp-shelf__wobbler {
+  position: absolute;
+  right: -5%;
+  top: 30%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 20cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--lima);
+  color: var(--verde-noche);
+  font-family: var(--f-display);
+  font-size: 2.4cqw;
+  font-weight: 600;
+  line-height: 1.05;
+  text-align: center;
+  rotate: 10deg;
+  box-shadow: 0 1.5cqw 3cqw rgba(0, 0, 0, 0.35);
+}
+
+/* ----- Invitación digital ------------------------------------------------- */
+.cp-chat {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: linear-gradient(180deg, #e7ede2, #dce5d5);
+}
+
+.cp-chat__head {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 7cqh 5cqw 2cqh;
+  background: var(--verde);
+  color: var(--blanco);
+  font-size: 4.6cqw;
+}
+
+.cp-chat__avatar {
+  width: 9cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lima), var(--verde-hoja));
+}
+
+.cp-chat__thread {
+  display: grid;
+  align-content: end;
+  gap: 2cqh;
+  padding: 3cqh 4cqw 5cqh;
+}
+
+.cp-invite {
+  display: grid;
+  gap: 1cqh;
+  justify-self: start;
+  width: 86%;
+  padding: 2cqw 2cqw 3cqw;
+  border-radius: 5cqw 5cqw 5cqw 1.5cqw;
+  background: var(--blanco);
+  box-shadow: 0 0.6cqh 1.5cqh rgba(0, 25, 15, 0.18);
+}
+
+.cp-invite__photo {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 3.5cqw;
+}
+
+/* Manta del picnic: frente de la ronda, junto a los vasos */
+.cp-pack--blanket {
+  left: 43.5%;
+  bottom: 25%;
+  width: 7.2%;
+}
+
+.cp-pack--blanket img {
+  filter: brightness(0.88) saturate(0.92);
+}
+
+.cp-invite__question {
+  padding-inline: 2cqw;
+  color: var(--verde);
+  font-family: var(--f-display);
+  font-size: 10cqw;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cp-invite__text {
+  padding-inline: 2cqw;
+  font-size: 4.8cqw;
+}
+
+.cp-invite__button {
+  justify-self: start;
+  margin: 0.5cqh 2cqw;
+  padding: 1cqh 5cqw;
+  border-radius: 999px;
+  background: var(--verde);
+  color: var(--blanco);
+  font-size: 4.2cqw;
+  font-weight: 600;
+}
+
+.cp-invite__claim {
+  padding-inline: 2cqw;
+  color: var(--gris);
+  font-size: 3.4cqw;
+}
+
+.cp-chat__reply {
+  justify-self: end;
+  max-width: 70%;
+  padding: 1.6cqh 4cqw;
+  border-radius: 5cqw 5cqw 1.5cqw 5cqw;
+  background: #d6f5c3;
+  font-size: 4.4cqw;
+  box-shadow: 0 0.6cqh 1.5cqh rgba(0, 25, 15, 0.12);
+}

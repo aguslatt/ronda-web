@@ -13,7 +13,7 @@ interface ImageRef {
 export const nav: { label: string; href: string; sections: string[] }[] = [
   { label: 'Hallazgos', href: '#hallazgo', sections: ['hallazgo', 'marca', 'publico', 'insight'] },
   { label: 'Estrategia', href: '#estrategia', sections: ['estrategia', 'estrategia-cont', 'cambio'] },
-  { label: 'Activación', href: '#activacion', sections: ['activacion', 'propuesta-forma'] },
+  { label: 'Activación', href: '#activacion', sections: ['activacion'] },
   { label: 'Inversión', href: '#inversion', sections: ['inversion', 'preguntas', 'cierre'] },
 ]
 
@@ -287,6 +287,12 @@ export const activation = {
   eyebrow: 'Cómo se activa',
   title: 'Una misma idea. Distintas ocasiones para ofrecer.',
   // Las visualizaciones son bocetos conceptuales armados con el mensaje y los recursos aprobados
+  intro:
+    'Cada canal cumple un rol documentado en la tesis. Elegí uno para ver su función estratégica y explorar cómo podría verse su aplicación.',
+  docsTag: 'Documentado en la tesis',
+  sketchTag: 'Boceto de aplicación propuesto',
+  sketchNote: 'Exploración creativa: la tesis no incluye piezas (pág. 53).',
+  labels: { actions: 'Acciones propuestas', kpi: 'Indicador', budget: 'Inversión', message: 'Mensaje', support: 'Soporte' },
   visualTag: 'Propuesta visual',
   visualNote: 'Boceto conceptual. No es una pieza de la campaña.',
   claim: 'Romance, la yerba que se ofrece.',
@@ -302,6 +308,18 @@ export const activation = {
   channels: [
     {
       key: 'streaming',
+      piece: 'streaming',
+      docs: {
+        actions: [
+          'Diez menciones con la dinámica “¿unos mates?”: seis en Luzu TV y cuatro en Olga.',
+          'Romance en la mesa de Nadie Dice Nada y Sería Increíble durante doce semanas.',
+          'Cuatro historias o clips en las redes de los canales.',
+        ],
+        kpi: 'Reconocimiento asistido del 15,6% al 30%.',
+        budget: '40% · ARS 60.000.000' as string | null,
+        status: 'Integraciones propuestas, sin acuerdos confirmados.' as string | null,
+        pages: [49, 52, 53],
+      },
       name: 'Streaming',
       detail: 'Luzu TV y Olga',
       role: 'Reconocimiento y significado',
@@ -311,6 +329,14 @@ export const activation = {
     },
     {
       key: 'instagram',
+      piece: 'historia',
+      docs: {
+        actions: ['Pauta de alcance por ARS 18.000.000, dentro de la pauta digital.', 'Reels del programa de creadores.'],
+        kpi: 'Alcance del 60% del target e interacción superior al 3%.',
+        budget: 'Parte del 20% de pauta digital',
+        status: null as string | null,
+        pages: [34, 50, 52, 53],
+      },
       name: 'Instagram',
       detail: null,
       role: 'Sostener',
@@ -320,6 +346,18 @@ export const activation = {
     },
     {
       key: 'tiktok',
+      piece: 'tiktok',
+      docs: {
+        actions: [
+          'Pauta por ARS 12.000.000 para abrir el tramo más joven.',
+          'Doce creadores de 50.000 a 300.000 seguidores, con un reel y un video cada uno.',
+          'Logística de catas.',
+        ],
+        kpi: '3 millones de visualizaciones acumuladas.',
+        budget: '10% creadores + parte de la pauta digital',
+        status: 'La tesis no nombra creadores.' as string | null,
+        pages: [23, 50, 53],
+      },
       name: 'TikTok y creadores',
       detail: null,
       role: 'Descubrir',
@@ -329,6 +367,18 @@ export const activation = {
     },
     {
       key: 'pdv',
+      piece: 'pdv',
+      docs: {
+        actions: [
+          'Ocho jornadas de degustación en universidades y coworkings.',
+          'Stand en MATEAR.',
+          'Material de góndola en unos 300 puntos de venta.',
+        ],
+        kpi: '20.000 muestras entregadas y +10% de ventas en los comercios cubiertos.',
+        budget: '12% · ARS 18.000.000',
+        status: null as string | null,
+        pages: [34, 50, 53],
+      },
       name: 'Activaciones y punto de venta',
       detail: null,
       role: 'Probar y comprar',
@@ -338,6 +388,14 @@ export const activation = {
     },
     {
       key: 'web',
+      piece: 'invitacion',
+      docs: {
+        actions: ['El sitio y WhatsApp sostienen la promoción de la campaña.', '10.000 invitaciones con promoción; la tesis no detalla la mecánica.'],
+        kpi: 'Tasa de canje superior al 20%.',
+        budget: null as string | null,
+        status: null as string | null,
+        pages: [45, 50],
+      },
       name: 'Web y WhatsApp',
       detail: null,
       role: 'Continuar',
@@ -366,6 +424,15 @@ export const campaign = {
   claim: 'Romance, la yerba que se ofrece.',
   idea: 'Un gesto empieza una ronda.',
   pieces: [
+    {
+      key: 'tiktok',
+      name: 'Video vertical de creador',
+      support: 'Formato vertical 9:16',
+      message: '¿Unos mates? Cata de Romance Tradicional.',
+      function: 'TikTok y los creadores generan descubrimiento y recomendación.',
+      pages: [50, 53],
+      alt: 'Boceto de video vertical para creadores: manos que ceban un mate con termo, con la pregunta “¿Unos mates?”, una tarjeta de cata con el envase de Romance y la identificación de publicidad.',
+    },
     {
       key: 'historia',
       name: 'Historia de Instagram',

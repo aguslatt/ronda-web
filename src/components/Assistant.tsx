@@ -62,18 +62,35 @@ export function Assistant() {
     [send],
   )
 
-  // El acceso flotante se retira donde el cierre y el pie ya ofrecen “Preguntale a Ronda”
+  // El acceso flotante se retira cuando debajo (esquina inferior derecha) hay controles o textos
+  // que podría tapar. El encabezado ofrece siempre “Preguntale a Ronda”.
   const [nearEnd, setNearEnd] = useState(false)
   useEffect(() => {
-    const targets = [document.querySelector('.closing__signature'), document.querySelector('.site-footer')].filter(Boolean) as Element[]
-    if (!targets.length || !('IntersectionObserver' in window)) return
+    if (!('IntersectionObserver' in window)) return
+    const selectors =
+      '.closing__signature, .site-footer, .budget-panel, .legend-list, .table-card, .timeline, .channel-cards, .stage__bar, .faq__ask, .explore__panel, .explore__foot, .total'
+    let observer: IntersectionObserver | null = null
     const visible = new Set<Element>()
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => (entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target)))
-      setNearEnd(visible.size > 0)
-    })
-    targets.forEach((target) => observer.observe(target))
-    return () => observer.disconnect()
+    const setup = () => {
+      observer?.disconnect()
+      visible.clear()
+      const zone = { width: Math.min(window.innerWidth, 380), height: 110 }
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => (entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target)))
+          setNearEnd(visible.size > 0)
+        },
+        { rootMargin: `-${Math.max(0, window.innerHeight - zone.height)}px 0px 0px -${Math.max(0, window.innerWidth - zone.width)}px` },
+      )
+      document.querySelectorAll(selectors).forEach((element) => observer?.observe(element))
+    }
+    const timer = window.setTimeout(setup, 300)
+    window.addEventListener('resize', setup)
+    return () => {
+      window.clearTimeout(timer)
+      observer?.disconnect()
+      window.removeEventListener('resize', setup)
+    }
   }, [])
 
   useEffect(() => {
@@ -113,7 +130,7 @@ export function Assistant() {
         <span className="assistant-launcher__seal" aria-hidden="true">
           <Picture name="romance-medallon" alt="" sizes="40px" />
         </span>
-        {copy.launcher}
+        <span className="assistant-launcher__label">{copy.launcher}</span>
       </button>
 
       <section id="asistente" className={`assistant${open ? ' is-open' : ''}`} role="dialog" aria-modal="false" aria-labelledby="asistente-titulo" hidden={!open}>

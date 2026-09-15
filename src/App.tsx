@@ -14,7 +14,6 @@ import { Footer } from './components/Footer'
 import { Assistant } from './components/Assistant'
 import { Presentation } from './components/Presentation'
 import { Faq } from './sections/Faq'
-import { Campaign } from './sections/Campaign'
 import { useReveal } from './hooks/useReveal'
 
 export default function App() {
@@ -39,7 +38,6 @@ export default function App() {
         </Turn>
         <Change />
         <Activation />
-        <Campaign />
         <Investment />
         <Faq />
         <Closing />

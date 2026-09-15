@@ -20,24 +20,41 @@
   will-change: transform;
 }
 
-/* El punto de selección es el centro del medallón */
+/* Punto de selección exacto: pequeño, con doble contorno para leerse sobre claro y oscuro */
+.brand-cursor__dot {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rojo);
+  box-shadow:
+    0 0 0 1.5px var(--blanco),
+    0 0 0 2.5px rgba(0, 39, 26, 0.45);
+  transition: opacity 120ms linear;
+}
+
+/* Medallón como insignia al costado del punto: no tapa el texto que se lee o se selecciona */
 .brand-cursor__body {
   position: absolute;
-  top: -15px;
-  left: -15px;
+  top: 11px;
+  left: 11px;
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.92;
   border-radius: 50%;
   background: var(--blanco);
-  /* Aro blanco + sombra: se lee sobre fondos claros y oscuros */
   box-shadow:
-    0 0 0 2px var(--blanco),
-    0 0 0 3px rgba(0, 39, 26, 0.35),
-    0 4px 10px rgba(0, 25, 15, 0.35);
+    0 0 0 1.5px var(--blanco),
+    0 0 0 2.5px rgba(0, 39, 26, 0.3),
+    0 3px 8px rgba(0, 25, 15, 0.3);
+  transform-origin: 0 0;
   transition:
     scale 160ms var(--ease),
-    opacity 120ms linear;
+    opacity 120ms linear,
+    translate 160ms var(--ease);
 }
 
 .brand-cursor__body img {
@@ -46,35 +63,21 @@
   border-radius: 50%;
 }
 
-/* Centro exacto */
-.brand-cursor__body::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
-  border-radius: 50%;
-  background: var(--rojo);
-  box-shadow: 0 0 0 1.5px var(--blanco);
-}
-
-/* Aro que se abre sobre elementos interactivos (sin estela: acompaña al punto) */
+/* Aro sobre elementos interactivos (sin estela: acompaña al punto) */
 .brand-cursor__ring {
   position: absolute;
-  top: -22px;
-  left: -22px;
-  width: 44px;
-  height: 44px;
+  top: -15px;
+  left: -15px;
+  width: 30px;
+  height: 30px;
   border: 1.5px solid var(--lima);
   border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 39, 26, 0.25);
+  box-shadow: 0 0 0 1px rgba(0, 39, 26, 0.3);
   opacity: 0;
-  scale: 0.6;
+  scale: 0.5;
   transition:
-    scale 260ms var(--ease),
-    opacity 180ms linear;
+    scale 220ms var(--ease),
+    opacity 160ms linear;
 }
 
 .brand-cursor[data-state='interactive'] .brand-cursor__ring {
@@ -82,18 +85,15 @@
   scale: 1;
 }
 
-.brand-cursor.is-pressed .brand-cursor__ring {
-  scale: 0.82;
-}
-
 .brand-cursor[data-state='interactive'] .brand-cursor__body {
-  scale: 1.18;
+  scale: 1.12;
+  translate: 4px 4px;
 }
 
-.brand-cursor.is-pressed .brand-cursor__body {
-  scale: 0.9;
+.brand-cursor.is-pressed .brand-cursor__ring {
+  scale: 0.8;
 }
 
-.brand-cursor[data-state='hidden'] .brand-cursor__body {
+.brand-cursor[data-state='hidden'] :is(.brand-cursor__body, .brand-cursor__dot, .brand-cursor__ring) {
   opacity: 0;
 }
