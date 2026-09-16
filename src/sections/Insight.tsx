@@ -13,10 +13,10 @@ export function Insight() {
         <span className="eyebrow__number">{i.number}</span>
         {i.eyebrow}
       </h2>
-      <p className="insight__phrase" data-reveal="rise">
+      <p className="insight__phrase" data-reveal="rise" data-exit="">
         {i.lines.join(' ')} <mark className="insight__mark">{i.marked}</mark>
       </p>
-      <p className="insight__note">{i.clarification}</p>
+      <p className="insight__note" data-exit="">{i.clarification}</p>
     </Chapter>
   )
 }

@@ -83,11 +83,34 @@ export function createBackdrop(radius = 14) {
 }
 
 /** Piso del estudio, que recibe la sombra de la mesa. */
+let floorFade: THREE.CanvasTexture | null = null
 export function createFloor() {
-  // Sin reflejos de entorno: en encuadres bajos el piso no se lee como una franja gris detrás de la mesa
-  const floor = new THREE.Mesh(new THREE.CircleGeometry(14, 64), new THREE.MeshStandardMaterial({ color: 0x04100a, roughness: 1, envMapIntensity: 0.04 }))
+  /*
+   * Piso corto y desvanecido: recibe la sombra de la mesa y se funde con el ciclorama.
+   * Antes era un disco de 14 m cuyo borde, en los encuadres bajos (la invitación del cierre),
+   * se leía como el canto de una segunda mesa detrás de la primera.
+   */
+  if (!floorFade) {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 128
+    const g = canvas.getContext('2d')!
+    const gradient = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+    gradient.addColorStop(0, '#fff')
+    gradient.addColorStop(0.42, '#fff')
+    gradient.addColorStop(0.78, '#5a5a5a')
+    gradient.addColorStop(1, '#000')
+    g.fillStyle = gradient
+    g.fillRect(0, 0, 128, 128)
+    floorFade = new THREE.CanvasTexture(canvas)
+  }
+  const floor = new THREE.Mesh(
+    new THREE.CircleGeometry(3.4, 64),
+    // Sin reflejos de entorno: en encuadres bajos el piso no se lee como una franja gris
+    new THREE.MeshStandardMaterial({ color: 0x04100a, roughness: 1, envMapIntensity: 0.04, transparent: true, alphaMap: floorFade, depthWrite: false }),
+  )
   floor.rotation.x = -Math.PI / 2
   floor.position.y = -0.75
   floor.receiveShadow = true
+  floor.renderOrder = -1
   return floor
 }

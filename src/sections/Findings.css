@@ -106,7 +106,7 @@
   width: min(100%, 12rem);
   aspect-ratio: 1;
   justify-self: center;
-  transition: --v 1100ms var(--ease);
+  transition: --v 520ms var(--ease);
 }
 
 .explore__ring {

@@ -7,7 +7,7 @@ import './Hero.css'
 function Line({ text, index }: { text: string; index: number }) {
   const parts = text.split('*')
   return (
-    <span className="opening__line" data-enter="line" style={{ '--d': `${120 + index * 110}ms` } as CSSProperties}>
+    <span className="opening__line" data-enter="line" style={{ '--d': `${60 + index * 70}ms` } as CSSProperties}>
       {parts.map((part, i) =>
         i % 2 === 1 ? (
           <span key={i} className="opening__accent">
@@ -49,10 +49,10 @@ export function Hero() {
           <Line key={line} text={line} index={index} />
         ))}
       </h1>
-      <p className="opening__lede" data-enter="rise" style={{ '--d': '520ms' } as CSSProperties}>
+      <p className="opening__lede" data-enter="rise" style={{ '--d': '300ms' } as CSSProperties}>
         {hero.lede}
       </p>
-      <div className="opening__actions tone-dark" data-enter="rise" style={{ '--d': '640ms' } as CSSProperties}>
+      <div className="opening__actions tone-dark" data-enter="rise" style={{ '--d': '380ms' } as CSSProperties}>
         <a className="cta" href={hero.cta.href}>
           {hero.cta.label}
           <span className="cta__icon" aria-hidden="true">

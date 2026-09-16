@@ -20,6 +20,8 @@ import { Authors } from './components/Authors'
 import { Presentation } from './components/Presentation'
 import { useReveal } from './hooks/useReveal'
 import { useHashLanding } from './hooks/useHashLanding'
+import { useDirectJumps } from './hooks/useDirectJumps'
+import { useHandoff } from './hooks/useHandoff'
 
 /**
  * “La ronda se construye mientras recorrés la propuesta.”
@@ -29,6 +31,8 @@ import { useHashLanding } from './hooks/useHashLanding'
 export default function App() {
   useReveal()
   useHashLanding()
+  useDirectJumps()
+  useHandoff()
 
   return (
     <>

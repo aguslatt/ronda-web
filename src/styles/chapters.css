@@ -138,6 +138,22 @@
     grid-column: 1 / -1;
   }
 
+  /* Velo propio detrás del texto: sobre la mesa iluminada, el titular y la bajada siguen legibles.
+     Los capítulos largos (activación) no lo necesitan: su encuadre ya viene atenuado. */
+  .chapter:not(.chapter--flow) .chapter__panel {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .chapter:not(.chapter--flow) .chapter__panel::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -5rem calc(var(--gutter) * -1) -100vh;
+    background: linear-gradient(180deg, rgba(2, 10, 6, 0) 0%, rgba(2, 10, 6, 0.6) 8%, rgba(2, 10, 6, 0.88) 22%, rgba(2, 10, 6, 0.93) 100%);
+    pointer-events: none;
+  }
+
   .chapter.is-fit > .chapter__inner {
     align-content: end;
   }

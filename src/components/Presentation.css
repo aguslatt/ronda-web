@@ -119,7 +119,7 @@
 
 .presentation__visual {
   min-width: 0;
-  animation: scene-visual 750ms var(--ease);
+  animation: scene-visual 400ms var(--ease);
 }
 
 @keyframes scene-text {
@@ -325,7 +325,7 @@
   border-radius: 50%;
   background: conic-gradient(var(--verde) calc(var(--v) * 1%), var(--niebla) 0);
   mask: radial-gradient(closest-side, transparent 72%, #000 73%);
-  animation: ring-in 1100ms var(--ease);
+  animation: ring-in 520ms var(--ease);
 }
 
 .pv-ring:nth-child(3) .pv-ring__chart {
@@ -509,7 +509,7 @@
   border-radius: 0.4rem;
   background: var(--tone);
   transform-origin: left;
-  animation: bar-in 900ms var(--ease) backwards;
+  animation: bar-in 460ms var(--ease) backwards;
 }
 
 @keyframes bar-in {

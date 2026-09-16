@@ -102,6 +102,7 @@ export class RondaScene {
       onChange: options.onChange,
       onReady: () => {
         this.loading = false
+        void this.precompile()
         options.onReady()
         options.onChange()
       },
@@ -115,9 +116,9 @@ export class RondaScene {
     /* Luces */
     this.spot = new THREE.SpotLight(0xffd6a6, 40, 0, 0.4, 0.9, 2)
     this.spot.castShadow = true
-    this.spot.shadow.mapSize.setScalar(options.mobile ? 1024 : 2048)
-    this.spot.shadow.radius = options.mobile ? 4 : 6
-    this.spot.shadow.blurSamples = options.mobile ? 8 : 12
+    this.spot.shadow.mapSize.setScalar(options.mobile ? 768 : 1280)
+    this.spot.shadow.radius = options.mobile ? 3.5 : 5
+    this.spot.shadow.blurSamples = options.mobile ? 6 : 8
     this.spot.shadow.bias = -0.0004
     this.spot.shadow.normalBias = 0.01
     this.spot.shadow.camera.near = 0.4
@@ -318,6 +319,23 @@ export class RondaScene {
     this.backdrop.uniforms.uAmount.value = lerp(0.3, 1, L)
   }
 
+  /**
+   * Compila por adelantado los materiales de lo que aparece más tarde (los mates que se suman,
+   * los halos de lugar y el portarretrato). Sin esto, el cuadro en que se hacen visibles se
+   * detiene varios cientos de milisegundos compilando sus programas.
+   */
+  private async precompile() {
+    const ocultos: THREE.Object3D[] = [...this.extras.map((e) => e.mate), ...this.glows, this.frame, this.frameShadow].filter((o) => !o.visible)
+    ocultos.forEach((o) => (o.visible = true))
+    try {
+      await this.renderer.compileAsync(this.scene, this.camera)
+    } catch {
+      this.renderer.compile(this.scene, this.camera)
+    }
+    ocultos.forEach((o) => (o.visible = false))
+    this.options.onChange()
+  }
+
   /** ¿Queda inclinación del marco por resolver? Mantiene vivo el bucle hasta que se asienta. */
   get frameSettling() {
     return Math.abs(this.frameAim - this.frameHover) > 0.0015
@@ -351,7 +369,7 @@ export class RondaScene {
 
   resize(width: number, height: number) {
     this.size = { width: Math.max(1, width), height: Math.max(1, height) }
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.options.mobile ? 1.5 : 1.75))
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.options.mobile ? 1.35 : 1.5))
     this.renderer.setSize(this.size.width, this.size.height, false)
   }
 

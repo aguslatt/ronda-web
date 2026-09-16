@@ -240,8 +240,8 @@
   filter: blur(calc(min(var(--abs), 2) * 1.5px)) saturate(calc(1 - min(var(--abs), 1) * 0.35));
   cursor: pointer;
   transition:
-    translate 800ms var(--ease),
-    scale 800ms var(--ease),
+    translate 420ms var(--ease),
+    scale 420ms var(--ease),
     opacity 600ms var(--ease),
     filter 600ms var(--ease);
 }

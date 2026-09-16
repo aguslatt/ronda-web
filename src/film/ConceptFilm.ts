@@ -63,6 +63,7 @@ interface Grain {
   velocity: THREE.Vector3
   scale: THREE.Vector3
   axis: THREE.Vector3
+  gravity: number
   spin: number
   phase: number
   landing: number
@@ -81,6 +82,7 @@ class YerbaPour {
   private hidden = new THREE.Matrix4().makeScale(0, 0, 0)
   private position = new THREE.Vector3()
   private rotation = new THREE.Quaternion()
+  private escala = new THREE.Vector3()
 
   constructor(count: number, mouth: THREE.Vector3) {
     const rand = random(7)
@@ -113,9 +115,12 @@ class YerbaPour {
         const angle = rand() * Math.PI * 2
         const radius = Math.sqrt(rand()) * 0.021
         const target = new THREE.Vector3(mouth.x + Math.cos(angle) * radius, MOUTH_Y, mouth.z + Math.sin(angle) * radius)
+        // El aire frena más al polvo que al palito: cada fragmento cae con su propia aceleración
+        const peso = kind === 'dust' ? 0.55 : kind === 'leaf' ? 0.74 : 1
+        const g = gravity * peso
         const vy = -0.15 - rand() * 0.1
         const drop = start.y - MOUTH_Y
-        const landing = (vy + Math.sqrt(vy * vy + 2 * gravity * drop)) / gravity
+        const landing = (vy + Math.sqrt(vy * vy + 2 * g * drop)) / g
         const velocity = new THREE.Vector3((target.x - start.x) / landing + (rand() - 0.5) * 0.03, vy, (target.z - start.z) / landing + (rand() - 0.5) * 0.03)
         let scale: THREE.Vector3
         // Colores de yerba procesada: verde oliva seco para hoja y polvo, ocre apagado para el palo
@@ -141,7 +146,8 @@ class YerbaPour {
           velocity,
           scale,
           axis: new THREE.Vector3(rand() - 0.5, rand() - 0.5, rand() - 0.5).normalize(),
-          spin: 6 + rand() * 16,
+          gravity: g,
+          spin: kind === 'dust' ? 0.6 + rand() * 1.6 : kind === 'leaf' ? 2 + rand() * 4.5 : 1.2 + rand() * 3,
           phase: rand() * Math.PI * 2,
           landing,
         })
@@ -156,9 +162,16 @@ class YerbaPour {
       const tau = (t - grain.spawn) * SLOW
       if (tau < 0 || tau > grain.landing) this.matrix.copy(this.hidden)
       else {
-        this.position.set(grain.start.x + grain.velocity.x * tau, grain.start.y + grain.velocity.y * tau - 4.9 * tau * tau, grain.start.z + grain.velocity.z * tau)
+        this.position.set(
+          grain.start.x + grain.velocity.x * tau,
+          grain.start.y + grain.velocity.y * tau - 0.5 * grain.gravity * tau * tau,
+          grain.start.z + grain.velocity.z * tau,
+        )
         this.rotation.setFromAxisAngle(grain.axis, grain.phase + grain.spin * tau)
-        this.matrix.compose(this.position, this.rotation, grain.scale)
+        // Último tramo: el fragmento se asienta en la yerba en vez de desaparecer de golpe
+        const asiento = 1 - Math.max(0, (tau - grain.landing * 0.88) / (grain.landing * 0.12)) ** 2
+        this.escala.copy(grain.scale).multiplyScalar(Math.max(0, asiento))
+        this.matrix.compose(this.position, this.rotation, this.escala)
       }
       this.meshes[grain.mesh].setMatrixAt(grain.index, this.matrix)
     }

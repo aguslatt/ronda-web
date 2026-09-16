@@ -67,11 +67,11 @@
 /* Entrada: el titular aparece línea por línea, después la bajada y la acción (la escena descubre el producto) */
 @media (prefers-reduced-motion: no-preference) {
   .opening [data-enter='rise'] {
-    animation: opening-rise 900ms var(--ease) var(--d, 0ms) both;
+    animation: opening-rise var(--t-title) var(--ease) var(--d, 0ms) both;
   }
 
   .opening [data-enter='line'] {
-    animation: opening-line 1000ms var(--ease) var(--d, 0ms) both;
+    animation: opening-line 480ms var(--ease) var(--d, 0ms) both;
   }
 
   .fonts-pending .opening [data-enter] {

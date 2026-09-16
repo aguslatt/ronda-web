@@ -32,7 +32,7 @@
 .closing__line {
   transition:
     opacity 520ms var(--ease) calc(var(--i, 0) * 70ms),
-    translate 700ms var(--ease) calc(var(--i, 0) * 70ms),
+    translate 360ms var(--ease) calc(var(--i, 0) * 45ms),
     filter 520ms var(--ease) calc(var(--i, 0) * 70ms);
 }
 
@@ -43,7 +43,7 @@
 /* Al aceptar, los tres titulares se retiran suavemente hacia arriba */
 .closing__lines.is-retired {
   visibility: hidden;
-  transition: visibility 0s linear 800ms;
+  transition: visibility 0s linear 420ms;
 }
 
 .closing__lines.is-retired .closing__line {
@@ -73,8 +73,8 @@
   visibility: visible;
   translate: 0 0;
   transition:
-    opacity 900ms var(--ease),
-    translate 1000ms var(--ease),
+    opacity 360ms var(--ease),
+    translate 420ms var(--ease),
     visibility 0s;
 }
 
@@ -113,7 +113,7 @@
 
 .closing__result.is-shown .invite__replay {
   opacity: 1;
-  transition-delay: 0s, 0s, 700ms;
+  transition-delay: 0s, 0s, 240ms;
 }
 
 .invite__replay:hover {

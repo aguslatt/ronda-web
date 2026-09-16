@@ -16,17 +16,19 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2
 const poster = (key: string, mobile: boolean) => `./scene/posters/${key}-${mobile ? 'm' : 'd'}.webp`
 
 /*
- * Invitación del cierre (segundos): los titulares se retiran (0–0,6); la cámara baja a la altura de
- * alguien sentado (0,5–3,3); el mate llega (1,1–3,5); queda un segundo para contemplar el gesto y a los
- * 4,5 aparece el mensaje. Repetir: la escena vuelve en 1,2 s, espera un instante y la secuencia empieza de nuevo.
+ * Invitación del cierre (segundos): los titulares se retiran enseguida; la cámara baja a la altura de
+ * alguien sentado (0,15–1,15); el mate llega (0,45–1,5); queda un instante para ver el gesto apoyado y
+ * a los 1,95 aparece el mensaje. Repetir: la escena vuelve en 0,6 s y la secuencia empieza de nuevo.
  */
-const INVITE = { cameraStart: 0.5, camera: 2.8, mateStart: 1.1, mate: 2.4, total: 4.5, rewind: 1.2, pause: 0.45 }
+const INVITE = { cameraStart: 0.15, camera: 1, mateStart: 0.45, mate: 1.05, total: 1.95, rewind: 0.6, pause: 0.25 }
 /* Entrada de la portada: se descubre el producto (luz y cámara) y el mate hace su pequeño gesto de invitación */
-const INTRO = { delay: 0.25, camera: 2.2, total: 2.6 }
+const INTRO = { delay: 0.15, camera: 1.25, total: 1.55 }
 /* Cambio de escena entre pestañas de hallazgos */
-const FINDING_TIME = 1.1
+const FINDING_TIME = 0.55
 /* Acercamiento al portarretrato de las autoras (segundos de ida y de vuelta) */
-const AUTHORS_TIME = 0.9
+const AUTHORS_TIME = 0.8
+/* Salto de capítulo (menú o enlace directo): un solo movimiento, sin pasar por los encuadres del camino */
+const JUMP_TIME = 0.55
 
 /** Posición en pantalla del portarretrato, para su punto interactivo. */
 type Spot = { x: number; y: number; size: number }
@@ -86,6 +88,9 @@ export function SceneCanvas() {
     let theater = false
     /** Último scroll aplicado: un salto grande (enlace directo o ir a un capítulo) se resuelve sin barrido de cámara. */
     let lastScroll = window.scrollY
+    /** Salto de capítulo en curso: se va del encuadre actual al del destino, sin los intermedios. */
+    let jumpFrom: Float32Array | null = null
+    let jumpT = 1
 
     /* Entrada de la portada: empieza cuando la escena está lista (el primer cuadro coincide con el render fijo) */
     let introTime = capture || reduced.matches ? INTRO.total : -INTRO.delay
@@ -137,12 +142,12 @@ export function SceneCanvas() {
       if (forced) return { shot: shotFor(forced, mobile), key: forced }
       if (!marks.length) return { shot: shotFor('aperturaInicio', mobile), key: 'apertura' }
       const vh = window.innerHeight
-      const line = window.scrollY + vh * 0.75
+      const line = window.scrollY + vh * 0.72
       let j = 0
       marks.forEach((mark, index) => {
         if (mark.top <= line) j = index
       })
-      let t = j === 0 ? 1 : smoothstep(clamp01((line - marks[j].top) / (vh * 0.75)))
+      let t = j === 0 ? 1 : smoothstep(clamp01((line - marks[j].top) / (vh * 0.58)))
       if (reduced.matches) t = t < 0.5 ? 0 : 1
       const to = resolve(marks[j].key)
       const from = j > 0 ? resolve(marks[j - 1].key) : to
@@ -243,18 +248,30 @@ export function SceneCanvas() {
       const goal = flatten(shot)
       // Las secuencias siguen su propia curva (sin la amortiguación del scroll)
       const sequence = inviteDirection !== 0 || introActive || findingActive || authorsDir !== 0
-      // Salto de scroll grande: la escena aparece ya en su encuadre, sin cruzar la mesa a toda velocidad
+      // Salto de capítulo: un único movimiento corto del encuadre actual al del destino
       const jumped = Math.abs(window.scrollY - lastScroll) > window.innerHeight * 1.5
       lastScroll = window.scrollY
-      if (!current || capture || reduced.matches || sequence || jumped) current = goal.slice()
-      let moving = sequence
-      const k = 1 - Math.exp(-dt * 6)
-      for (let i = 0; i < goal.length; i++) {
-        const d = goal[i] - current[i]
-        if (Math.abs(d) > 0.0004) {
-          current[i] += d * k
-          moving = true
-        } else current[i] = goal[i]
+      if (jumped && current && !capture && !reduced.matches) {
+        jumpFrom = current.slice()
+        jumpT = 0
+      }
+      if (jumpT < 1 && jumpFrom) {
+        jumpT = Math.min(1, jumpT + dt / JUMP_TIME)
+        const k = easeInOutCubic(jumpT)
+        current = current ?? goal.slice()
+        for (let i = 0; i < goal.length; i++) current[i] = jumpFrom[i] + (goal[i] - jumpFrom[i]) * k
+        if (jumpT >= 1) jumpFrom = null
+      } else if (!current || capture || reduced.matches || sequence || jumped) current = goal.slice()
+      let moving = sequence || jumpT < 1
+      if (jumpT >= 1) {
+        const k = 1 - Math.exp(-dt * 9)
+        for (let i = 0; i < goal.length; i++) {
+          const d = goal[i] - current[i]
+          if (Math.abs(d) > 0.0004) {
+            current[i] += d * k
+            moving = true
+          } else current[i] = goal[i]
+        }
       }
       const applied = unflatten(current)
       publish(applied, key)

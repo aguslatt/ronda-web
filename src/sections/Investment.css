@@ -193,8 +193,8 @@
 
   .explorer .budget-panel {
     transition:
-      opacity 600ms var(--ease) 820ms,
-      translate 800ms var(--ease) 820ms;
+      opacity 300ms var(--ease) 380ms,
+      translate 420ms var(--ease) 380ms;
   }
 
   /* Cada rubro de la leyenda se enciende cuando su segmento alcanza su proporción */
