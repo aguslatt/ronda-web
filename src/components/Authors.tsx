@@ -42,6 +42,8 @@ export function Authors() {
       return
     }
     const dialog = dialogRef.current
+    // Mientras la ficha está abierta, el fondo no se desplaza
+    document.documentElement.classList.add('is-authors')
     requestAnimationFrame(() => dialog?.querySelector<HTMLElement>('.authors__close')?.focus({ preventScroll: true }))
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -63,7 +65,10 @@ export function Authors() {
       }
     }
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.documentElement.classList.remove('is-authors')
+    }
   }, [open, close])
 
   if (!open) return null
