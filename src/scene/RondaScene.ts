@@ -19,15 +19,15 @@ const v = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z)
  * Disposición de la mesa (metros, vista desde arriba; la persona de la portada está del lado +z).
  * Los objetos se reacomodan escalonados (notebook, envase, termo) para no cruzarse al ir al centro.
  */
-const MAIN_START = v(0.13, 0, 0.47)
+const MAIN_START = v(0.16, 0, 0.5)
 /** Posición del mate en el primer cuadro: un poco atrás; en la entrada avanza y gira hacia quien mira. */
-const MAIN_PRE = v(0.118, 0, 0.44)
+const MAIN_PRE = v(0.148, 0, 0.47)
 const MAIN_END = seat(210)
 /** Lugar de quien visita: el borde de la mesa del lado de la cámara del cierre. */
 const VISITOR = v(-0.03, 0, -0.5)
 const EXTRA_SEATS = [150, 270, 90, 330, 30]
 const FREE_SEATS = [...EXTRA_SEATS, 210]
-const PACK = { start: v(-0.04, 0, 0.37), end: v(-0.08, 0, -0.04), rotStart: 0.6, rotEnd: 0.2 }
+const PACK = { start: v(-0.07, 0, 0.35), end: v(-0.08, 0, -0.04), rotStart: 0.6, rotEnd: 0.2 }
 // El termo empieza fuera del encuadre de la portada (atrás, a la derecha) y es el primero en ir al centro
 const TERMO = { start: v(0.3, 0, -0.34), end: v(0.1, 0, 0.04), rotStart: 0.3, rotEnd: 0.9 }
 const LAPTOP = { start: v(0.2, 0, 0.05), end: seat(60, 0.5), rotStart: -0.35, rotEnd: Math.PI / 3 }
@@ -265,9 +265,11 @@ export class RondaScene {
     this.lightTarget.lerp(this.mainMate.position, (1 - focus) * 0.18)
     this.spot.target.position.set(lerp(this.lightTarget.x, 0, L), 0, lerp(this.lightTarget.z, 0, L))
     this.spot.position.set(lerp(0.26, 0.05, L), lerp(1.28, 1.95, L), lerp(1.02, 0.3, L))
-    this.spot.angle = lerp(lerp(0.34, 0.23, focus), 0.72, L)
+    // Con el foco de marca el cono se abre: el envase recibe luz pareja en toda su cara
+    this.spot.angle = lerp(lerp(0.34, 0.42, focus), 0.72, L)
     this.spot.penumbra = lerp(0.9, 0.7, L)
-    this.spot.intensity = lerp(lerp(34, 40, focus), 58, L) * lerp(0.6, 1, reveal)
+    // …y baja de intensidad: de cerca, más luz solo lava los colores del packaging
+    this.spot.intensity = lerp(lerp(34, 23, focus), 58, L) * lerp(0.6, 1, reveal)
     if (invite > 0) {
       // La luz acompaña: se cierra apenas y se entibia sobre el lugar de quien recibe
       const warm = easeInOut(invite)
@@ -277,7 +279,8 @@ export class RondaScene {
     }
     this.kicker.target.position.copy(this.mainMate.position).setY(0.05)
     this.kicker.intensity = 1.6 * (1 - L) * (1 - focus * 0.6) * reveal
-    this.scene.environmentIntensity = lerp(0.12, 0.42, L) * (1 - 0.3 * focus * (1 - L))
+    // Relleno de entorno alto en el foco de marca: los verdes y rojos del envase se leen en la sombra
+    this.scene.environmentIntensity = lerp(0.12, 0.42, L) * (1 + 0.9 * focus * (1 - L))
     this.backdrop.uniforms.uAmount.value = lerp(0.3, 1, L)
   }
 

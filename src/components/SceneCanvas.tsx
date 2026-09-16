@@ -76,6 +76,8 @@ export function SceneCanvas() {
     let currentPoster = ''
     let marks: { key: string; top: number }[] = []
     let theater = false
+    /** Último scroll aplicado: un salto grande (enlace directo o ir a un capítulo) se resuelve sin barrido de cámara. */
+    let lastScroll = window.scrollY
 
     /* Entrada de la portada: empieza cuando la escena está lista (el primer cuadro coincide con el render fijo) */
     let introTime = capture || reduced.matches ? INTRO.total : -INTRO.delay
@@ -219,7 +221,10 @@ export function SceneCanvas() {
       const goal = flatten(shot)
       // Las secuencias siguen su propia curva (sin la amortiguación del scroll)
       const sequence = inviteDirection !== 0 || introActive || findingActive
-      if (!current || capture || reduced.matches || sequence) current = goal.slice()
+      // Salto de scroll grande: la escena aparece ya en su encuadre, sin cruzar la mesa a toda velocidad
+      const jumped = Math.abs(window.scrollY - lastScroll) > window.innerHeight * 1.5
+      lastScroll = window.scrollY
+      if (!current || capture || reduced.matches || sequence || jumped) current = goal.slice()
       let moving = sequence
       const k = 1 - Math.exp(-dt * 6)
       for (let i = 0; i < goal.length; i++) {
@@ -335,7 +340,8 @@ export function SceneCanvas() {
             })
             scene.resize(window.innerWidth, window.innerHeight)
             // Solo en modo captura: acceso a la escena para las verificaciones automáticas
-            if (capture) probe.__ronda!.scene = scene
+            // La escena queda a mano para medir el movimiento en pruebas (captura y desarrollo; no en producción)
+            if (capture || import.meta.env.DEV) probe.__ronda!.scene = scene
             kick()
           } catch {
             setMode('fallback')

@@ -52,13 +52,13 @@ export const SHOTS: Record<string, ShotInput> = {
   aperturaInicio: {
     cam: [0.66, 0.24, 1.18], target: [0.09, 0.1, 0.36], fov: 27, fx: 0.2, fy: 0.03,
     light: 0, lid: 1, offer: 0, ronda: 0, gather: 0, dim: 0, intro: 0, focus: 0.35,
-    mobile: { cam: [0.44, 0.35, 1.38], target: [0.04, 0.1, 0.39], fov: 36, fx: 0, fy: 0.22 },
+    mobile: { cam: [0.5, 0.38, 1.6], target: [0.05, 0.1, 0.38], fov: 35, fx: 0.05, fy: 0.26 },
   },
   // Portada: Romance y el mate en primer plano; la notebook atrás, como contexto del consumo individual
   apertura: {
     cam: [0.56, 0.2, 1.06], target: [0.09, 0.1, 0.36], fov: 27, fx: 0.2, fy: 0.03,
     light: 0, lid: 1, offer: 0, ronda: 0, gather: 0, dim: 0, focus: 0.35,
-    mobile: { cam: [0.37, 0.3, 1.24], target: [0.04, 0.1, 0.39], fov: 36, fx: 0, fy: 0.22 },
+    mobile: { cam: [0.43, 0.33, 1.46], target: [0.05, 0.1, 0.38], fov: 35, fx: 0.05, fy: 0.26 },
   },
   // Hallazgo 59,7%: el puesto de una persona (su mate, la notebook y el envase)
   hallazgo: {
@@ -80,7 +80,7 @@ export const SHOTS: Record<string, ShotInput> = {
   },
   // La marca: acercamiento al frente del envase y su medallón de dos manos
   marca: {
-    cam: [0.16, 0.15, 0.8], target: [-0.04, 0.1, 0.37], fov: 24, fx: 0.2, fy: 0,
+    cam: [0.2, 0.17, 0.97], target: [-0.04, 0.12, 0.37], fov: 26, fx: 0.2, fy: 0,
     light: 0.12, lid: 1, offer: 0, ronda: 0, gather: 0, dim: 0, focus: 1,
     mobile: { cam: [0.2, 0.22, 1.02], target: [-0.04, 0.1, 0.37], fov: 32, fx: 0, fy: 0.3 },
   },

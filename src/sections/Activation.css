@@ -169,14 +169,14 @@
   grid-column: 2;
   justify-self: start;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
   font-size: 0.75rem;
   font-weight: 600;
-  white-space: nowrap;
+  line-height: 1.3;
+  /* Los montos largos bajan de línea en vez de cortarse */
+  white-space: normal;
 }
 
 .channel.is-active .channel__budget {

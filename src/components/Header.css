@@ -66,10 +66,12 @@
 .site-header__bar {
   position: relative;
   display: flex;
+  /* Con texto muy ampliado la barra crece y se acomoda en dos filas en vez de recortarse */
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  height: var(--header-h);
+  gap: 0.5rem 1rem;
+  min-height: var(--header-h);
   padding-inline: var(--edge);
 }
 
@@ -97,7 +99,8 @@
 
 .site-nav__list {
   display: flex;
-  gap: clamp(1.25rem, 2.6vw, 2.75rem);
+  flex-wrap: wrap;
+  gap: 0.25rem clamp(1.25rem, 2.6vw, 2.75rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -236,7 +239,8 @@
   background: var(--verde-hoja);
 }
 
-@media (min-width: 900px) and (max-width: 1180px) {
+/* Cortes en em: el encabezado también se adapta cuando la persona amplía el texto del navegador */
+@media (min-width: 56.25em) and (max-width: 73.75em) {
   .site-header__present,
   .site-header__ask {
     padding-inline: 0.7rem;
@@ -260,7 +264,7 @@
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 56.1875em) {
   .site-header__toggle {
     display: inline-flex;
     flex: none;

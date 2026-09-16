@@ -19,9 +19,16 @@ La apertura muestra una situación individual y el cierre revela una ronda compa
   contraluz cálido que marca la textura de la calabaza. Entrada coordinada de 2,6 s: aparece el titular, la cámara
   revela el producto y el mate hace un pequeño giro de invitación. El primer cuadro (`aperturaInicio`) ya está compuesto
   y es también el render de respaldo.
+- **El titular entra siempre**: la medida del titular de portada se calcula sobre el ancho real de su columna
+  (`container-type: inline-size` + `cqw`), no sobre el ancho de la ventana, así ninguna línea se sale ni se recorta.
+  Las máscaras de entrada terminan fuera de la caja (`inset` negativo), de modo que acentos, bandas rojas y
+  descendentes quedan completos una vez terminada la animación.
 - **Estudio oscuro en verdes de Romance** (ciclorama verde noche con un halo en el horizonte), una sola mesa redonda
   de algarrobo aceitado y objetos de escala real: mates, bombillas de alpaca, termo esmaltado, notebook y el envase
   de Romance Tradicional de 1 kg.
+- **El envase conserva sus colores**: cuando la cámara se acerca a Romance, el cono de luz se abre y baja de
+  intensidad, y sube el relleno de entorno; el papel es mate (poco brillo especular). Así el rojo y el verde del
+  packaging se leen en vez de lavarse.
 - **La luz cuenta la historia**: al principio es un foco cálido sobre una sola persona (la mesa en penumbra);
   al final baña toda la mesa. Un contraluz tenue recorta las siluetas.
 - **Objetos que conectan escenas**: la notebook abierta (el mate frente a una pantalla) se cierra en el insight;
@@ -127,6 +134,13 @@ materiales y luz de la mesa (`src/film/ConceptFilm.ts`, guion en `src/film/timel
 - La escena es decorativa (`aria-hidden`); cada capítulo describe en texto lo que muestra.
 - **Enlaces directos** (`#hallazgo`, `#activacion`, …): `src/hooks/useHashLanding.ts` vuelve a alinear el capítulo
   mientras cargan fuentes, imágenes y escena, y se detiene apenas la persona interactúa.
+- **Contraste medido sobre la escena**: los textos sobre la mesa se verificaron ocultando el texto y midiendo el
+  fondo real (portada en celular: 10,8:1 de media y 7,4:1 en la zona más clara). En celular, el bloque de texto de
+  la portada se apoya sobre un velo propio para que la madera iluminada no le quite contraste a la volanta.
+- **Texto ampliado**: el encabezado se acomoda en dos filas y sus cortes están en `em`, así el menú y el asistente
+  siguen alcanzables cuando se agranda el texto del navegador.
+- **Saltos de scroll**: al entrar por un enlace directo o saltar de capítulo, la escena aparece ya en su encuadre en
+  vez de cruzar la mesa a toda velocidad (`SceneCanvas.tsx` compara el desplazamiento entre cuadros).
 - **Cursor medallón**: solo con mouse; sobre textos se achica y se vuelve translúcido, sobre controles queda solo el anillo.
 - Materiales: madera con poro en relieve, alpaca con reflejo anisotrópico controlado, calabaza con pequeñas
   irregularidades de superficie y rugosidad variable; sombras suaves (VSM) y sombras de contacto degradadas.
