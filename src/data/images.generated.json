@@ -200,5 +200,22 @@
       640,
       1000
     ]
+  },
+  "autoras": {
+    "width": 640,
+    "height": 640,
+    "widths": [
+      320,
+      640
+    ]
+  },
+  "autoras-duo": {
+    "width": 320,
+    "height": 320,
+    "widths": [
+      96,
+      192,
+      320
+    ]
   }
 }

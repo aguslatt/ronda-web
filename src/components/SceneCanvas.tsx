@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { blend, FINDING_SHOTS, flatten, shotFor, SHOT_KEYS, unflatten, type Shot } from '../scene/shots'
 import type { RondaScene } from '../scene/RondaScene'
 import { announceInvite, onInviteAction, type InvitePhase } from '../scene/invite'
-import { onFinding, onTheater, SCENE_READY_EVENT } from '../scene/events'
+import { onAuthors, onFinding, onTheater, requestAuthors, SCENE_READY_EVENT } from '../scene/events'
 import { HOME_EVENT } from '../navigation'
+import { authors } from '../content'
 import { supportsWebGL } from '../scene/webgl'
 import './SceneCanvas.css'
 
@@ -24,6 +25,11 @@ const INVITE = { cameraStart: 0.5, camera: 2.8, mateStart: 1.1, mate: 2.4, total
 const INTRO = { delay: 0.25, camera: 2.2, total: 2.6 }
 /* Cambio de escena entre pestañas de hallazgos */
 const FINDING_TIME = 1.1
+/* Acercamiento al portarretrato de las autoras (segundos de ida y de vuelta) */
+const AUTHORS_TIME = 0.9
+
+/** Posición en pantalla del portarretrato, para su punto interactivo. */
+type Spot = { x: number; y: number; size: number }
 
 type Mode = 'loading' | 'ready' | 'fallback'
 
@@ -38,6 +44,8 @@ export function SceneCanvas() {
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [mode, setMode] = useState<Mode>('loading')
+  const [spot, setSpot] = useState<Spot | null>(null)
+  const sceneRef = useRef<RondaScene | null>(null)
 
   useEffect(() => {
     const root = rootRef.current
@@ -86,6 +94,11 @@ export function SceneCanvas() {
     let findingIndex = 0
     let findingFrom: Shot | null = null
     let findingT = 1
+
+    /* Ficha de las autoras: acercamiento al portarretrato y vuelta al encuadre anterior */
+    let authorsT = 0
+    let authorsDir = 0
+    let lastSpot: Spot | null = null
 
     /* Invitación */
     let inviteTime = 0
@@ -141,6 +154,10 @@ export function SceneCanvas() {
         shot.intro = clamp01(introTime / INTRO.total)
       }
       if (key === 'hallazgo' && findingFrom && findingT < 1) shot = blend(findingFrom, shot, easeInOutCubic(findingT), false)
+      if (authorsT > 0) {
+        // Acercamiento directo al portarretrato (sin arco): es un objeto de la mesa, no un cambio de capítulo
+        shot = blend(shot, shotFor('autoras', mobile), easeInOutCubic(authorsT), false)
+      }
       if (inviteTime > 0 && key === 'cierre') {
         // Acercamiento directo (sin arco) hasta la altura de quien se sienta a la mesa
         shot = blend(shot, shotFor('invitacion', mobile), easeInOutCubic(clamp01((inviteTime - INVITE.cameraStart) / INVITE.camera)), false)
@@ -208,6 +225,11 @@ export function SceneCanvas() {
         }
       }
 
+      if (authorsDir !== 0) {
+        authorsT = clamp01(authorsT + (dt / AUTHORS_TIME) * authorsDir)
+        if (authorsT === 0 || authorsT === 1) authorsDir = 0
+      }
+
       const findingActive = findingT < 1
       if (findingActive) {
         findingT = Math.min(1, findingT + dt / FINDING_TIME)
@@ -220,7 +242,7 @@ export function SceneCanvas() {
       const { shot, key } = desired()
       const goal = flatten(shot)
       // Las secuencias siguen su propia curva (sin la amortiguación del scroll)
-      const sequence = inviteDirection !== 0 || introActive || findingActive
+      const sequence = inviteDirection !== 0 || introActive || findingActive || authorsDir !== 0
       // Salto de scroll grande: la escena aparece ya en su encuadre, sin cruzar la mesa a toda velocidad
       const jumped = Math.abs(window.scrollY - lastScroll) > window.innerHeight * 1.5
       lastScroll = window.scrollY
@@ -241,8 +263,17 @@ export function SceneCanvas() {
         scene.render()
         probe.__ronda!.frames++
       }
+      // Punto interactivo del portarretrato: solo se actualiza cuando se movió lo suficiente
+      const punto = scene && !theater ? scene.framePoint() : null
+      const cambio =
+        (punto === null) !== (lastSpot === null) ||
+        (punto && lastSpot && (Math.abs(punto.x - lastSpot.x) > 1.5 || Math.abs(punto.y - lastSpot.y) > 1.5 || Math.abs(punto.size - lastSpot.size) > 2))
+      if (cambio) {
+        lastSpot = punto
+        setSpot(punto)
+      }
       probe.__ronda!.moving = moving
-      if (moving || scene?.loading || (scene && introTime < INTRO.total)) frame = requestAnimationFrame(tick)
+      if (moving || scene?.loading || scene?.frameSettling || (scene && introTime < INTRO.total)) frame = requestAnimationFrame(tick)
       else last = 0
     }
 
@@ -298,6 +329,17 @@ export function SceneCanvas() {
       kick()
     })
 
+    const stopAuthors = onAuthors((action) => {
+      if (action === 'open') {
+        if (reduced.matches) authorsT = 1
+        else authorsDir = 1
+      } else {
+        if (reduced.matches) authorsT = 0
+        else authorsDir = -1
+      }
+      kick()
+    })
+
     const stopTheater = onTheater((on) => {
       theater = on
       probe.__ronda!.theater = on
@@ -338,6 +380,7 @@ export function SceneCanvas() {
                 window.dispatchEvent(new CustomEvent(SCENE_READY_EVENT))
               },
             })
+            sceneRef.current = scene
             scene.resize(window.innerWidth, window.innerHeight)
             // Solo en modo captura: acceso a la escena para las verificaciones automáticas
             // La escena queda a mano para medir el movimiento en pruebas (captura y desarrollo; no en producción)
@@ -356,11 +399,13 @@ export function SceneCanvas() {
       stopInviteActions()
       stopFinding()
       stopTheater()
+      stopAuthors()
       window.removeEventListener('scroll', kick)
       window.removeEventListener('resize', onResize)
       window.removeEventListener(HOME_EVENT, onHome)
       document.removeEventListener('visibilitychange', kick)
       reduced.removeEventListener('change', kick)
+      sceneRef.current = null
       scene?.dispose()
       html.classList.remove('scene-poster')
     }
@@ -370,6 +415,7 @@ export function SceneCanvas() {
   const posters = mode === 'fallback' ? SHOT_KEYS : mode === 'loading' ? ['apertura'] : []
 
   return (
+    <>
     <div ref={rootRef} className={`scene is-${mode}`} aria-hidden="true">
       <div className="scene__posters">
         {posters.map((key) => (
@@ -383,5 +429,22 @@ export function SceneCanvas() {
       <span className="scene__scrim" />
       <span className="scene__grain" />
     </div>
+    {/* Punto interactivo sobre el portarretrato: vive fuera de la capa decorativa para
+        que funcione con mouse, con el dedo y con el teclado. */}
+    {spot && (
+      <button
+        type="button"
+        className="frame-spot"
+        style={{ left: `${Math.round(spot.x)}px`, top: `${Math.round(spot.y)}px`, '--spot': `${Math.max(44, Math.round(spot.size))}px` } as CSSProperties}
+        onPointerEnter={() => sceneRef.current?.setFrameHover(true)}
+        onPointerLeave={() => sceneRef.current?.setFrameHover(false)}
+        onFocus={() => sceneRef.current?.setFrameHover(true)}
+        onBlur={() => sceneRef.current?.setFrameHover(false)}
+        onClick={() => requestAuthors('open')}
+      >
+        <span className="frame-spot__label">{authors.hint}</span>
+      </button>
+    )}
+    </>
   )
 }

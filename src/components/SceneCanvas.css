@@ -62,8 +62,72 @@
 }
 
 /* Modo render fijo (?shot=clave): solo la escena, para generar los renders de respaldo */
-.scene-poster :is(.site-header, main, .site-footer, .assistant-launcher, .chapter-rail, .chapter-sheet, .scene-caption, .brand-cursor, .skip-link),
+.scene-poster :is(.site-header, main, .site-footer, .assistant-launcher, .chapter-rail, .chapter-sheet, .scene-caption, .brand-cursor, .skip-link, .frame-spot),
 .scene-poster .scene__scrim,
 .scene-poster .scene__grain {
   visibility: hidden;
+}
+
+/* ==========================================================================
+   Punto interactivo del portarretrato de las autoras
+   Sigue al marco en pantalla (lo calcula la escena) y funciona con mouse,
+   con el dedo y con el teclado. Nunca tapa textos: es del tamaño del marco.
+   ========================================================================== */
+.frame-spot {
+  position: fixed;
+  z-index: 12;
+  width: var(--spot, 44px);
+  height: calc(var(--spot, 44px) * 1.1);
+  min-width: 44px;
+  min-height: 44px;
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.frame-spot__label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  translate: -50% 0.35rem;
+  width: max-content;
+  max-width: 11rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(2, 10, 6, 0.88);
+  color: var(--blanco);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--t-fast) var(--ease),
+    translate var(--t-fast) var(--ease);
+}
+
+.frame-spot:hover .frame-spot__label,
+.frame-spot:focus-visible .frame-spot__label {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+.frame-spot:focus-visible {
+  outline: 2px solid var(--lima);
+  outline-offset: 3px;
+  border-radius: 0.35rem;
+}
+
+/* Con la ficha abierta o en modo escenario, el punto no interfiere */
+.is-theater .frame-spot {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-spot__label {
+    transition: none;
+  }
 }

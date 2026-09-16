@@ -83,7 +83,7 @@ export const findings = {
       base: 'Base: quienes toman mate al menos una vez por semana (n = 315 de 403).',
       explanation:
         'El mate sigue siendo frecuente (48,1% lo toma a diario), pero predomina a solas: en la última ocasión, el 34,3% estaba solo y el 58,4% trabajaba o estudiaba.',
-      pages: [30, 31],
+      pages: [31, 32],
     },
     {
       tab: 'Qué significa compartir',
@@ -94,7 +94,7 @@ export const findings = {
       base: 'Base: grado de acuerdo en una escala de 1 a 5 (promedio 4,25). La tesis no informa el n de esta pregunta.',
       explanation:
         'La percepción se mantiene entre quienes toman mate mayormente solos (77,1%): el hábito se individualizó, pero el significado social no se perdió.',
-      pages: [32, 43],
+      pages: [33, 44],
     },
     {
       tab: 'Dónde está la oportunidad',
@@ -105,7 +105,7 @@ export const findings = {
       base: 'Base: reconocimiento entre catorce marcas; las figuras del apartado indican la muestra total (n = 403).',
       explanation:
         'Solo el 15,6% reconoció a Romance y el 3,0% declaró consumirla; entre los 16 y 24 años el desconocimiento llega al 81,0%. Es un problema de notoriedad antes que de imagen.',
-      pages: [33, 36],
+      pages: [34, 38],
     },
   ],
   source:
@@ -215,7 +215,7 @@ export const strategy = {
     name: 'gesto-ofrecer',
     alt: 'Una misma fotografía dividida en tres ventanas: una mano le pasa un mate a otra.',
   } satisfies ImageRef,
-  // Notoriedad y significado se construyen al mismo tiempo, no en etapas (tesis, pág. 44)
+  // Notoriedad y significado se construyen al mismo tiempo, no en etapas (tesis, pág. 45)
   progression: [
     { title: 'Reconocimiento y significado', text: 'Al mismo tiempo, en cada contacto con la marca.' },
     { title: 'Una invitación', text: 'Que “¿unos mates?” termine en una prueba compartida.' },
@@ -276,7 +276,7 @@ export const change = {
     },
   ],
   goalsTitle: 'Metas propuestas',
-  // Metas y plazos según la tesis (pág. 44–46, 49)
+  // Metas y plazos según la tesis (pág. 45–46, 49)
   goals: [
     { display: '40%', label: 'Conoce Romance y la asocia con “compartir” (base: 21,1%).' },
     { display: '30%', label: 'Reconocimiento asistido de marca (base: 15,6%).' },
@@ -337,7 +337,7 @@ export const activation = {
         kpi: 'Reconocimiento asistido del 15,6% al 30%.',
         budget: '40% · ARS 60.000.000' as string | null,
         status: 'Integraciones propuestas, sin acuerdos confirmados.' as string | null,
-        pages: [49, 52, 53],
+        pages: [49, 51, 53],
       },
       name: 'Streaming',
       detail: 'Luzu TV y Olga',
@@ -354,7 +354,7 @@ export const activation = {
         kpi: 'Alcance del 60% del target e interacción superior al 3%.',
         budget: 'Parte del 20% de pauta digital',
         status: null as string | null,
-        pages: [34, 50, 52, 53],
+        pages: [35, 50, 51, 53],
       },
       name: 'Instagram',
       detail: null,
@@ -369,13 +369,13 @@ export const activation = {
       docs: {
         actions: [
           'Pauta por ARS 12.000.000 para abrir el tramo más joven.',
-          'Doce creadores de 50.000 a 300.000 seguidores, con un reel y un video cada uno.',
+          'Doce creadores con dos piezas cada uno, a un valor promedio de $600.000 por pieza.',
           'Logística de catas.',
         ],
         kpi: '3 millones de visualizaciones acumuladas.',
         budget: '10% creadores + parte de la pauta digital',
         status: 'La tesis no nombra creadores.' as string | null,
-        pages: [23, 50, 52, 53],
+        pages: [26, 50, 51, 53],
       },
       name: 'TikTok y creadores',
       detail: null,
@@ -393,10 +393,10 @@ export const activation = {
           'Stand en MATEAR.',
           'Material de góndola en unos 300 puntos de venta.',
         ],
-        kpi: '20.000 muestras entregadas y +10% de ventas en los comercios cubiertos.',
+        kpi: 'Muestras entregadas y +10% de ventas en los comercios cubiertos.',
         budget: '12% · ARS 18.000.000',
         status: null as string | null,
-        pages: [34, 50, 53],
+        pages: [35, 50, 53],
       },
       name: 'Activaciones y punto de venta',
       detail: null,
@@ -409,7 +409,7 @@ export const activation = {
       key: 'web',
       piece: 'invitacion',
       docs: {
-        actions: ['El sitio y WhatsApp sostienen la promoción de la campaña.', '10.000 invitaciones con promoción; la tesis no detalla la mecánica.'],
+        actions: ['El sitio y WhatsApp sostienen la promoción de la campaña.', 'La tesis no detalla la mecánica de la promoción.'],
         kpi: 'Tasa de canje superior al 20%.',
         budget: null as string | null,
         status: null as string | null,
@@ -459,7 +459,7 @@ export const campaign = {
       message: '¿Unos mates?',
       function:
         'Instagram sostiene el vínculo con el público: es el canal preferido por el 45,9% de la muestra para mantener el vínculo con las marcas.',
-      pages: [34, 50],
+      pages: [35, 50],
       alt: 'Boceto de historia de Instagram: manos que ceban un mate al atardecer en la costanera, con la pregunta “¿Unos mates?”, el envase de Romance y la frase “Un gesto empieza una ronda”.',
     },
     {
@@ -469,7 +469,7 @@ export const campaign = {
       message: '¿Unos mates? Romance, la yerba que se ofrece.',
       function:
         'El streaming en vivo es el medio principal: construye reconocimiento y significado a la vez. Se proponen diez menciones “¿unos mates?” con Romance en la mesa. Luzu TV y Olga son medios propuestos, sin acuerdo confirmado.',
-      pages: [49, 52, 53],
+      pages: [49, 51, 53],
       alt: 'Boceto de integración en streaming: un set con sillones y micrófonos, el envase de Romance sobre la mesa y un zócalo con la pregunta “¿Unos mates?”.',
     },
     {
@@ -479,7 +479,7 @@ export const campaign = {
       message: '¿Unos mates? Llevá la yerba que se ofrece.',
       function:
         'El 65,5% descubre marcas en el punto de venta. La tesis propone material de góndola en unos 300 comercios y degustaciones para facilitar la prueba y la compra.',
-      pages: [34, 53],
+      pages: [35, 53],
       alt: 'Boceto de material de góndola frente a un maxikiosco de barrio: un cartel rojo con “¿Unos mates?”, envases de Romance en el estante y un sello circular.',
     },
     {
@@ -488,7 +488,7 @@ export const campaign = {
       support: 'Tarjeta para compartir por chat',
       message: '¿Unos mates? Yo llevo la Romance.',
       function:
-        'Los medios propios (sitio y WhatsApp) sostienen la promoción de la campaña. La tesis prevé 10.000 invitaciones con promoción, sin detallar la mecánica.',
+        'Los medios propios (sitio y WhatsApp) sostienen la promoción de la campaña. La tesis no detalla la mecánica de la promoción.',
       pages: [45, 50],
       alt: 'Boceto de invitación digital en un chat: una tarjeta con amigas sentadas en ronda en un parque, el envase de Romance y la pregunta “¿Unos mates?”.',
     },
@@ -512,7 +512,7 @@ export const investment = {
       label: 'Streaming',
       pct: 40,
       amount: 60_000_000,
-      role: 'Medio principal: diez menciones “¿unos mates?”, Romance en la mesa durante doce semanas y cuatro historias o clips (pág. 52).' as string | null,
+      role: 'Medio principal: diez menciones “¿unos mates?”, Romance en la mesa durante doce semanas y cuatro historias o clips (pág. 51).' as string | null,
     },
     {
       label: 'Producción',
@@ -524,7 +524,7 @@ export const investment = {
       label: 'Pauta digital',
       pct: 20,
       amount: 30_000_000,
-      role: 'Instagram ($18.000.000) sostiene el vínculo y TikTok ($12.000.000) abre el tramo más joven; cerca del 60% de alcance (pág. 50, 52–53).' as string | null,
+      role: 'Instagram ($18.000.000) sostiene el vínculo y TikTok ($12.000.000) abre el tramo más joven; cerca del 60% de alcance (pág. 50, 51–53).' as string | null,
     },
     {
       label: 'Creadores',
@@ -594,7 +594,7 @@ export const presentation = {
         'La propuesta, llamada “Ronda”, busca instalar a Romance como la yerba que se ofrece.',
       ],
       figures: [hero.campaign, 'ARS 150.000.000 estimados'],
-      pages: [1, 44, 50],
+      pages: [5, 45, 50],
     },
     {
       id: 'hallazgos',
@@ -606,7 +606,7 @@ export const presentation = {
         'El 69% no conoce Romance; entre los 16 y 24 años la cifra llega al 81%.',
       ],
       figures: ['59,7% (n = 315)', '81,6%', '69%', 'Muestra: 403'],
-      pages: [30, 31, 32, 33],
+      pages: [31, 32, 33, 34],
     },
     {
       id: 'insight',
@@ -617,7 +617,7 @@ export const presentation = {
         'Romance no tiene que convencer a nadie de que compartir es bueno: tiene que devolver la ocasión.',
       ],
       figures: ['40,9% lo tomaría si se lo ofrecen'],
-      pages: [34, 36, 48],
+      pages: [35, 38, 48],
     },
     {
       id: 'estrategia',
@@ -628,7 +628,7 @@ export const presentation = {
         'El vínculo ya está en su nombre, su historia y el isotipo de las dos manos.',
       ],
       figures: ['5,7 millones de kg vendidos (2025)', 'Puesto 13 del ranking'],
-      pages: [12, 22, 43, 44, 48],
+      pages: [15, 25, 44, 45, 48],
     },
     {
       id: 'activaciones',
@@ -638,8 +638,8 @@ export const presentation = {
         'Se proponen diez menciones “¿unos mates?” en Luzu TV y Olga, con Romance en la mesa durante doce semanas. Son integraciones propuestas, sujetas a negociación.',
         'Instagram sostiene el vínculo, TikTok y los creadores generan descubrimiento, y las degustaciones y la góndola facilitan la prueba.',
       ],
-      figures: ['10 menciones', '12 creadores', '20.000 muestras', '300 puntos de venta'],
-      pages: [49, 50, 52, 53],
+      figures: ['10 PNT', '12 creadores', '8 degustaciones', '300 puntos de venta'],
+      pages: [49, 50, 51, 53],
     },
     {
       id: 'inversion',
@@ -650,7 +650,7 @@ export const presentation = {
         'Equivale a poco más del 0,5% de la venta anual estimada de Romance.',
       ],
       figures: ['40% streaming', '20% pauta digital', '15% producción', '12% activaciones', '10% creadores', '3% medición'],
-      pages: [50, 51, 52, 53],
+      pages: [50, 51, 53],
     },
     {
       id: 'objetivos',
@@ -661,7 +661,7 @@ export const presentation = {
         'Marketing: sumar cuatro puntos de consumo entre personas de 21 a 32 años del AMBA en un año. Se mide replicando la encuesta antes y después, con 400 casos cada vez.',
       ],
       figures: ['30% reconocimiento', '40% asociación', '7% consumo'],
-      pages: [44, 45, 46, 49, 53],
+      pages: [45, 46, 49, 53],
     },
     {
       id: 'cierre',
@@ -680,17 +680,17 @@ export const presentation = {
 /* Documentos -------------------------------------------------------------- */
 // Tesis final en PDF. Para reemplazarla, colocar el archivo en public/docs/ con el mismo nombre.
 // Si `url` es null, los accesos “Leer la tesis” y los enlaces de página no se muestran.
-// Las páginas citadas en el sitio usan la numeración del PDF (verificada contra este archivo, 56 páginas).
+// Las páginas citadas en el sitio usan la numeración del PDF (verificada contra este archivo, 64 páginas).
 export const documents = {
   thesis: {
     url: './docs/tesis-ronda.pdf' as string | null,
     fileName: 'Tesis Ronda · Gutiérrez Pinzón y Lattanzi · UADE 2026.pdf',
-    size: '16,4 MB',
+    size: '16,1 MB',
     read: 'Leer la tesis',
     download: 'Descargar',
-    // El brief es el apartado 6.3 de la tesis (pág. 44 a 53)
-    briefPage: 44,
-    briefLabel: 'Ver el brief (pág. 44–53)',
+    // El brief es el apartado 6.3 de la tesis (pág. 45 a 53)
+    briefPage: 45,
+    briefLabel: 'Ver el brief (pág. 45–53)',
   },
 }
 
@@ -734,7 +734,10 @@ export const contact = {
 
 /* Preguntale a Ronda y preguntas frecuentes ------------------------------- */
 export const assistant = {
-  name: 'Preguntale a Ronda',
+  // La ilustración de las autoras acompaña al asistente; las respuestas son automáticas
+  name: 'Ronda · Asistente de la tesis',
+  subtitle: 'Respuestas automáticas basadas en nuestra investigación',
+  avatarAlt: 'Ilustración de las dos autoras de la tesis.',
   launcher: 'Preguntale a Ronda',
   intro: 'Hola. Respondo con información de la tesis y te indico en qué páginas verificarla. ¿Qué querés saber?',
   disclaimer:
@@ -756,6 +759,25 @@ export const faqSection = {
   askTitle: '¿Tenés otra pregunta?',
   askText: 'Consultá a Ronda o escribinos si la tesis no tiene la información que buscás.',
   askCta: 'Preguntale a Ronda',
+}
+
+/* Las autoras ------------------------------------------------------------ */
+// Nombres y roles según el apartado 6.3.18 “Responsables del proyecto” de la tesis (pág. 53).
+// La ilustración muestra a las dos autoras; no se indica qué cara corresponde a cada nombre.
+export const authors = {
+  hint: 'Las autoras de Ronda',
+  open: 'Conocé a las autoras',
+  title: 'Las autoras de Ronda',
+  intro: 'Responsables del proyecto, según la tesis.',
+  people: [
+    { name: 'Andrea Valentina Gutiérrez Pinzón', role: 'Planificación estratégica y medios.' },
+    { name: 'Agustina Lattanzi', role: 'Dirección creativa y comunicación digital.' },
+  ],
+  image: { name: 'autoras', alt: 'Ilustración de las dos autoras del proyecto Ronda.' } satisfies ImageRef,
+  caption: 'Ilustración de las autoras.',
+  contactLabel: 'Escribinos a',
+  close: 'Cerrar',
+  pages: [53],
 }
 
 /* Créditos --------------------------------------------------------------- */

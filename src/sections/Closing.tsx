@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { closing as c, contact, credits, hero } from '../content'
+import { authors, closing as c, contact, credits, hero } from '../content'
 import { ArrowUpIcon } from '../components/Icons'
 import { Chapter } from '../components/Chapter'
 import { Picture } from '../components/Picture'
@@ -8,6 +8,7 @@ import { openAssistant } from '../assistant/bus'
 import { openPresentation } from '../presentation/bus'
 import { goHome } from '../navigation'
 import { onInvitePhase, requestInvite, type InvitePhase } from '../scene/invite'
+import { requestAuthors } from '../scene/events'
 import './Closing.css'
 
 /**
@@ -91,6 +92,9 @@ export function Closing() {
               </p>
               <ThesisLinks brief />
               <div className="closing__minor">
+                <button type="button" className="text-link closing__authors" onClick={() => requestAuthors('open')}>
+                  {authors.open}
+                </button>
                 <button type="button" className="text-link closing__present" onClick={() => openPresentation()}>
                   Modo presentación
                 </button>

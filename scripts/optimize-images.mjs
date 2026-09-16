@@ -45,6 +45,10 @@ const jobs = [
   { name: 'medio-luzu-tv', file: 'medio-luzu-tv.png', widths: [280, 560], quality: 92 },
   { name: 'medio-olga', file: 'medio-olga.png', widths: [260, 520], quality: 92 },
   { name: 'romance-cosecha', file: 'romance-cosecha.jpg', widths: [640, 1000] },
+  // Ilustración de las autoras: completa para la ficha y el portarretrato de la mesa
+  { name: 'autoras', file: 'autoras.jpg', widths: [320, 640], quality: 90 },
+  // Avatar del asistente: recorte centrado en las dos caras (deja fuera el resto de la escena)
+  { name: 'autoras-duo', file: 'autoras.jpg', widths: [96, 192, 320], quality: 92, extract: { left: 98, top: 42, width: 452, height: 452 } },
 ]
 
 await rm(OUT, { recursive: true, force: true })

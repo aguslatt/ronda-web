@@ -28,3 +28,17 @@ export function onTheater(listener: (on: boolean) => void) {
   window.addEventListener(THEATER, handler)
   return () => window.removeEventListener(THEATER, handler)
 }
+
+/* Ficha de las autoras: la abre el portarretrato de la mesa o el botón del cierre --------- */
+const AUTHORS_EVENT = 'ronda:autoras'
+export type AuthorsAction = 'open' | 'close'
+
+export function requestAuthors(action: AuthorsAction) {
+  window.dispatchEvent(new CustomEvent(AUTHORS_EVENT, { detail: action }))
+}
+
+export function onAuthors(handler: (action: AuthorsAction) => void) {
+  const listener = (event: Event) => handler((event as CustomEvent<AuthorsAction>).detail)
+  window.addEventListener(AUTHORS_EVENT, listener)
+  return () => window.removeEventListener(AUTHORS_EVENT, listener)
+}

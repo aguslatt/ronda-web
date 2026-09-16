@@ -44,7 +44,8 @@
   aspect-ratio: 1;
   overflow: hidden;
   border: 2px solid var(--blanco);
-  border-radius: 50%;
+  /* Esquina redondeada, no círculo: un círculo recortaría las caras de la ilustración */
+  border-radius: 32%;
   background: var(--blanco);
 }
 
@@ -304,4 +305,52 @@
     height: min(88svh, 44rem);
     border-radius: var(--radio-l) var(--radio-l) 0 0;
   }
+}
+
+/* ==========================================================================
+   Avatar del asistente: la ilustración de las autoras
+   Se recorta a la zona de las dos caras y se muestra en esquina redondeada,
+   para que ninguna cara quede cortada por una máscara circular.
+   ========================================================================== */
+.assistant-avatar {
+  display: block;
+  flex: none;
+  overflow: hidden;
+  border-radius: 28%;
+  background: var(--blanco);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.assistant-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.assistant-avatar--lg {
+  width: 2.75rem;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55);
+}
+
+.assistant-avatar--sm {
+  width: 2rem;
+  aspect-ratio: 1;
+  margin-top: 0.15rem;
+  box-shadow: 0 0 0 1px var(--linea);
+}
+
+/* Turno del asistente: avatar y globo alineados arriba */
+.assistant__turn {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5rem;
+  justify-self: start;
+  max-width: 96%;
+}
+
+.assistant__turn .assistant__bubble {
+  max-width: 100%;
 }

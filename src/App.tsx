@@ -16,6 +16,7 @@ import { Faq } from './sections/Faq'
 import { Closing } from './sections/Closing'
 import { Footer } from './components/Footer'
 import { Assistant } from './components/Assistant'
+import { Authors } from './components/Authors'
 import { Presentation } from './components/Presentation'
 import { useReveal } from './hooks/useReveal'
 import { useHashLanding } from './hooks/useHashLanding'
@@ -54,6 +55,7 @@ export default function App() {
       </main>
       <Footer />
       <Assistant />
+      <Authors />
       <Presentation />
     </>
   )

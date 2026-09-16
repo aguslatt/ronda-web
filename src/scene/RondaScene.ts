@@ -8,7 +8,7 @@
    ========================================================================== */
 import * as THREE from 'three'
 import { createBackdrop, createFloor, createKit } from './kit'
-import { contactShadow, createLaptop, createMate, createPack, createTable, createTermo, MAIN_MATE_STYLE, screenTexture, seat, seatGlow, type MateStyle } from './objects'
+import { contactShadow, createFrame, createLaptop, createMate, createPack, createTable, createTermo, MAIN_MATE_STYLE, screenTexture, seat, seatGlow, type MateStyle } from './objects'
 import { carry, clamp01, easeInOut, easeOut, facing } from './motion'
 import type { Shot } from './shots'
 
@@ -31,6 +31,12 @@ const PACK = { start: v(-0.07, 0, 0.35), end: v(-0.08, 0, -0.04), rotStart: 0.6,
 // El termo empieza fuera del encuadre de la portada (atrás, a la derecha) y es el primero en ir al centro
 const TERMO = { start: v(0.3, 0, -0.34), end: v(0.1, 0, 0.04), rotStart: 0.3, rotEnd: 0.9 }
 const LAPTOP = { start: v(0.2, 0, 0.05), end: seat(60, 0.5), rotStart: -0.35, rotEnd: Math.PI / 3 }
+/*
+ * Portarretrato de las autoras: apoyado hacia el borde de la mesa del lado de quien visita,
+ * a la derecha del envase y fuera del camino del mate que llega en la invitación.
+ */
+const FRAME = { position: v(0.3, 0, -0.26), rotation: Math.PI + 0.42 }
+
 /** Punto de luz de la portada: entre el envase y el mate. */
 const HERO_LIGHT = v(0.05, 0, 0.42)
 const LAPTOP_OPEN = new THREE.Color(0x5d6266)
@@ -72,6 +78,11 @@ export class RondaScene {
   private laptopPivot: THREE.Group
   private laptopShadow: THREE.Mesh
   private laptopBody: THREE.MeshStandardMaterial
+  private frame: THREE.Group
+  private frameShadow: THREE.Mesh
+  /** Inclinación del marco al señalarlo (0 a 1), amortiguada cuadro a cuadro. */
+  private frameHover = 0
+  private frameAim = 0
   private screenMaterial: THREE.MeshBasicMaterial
   private size = { width: 1, height: 1 }
   private start = new THREE.Vector3()
@@ -159,6 +170,13 @@ export class RondaScene {
     this.termo = createTermo(kit.metal)
     this.termoShadow = contactShadow(0.15, 0.15, 0.72)
     this.scene.add(this.termo, this.termoShadow)
+
+    this.frame = createFrame(kit.textures.autoras)
+    this.frame.position.copy(FRAME.position)
+    this.frame.rotation.y = FRAME.rotation
+    this.frameShadow = contactShadow(0.13, 0.09, 0.62)
+    this.frameShadow.position.set(FRAME.position.x, this.frameShadow.position.y, FRAME.position.z)
+    this.scene.add(this.frame, this.frameShadow)
 
     this.pack = createPack(kit.packFaces)
     this.packShadow = contactShadow(0.2, 0.13, 0.68)
@@ -259,6 +277,22 @@ export class RondaScene {
       glow.scale.setScalar(0.85 + 0.15 * seats)
     })
 
+    /* Portarretrato: se suma a la mesa cuando la ronda empieza a formarse y se inclina al señalarlo */
+    const framePresence = clamp01(s.ronda - 0.2)
+    this.frame.visible = framePresence > 0.02
+    this.frameShadow.visible = this.frame.visible
+    if (this.frame.visible) {
+      const entrada = easeOut(framePresence)
+      this.frameHover += (this.frameAim - this.frameHover) * 0.16
+      if (Math.abs(this.frameAim - this.frameHover) < 0.002) this.frameHover = this.frameAim
+      this.frame.scale.setScalar(lerp(0.84, 1, entrada))
+      this.frame.rotation.x = -0.12 + this.frameHover * 0.06
+      this.frame.rotation.y = FRAME.rotation + this.frameHover * 0.1
+      this.frame.position.y = this.frameHover * 0.003
+      const sombra = this.frameShadow.material as THREE.MeshBasicMaterial
+      sombra.opacity = (this.frameShadow.userData.opacity as number) * entrada * (1 - this.frameHover * 0.3)
+    }
+
     /* Luz: foco sobre el producto en la portada, en Romance con el foco de marca, y en toda la mesa al final */
     const reveal = easeOut(clamp01(intro / 0.55))
     this.lightTarget.lerpVectors(HERO_LIGHT, this.pack.position, focus * 0.85)
@@ -282,6 +316,37 @@ export class RondaScene {
     // Relleno de entorno alto en el foco de marca: los verdes y rojos del envase se leen en la sombra
     this.scene.environmentIntensity = lerp(0.12, 0.42, L) * (1 + 0.9 * focus * (1 - L))
     this.backdrop.uniforms.uAmount.value = lerp(0.3, 1, L)
+  }
+
+  /** ¿Queda inclinación del marco por resolver? Mantiene vivo el bucle hasta que se asienta. */
+  get frameSettling() {
+    return Math.abs(this.frameAim - this.frameHover) > 0.0015
+  }
+
+  /** Inclinación del marco al señalarlo. La pide el punto interactivo en HTML. */
+  setFrameHover(active: boolean) {
+    const aim = active ? 1 : 0
+    if (aim === this.frameAim) return
+    this.frameAim = aim
+    this.options.onChange()
+  }
+
+  /** ¿Está el marco en pantalla? Devuelve su posición proyectada para ubicar el punto interactivo. */
+  framePoint() {
+    if (!this.frame.visible) return null
+    this.frame.updateMatrixWorld()
+    const punto = new THREE.Vector3(0, 0.08, 0.01).applyMatrix4(this.frame.matrixWorld)
+    const distancia = punto.distanceTo(this.camera.position)
+    const p = punto.clone().project(this.camera)
+    if (p.z > 1 || Math.abs(p.x) > 1 || Math.abs(p.y) > 1) return null
+    // Tamaño aparente del marco, para que el punto interactivo acompañe su escala
+    const alto = 0.135 * this.frame.scale.y
+    const mitad = Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2) * distancia
+    return {
+      x: (p.x * 0.5 + 0.5) * this.size.width,
+      y: (-p.y * 0.5 + 0.5) * this.size.height,
+      size: (alto / (2 * mitad)) * this.size.height,
+    }
   }
 
   resize(width: number, height: number) {

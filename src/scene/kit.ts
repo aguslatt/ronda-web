@@ -17,8 +17,9 @@ export function createKit(renderer: THREE.WebGLRenderer, events: { onChange: () 
   const manager = new THREE.LoadingManager(events.onReady)
   const loader = new THREE.TextureLoader(manager)
   const anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy())
-  const texture = (file: string, color = true) => {
-    const t = loader.load(BASE + file, () => events.onChange())
+  // `dir` permite tomar imágenes de otras carpetas públicas (la ilustración de las autoras vive en /img)
+  const texture = (file: string, color = true, dir = BASE) => {
+    const t = loader.load(dir + file, () => events.onChange())
     t.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace
     t.anisotropy = anisotropy
     return t
@@ -32,6 +33,8 @@ export function createKit(renderer: THREE.WebGLRenderer, events: { onChange: () 
     yerba: texture('yerba.webp'),
     packFront: texture('pack-front.webp'),
     packSide: texture('pack-side.webp'),
+    // Ilustración de las autoras: la fotografía del portarretrato de la mesa
+    autoras: texture('autoras-640.webp', true, `${import.meta.env.BASE_URL}img/`),
   }
 
   // Alpaca cepillada: reflejos alargados y contenidos, sin destellos de espejo

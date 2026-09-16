@@ -130,6 +130,12 @@ export const SHOTS: Record<string, ShotInput> = {
     light: 1, lid: 0, offer: 1, ronda: 5, gather: 1, dim: 0,
     mobile: { cam: [0, 2.1, -2.35], target: [0, 0.02, 0], fov: 44, fx: 0, fy: -0.04 },
   },
+  // Las autoras: acercamiento breve al portarretrato apoyado en la mesa
+  autoras: {
+    cam: [0.115, 0.165, -0.665], target: [0.3, 0.08, -0.26], fov: 28, fx: 0, fy: 0.06,
+    light: 1, lid: 0, offer: 1, ronda: 5, gather: 1, dim: 0.25,
+    mobile: { cam: [0.09, 0.185, -0.76], target: [0.3, 0.08, -0.26], fov: 34, fx: 0, fy: 0.3 },
+  },
   // Invitación: a la altura de alguien sentado a la mesa; el mate llega a su lugar
   invitacion: {
     cam: [0.02, 0.4, -1.02], target: [-0.02, 0.06, -0.12], fov: 40, fx: 0, fy: -0.21,

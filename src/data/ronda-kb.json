@@ -1,1155 +1,1139 @@
 {
-  "source": {
-    "label": "Tesis de Publicidad (UADE) · Gutiérrez y Lattanzi",
-    "note": "Respuestas redactadas a partir de la tesis. Las páginas corresponden a la numeración del PDF."
+ "source": {
+  "label": "Tesis de Publicidad (UADE) · Gutiérrez y Lattanzi",
+  "note": "Respuestas redactadas a partir de la tesis. Las páginas corresponden a la numeración del PDF."
+ },
+ "featured": [
+  "metodologia-muestra",
+  "investigacion-59",
+  "insight-cual",
+  "estrategia-ofrecer",
+  "canales-luzu-olga",
+  "presupuesto-distribucion",
+  "objetivos-medicion",
+  "general-piezas"
+ ],
+ "faq": [
+  {
+   "id": "general-tema",
+   "question": "¿De qué trata la tesis?",
+   "answer": "Es el Trabajo Integrador Final de la Licenciatura en Publicidad de UADE (2026). Desarrolla una investigación, una estrategia y un plan de campaña para Yerba Mate Romance, a partir de la temática asignada: la revalorización del mate como bebida gregaria (pág. 5). El proyecto se llama “Ronda” (pág. 45).",
+   "pages": [
+    5,
+    45
+   ],
+   "keywords": [
+    "tesis",
+    "trabajo final",
+    "tif",
+    "tema",
+    "de que trata",
+    "uade",
+    "publicidad",
+    "proyecto ronda",
+    "bebida gregaria",
+    "romance"
+   ],
+   "topic": "general"
   },
-  "featured": [
-    "metodologia-muestra",
-    "investigacion-59",
-    "insight-cual",
-    "estrategia-ofrecer",
-    "canales-luzu-olga",
-    "presupuesto-distribucion",
-    "objetivos-medicion",
-    "general-piezas"
-  ],
-  "faq": [
-    {
-      "id": "general-tema",
-      "question": "¿De qué trata la tesis?",
-      "answer": "Es el Trabajo Integrador Final de la Licenciatura en Publicidad de UADE (2026). Desarrolla una investigación, una estrategia y un plan de campaña para Yerba Mate Romance, a partir de la temática asignada: la revalorización del mate como bebida gregaria (pág. 1). El proyecto se llama “Ronda” (pág. 44).",
-      "pages": [
-        1,
-        44
-      ],
-      "keywords": [
-        "tesis",
-        "trabajo final",
-        "tif",
-        "tema",
-        "de que trata",
-        "uade",
-        "publicidad",
-        "proyecto ronda",
-        "bebida gregaria",
-        "romance"
-      ],
-      "topic": "general"
-    },
-    {
-      "id": "investigacion-hipotesis",
-      "question": "¿Cuál fue la hipótesis y se confirmó?",
-      "answer": "La hipótesis era que, después de la pandemia, disminuyó el consumo grupal de mate y aumentó el individual como acompañamiento de actividades cotidianas (pág. 1). Los resultados la validan: antes de 2019, el 54,6% tomaba mate siempre o mayormente acompañado; después de 2021, bajó al 36,0%, y el consumo solo pasó del 20,3% al 46,5% (pág. 54). Se confirma en la conducta y se precisa en el significado, porque el valor de compartir se mantiene.",
-      "pages": [
-        1,
-        31,
-        54
-      ],
-      "keywords": [
-        "hipotesis",
-        "pandemia",
-        "covid",
-        "se confirmo",
-        "validacion",
-        "consumo individual",
-        "consumo grupal",
-        "antes y despues"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "metodologia-como",
-      "question": "¿Cómo se hizo la investigación?",
-      "answer": "Se usó un enfoque mixto: una encuesta digital cuantitativa y una entrevista en profundidad cualitativa (pág. 30). La encuesta reunió 403 respuestas válidas entre el 25 de agosto y el 6 de septiembre de 2026. Quienes toman mate al menos una vez por semana (n = 315) respondieron el módulo de hábitos, y los consumidores esporádicos (n = 88), el de barreras y motivadores.",
-      "pages": [
-        30
-      ],
-      "keywords": [
-        "metodologia",
-        "encuesta",
-        "entrevista",
-        "enfoque mixto",
-        "como se hizo",
-        "trabajo de campo",
-        "cuantitativa",
-        "cualitativa",
-        "fechas"
-      ],
-      "topic": "metodologia"
-    },
-    {
-      "id": "metodologia-muestra",
-      "question": "¿Quiénes respondieron la encuesta y cómo se eligió la muestra?",
-      "answer": "Fue una muestra no probabilística por conveniencia de 403 personas, difundida en redes sociales y por reenvío entre contactos (pág. 30). El 44,4% tiene entre 16 y 24 años, el 27,3% entre 25 y 34, el 83,4% no supera los 44 y el 79,9% vive en CABA o AMBA. Es una muestra predominantemente joven y urbana.",
-      "pages": [
-        30
-      ],
-      "keywords": [
-        "muestra",
-        "403",
-        "encuestados",
-        "conveniencia",
-        "no probabilistica",
-        "edad",
-        "amba",
-        "caba",
-        "perfil de la muestra",
-        "redes sociales"
-      ],
-      "topic": "metodologia"
-    },
-    {
-      "id": "metodologia-representatividad",
-      "question": "¿Los resultados son representativos de todos los argentinos?",
-      "answer": "No. La tesis aclara que la muestra es no probabilística, por conveniencia y concentrada en jóvenes del AMBA (79,9%), por lo que no puede generalizarse al total de los consumidores ni a regiones con otros códigos, como el Litoral (pág. 55). La comparación pre y post pandemia, además, se apoya en el recuerdo de los encuestados.",
-      "pages": [
-        55
-      ],
-      "keywords": [
-        "representativo",
-        "generalizar",
-        "poblacion",
-        "sesgo",
-        "limitaciones",
-        "muestra",
-        "litoral",
-        "memoria",
-        "validez"
-      ],
-      "topic": "metodologia"
-    },
-    {
-      "id": "metodologia-entrevista",
-      "question": "¿A quién entrevistaron y qué aportó?",
-      "answer": "Entrevistaron a Rosario Estrada, psicóloga clínica de orientación psicoanalítica, el 9 de septiembre de 2026: fueron 30 minutos por videollamada, con guía semiestructurada (pág. 34). Según Estrada, el consumo individual “ya venía gestándose” y la pandemia lo hizo más visible. Elegir tomar solo y valorar el encuentro no se contradicen, y una invitación sencilla como “¿tomamos unos mates?” puede generar encuentro sin exigir organización (pág. 35).",
-      "pages": [
-        34,
-        35
-      ],
-      "keywords": [
-        "entrevista",
-        "psicologa",
-        "rosario estrada",
-        "cualitativa",
-        "especialista",
-        "vinculo",
-        "ritual",
-        "soledad"
-      ],
-      "topic": "metodologia"
-    },
-    {
-      "id": "investigacion-59",
-      "question": "¿Qué significa el 59,7%?",
-      "answer": "Entre quienes toman mate al menos una vez por semana (n = 315), el 59,7% lo toma más veces solo que acompañado (pág. 30–31). El porcentaje no se calcula sobre las 403 personas, sino sobre los consumidores semanales. Además, en la última ocasión de consumo, el 34,3% estaba solo y el 58,4% trabajando o estudiando.",
-      "pages": [
-        30,
-        31
-      ],
-      "keywords": [
-        "59,7",
-        "59.7",
-        "solo",
-        "acompanado",
-        "consumo individual",
-        "consumidores semanales",
-        "315",
-        "habito"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "investigacion-81",
-      "question": "¿Qué significa el 81,6%?",
-      "answer": "El 81,6% considera que compartir mate genera cercanía y confianza (promedio 4,25 en una escala de 1 a 5) (pág. 32). La percepción se mantiene entre quienes toman mate mayormente solos (77,1%). La tesis concluye que el hábito se individualizó, pero el significado social no se perdió (pág. 43).",
-      "pages": [
-        32,
-        43
-      ],
-      "keywords": [
-        "81,6",
-        "81.6",
-        "cercania",
-        "confianza",
-        "compartir",
-        "valor social",
-        "encuentro",
-        "77,1"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "investigacion-69",
-      "question": "¿Qué significa el 69% que no conoce Romance?",
-      "answer": "El 69,0% de los encuestados afirmó no conocer Romance; entre los jóvenes de 16 a 24 años la cifra llega al 81,0% (pág. 33). Solo el 15,6% la reconoció entre catorce marcas y el 3,0% declaró consumirla. La tesis lo interpreta como un problema de notoriedad antes que de imagen.",
-      "pages": [
-        33,
-        36
-      ],
-      "keywords": [
-        "69",
-        "no conoce",
-        "notoriedad",
-        "conocimiento de marca",
-        "reconocimiento",
-        "15,6",
-        "3%",
-        "desconocimiento",
-        "81%"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "investigacion-pandemia",
-      "question": "¿Cambió la forma de tomar mate con la pandemia?",
-      "answer": "Sí, según la encuesta. Antes de 2019, el 54,6% tomaba mate siempre o mayormente acompañado; después de 2021, bajó al 36,0%, y el consumo solo subió del 20,3% al 46,5% (pág. 31). Entre quienes tomaban mate en ambos períodos (n = 221), el 45,2% se volvió más solitario. La pandemia no creó esta modalidad, pero pudo acelerarla.",
-      "pages": [
-        31,
-        35,
-        54
-      ],
-      "keywords": [
-        "pandemia",
-        "covid",
-        "antes de 2019",
-        "despues de 2021",
-        "45,2",
-        "cambio de habito",
-        "solitario",
-        "221"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "investigacion-eleccion",
-      "question": "¿Cómo eligen la yerba los consumidores?",
-      "answer": "Sobre todo por el producto: el sabor (34,2%) y la suavidad (23,3%) son los principales criterios, y el precio representa solo el 5,5% (pág. 32). El 58,3% cambiaría de yerba por un mejor sabor, frente al 6,2% que lo haría por una comunicación con la que se identifique. La recomendación (33,0%) y la posibilidad de probar (17,9%) también ayudan a incorporar marcas.",
-      "pages": [
-        32,
-        36
-      ],
-      "keywords": [
-        "eleccion",
-        "criterios",
-        "sabor",
-        "suavidad",
-        "precio",
-        "cambio de marca",
-        "recomendacion",
-        "probar",
-        "por que eligen"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "investigacion-descubrimiento",
-      "question": "¿Dónde descubren nuevas marcas de yerba?",
-      "answer": "Las principales vías son el punto de venta (65,5%), las recomendaciones (60,5%) y la prueba en casas o juntadas (43,2%) (pág. 34). Instagram es el canal preferido para mantener el vínculo con las marcas (45,9%). Interesa más la información sobre sabor, calidad y rendimiento (58,1%) y las promociones (45,4%) que las historias de mate compartido (15,6%).",
-      "pages": [
-        34
-      ],
-      "keywords": [
-        "descubrimiento",
-        "punto de venta",
-        "gondola",
-        "recomendacion",
-        "instagram",
-        "juntadas",
-        "contenidos",
-        "promociones",
-        "canales preferidos"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "marca-asociaciones",
-      "question": "¿Qué asocia la gente con Romance?",
-      "answer": "Las asociaciones son mayormente positivas y vinculares: “amor o pareja” (66,7%), “cercanía y calidez” (38,0%), “familia” (22,8%) y “compartir” (21,1%) (pág. 33). Se relevaron con una pregunta de respuesta múltiple (pág. 34). La oportunidad es ampliar ese significado de la pareja hacia amigos, familia y compañeros (pág. 36, 40).",
-      "pages": [
-        33,
-        34,
-        36,
-        40
-      ],
-      "keywords": [
-        "asociaciones",
-        "imagen de marca",
-        "amor",
-        "pareja",
-        "compartir",
-        "21,1",
-        "66,7",
-        "que piensan de romance",
-        "percepcion"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "investigacion-esporadicos",
-      "question": "¿Qué pasa con quienes toman mate poco o nada?",
-      "answer": "Entre los consumidores esporádicos o no consumidores (n = 88), lo social cumple un doble papel (pág. 34). Puede ser una barrera, porque el 31,8% no prepara mate si nadie más lo hace, y también un disparador, porque el 40,9% lo tomaría si alguien se lo ofreciera. El encuentro puede no solo acompañar el consumo, sino también iniciarlo.",
-      "pages": [
-        34
-      ],
-      "keywords": [
-        "esporadicos",
-        "no consumidores",
-        "barreras",
-        "motivadores",
-        "ofrecer",
-        "40,9",
-        "31,8",
-        "88"
-      ],
-      "topic": "investigacion"
-    },
-    {
-      "id": "marca-por-que-romance",
-      "question": "¿Por qué Romance?",
-      "answer": "Romance fue la marca asignada para el trabajo (pág. 1). La tesis encuentra que tiene el vínculo en su nombre, su historia y su packaging, con dos manos que sostienen dos mates en las cinco variedades, aunque no lo capitalizó en su comunicación (pág. 22–23, 43). Además, ninguna marca ocupa con códigos actuales el territorio del encuentro en los medios donde sucede hoy (pág. 38–39).",
-      "pages": [
-        1,
-        22,
-        23,
-        38,
-        39,
-        43
-      ],
-      "keywords": [
-        "por que romance",
-        "marca asignada",
-        "eleccion de marca",
-        "oportunidad",
-        "nombre",
-        "packaging",
-        "dos manos",
-        "vinculo"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "marca-historia",
-      "question": "¿Cuál es la historia de Romance?",
-      "answer": "En 1900, la familia Gerula se estableció en San José, Misiones, donde plantó las primeras hectáreas de yerba (pág. 17). A mediados del siglo XX, Miguel José Gerula, nieto del fundador, amplió plantaciones y secaderos. En 1978, la producción adoptó la marca Yerba Mate Romance, que la empresa define como nacida del amor de un hombre por una mujer.",
-      "pages": [
-        17
-      ],
-      "keywords": [
-        "historia",
-        "gerula",
-        "misiones",
-        "san jose",
-        "1900",
-        "1978",
-        "origen",
-        "familia",
-        "fundador"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "marca-producto",
-      "question": "¿Qué productos tiene Romance y cuál se elige para la campaña?",
-      "answer": "El portfolio tiene cinco variedades de yerba, una línea de accesorios y dos marcas secundarias, El Chasqui y Don Carlos (pág. 18). Para la campaña se elige Romance Tradicional en 500 g y 1 kg: es la de mayor rotación, y el formato de 500 g concentra el 55,1% del mercado interno y se ajusta a quienes viven solos (pág. 46). Su beneficio funcional es el rendimiento; el emocional, el gesto de ofrecer.",
-      "pages": [
-        18,
-        19,
-        46
-      ],
-      "keywords": [
-        "productos",
-        "portfolio",
-        "variedades",
-        "tradicional",
-        "500 g",
-        "1 kg",
-        "el chasqui",
-        "don carlos",
-        "terere",
-        "accesorios"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "marca-mercado",
-      "question": "¿Qué lugar ocupa Romance en el mercado?",
-      "answer": "Romance ocupa el puesto 13 del ranking de volumen, con 5,7 millones de kilos vendidos en 2025 (pág. 12). En el relevamiento del 7 de septiembre de 2026 en la tienda online de Jumbo costaba $4.800 por kilo, un 7,6% por debajo del promedio de la categoría ($5.192) (pág. 20). Tiene escala, pero no liderazgo ni una posición diferencial.",
-      "pages": [
-        12,
-        20,
-        21
-      ],
-      "keywords": [
-        "mercado",
-        "ranking",
-        "puesto 13",
-        "ventas",
-        "5,7 millones",
-        "precio",
-        "participacion",
-        "posicion"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "marca-competidores",
-      "question": "¿Quiénes son los competidores de Romance?",
-      "answer": "En precio y góndola compite con marcas de escala media como Rosamonte, Nobleza Gaucha, Aguantadora, La Tranquera, Piporé, Andresito y Cachamate; en hábito, con los líderes Playadito, Las Marías, CBSé y Amanda (pág. 20). En significado, CBSé y Baldo ocupan territorios de pertenencia, deporte e identidad nacional. De forma indirecta compiten café, té, otras bebidas con cafeína y las bebidas de yerba listas para tomar, como Yací, Overtake y Mathienzo (pág. 21).",
-      "pages": [
-        20,
-        21
-      ],
-      "keywords": [
-        "competidores",
-        "competencia",
-        "playadito",
-        "cbse",
-        "baldo",
-        "rosamonte",
-        "las marias",
-        "amanda",
-        "nobleza gaucha",
-        "bebidas listas"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "marca-comunicacion-actual",
-      "question": "¿Cómo comunica hoy Romance y cómo lo hace la categoría?",
-      "answer": "Romance concentra su comunicación en su sitio e Instagram, no tiene TikTok propio y no registra presencia sostenida en pauta masiva (pág. 23). Su eslogan es “Tus pasiones. Tu vida. Tu mate.”, y “Ronda Romance” aparece como iniciativa puntual (pág. 22). La categoría comunica el encuentro, el producto o asociaciones como el fútbol, pero ninguna marca analizada estaba en el streaming argentino (pág. 13–15).",
-      "pages": [
-        13,
-        14,
-        15,
-        22,
-        23
-      ],
-      "keywords": [
-        "comunicacion actual",
-        "redes",
-        "instagram",
-        "tiktok",
-        "eslogan",
-        "ronda romance",
-        "categoria",
-        "rutas comunicacionales",
-        "campanas de la competencia"
-      ],
-      "topic": "marca"
-    },
-    {
-      "id": "publico-quien",
-      "question": "¿A quién está dirigida la campaña?",
-      "answer": "A adultos jóvenes de 21 a 32 años del AMBA, sin distinción de nivel socioeconómico, que ya deciden y pagan su propia yerba (pág. 46). Toman mate con frecuencia mientras estudian, trabajan o están frente a una pantalla. Suelen hacerlo solos, pero valoran compartir y aceptan cuando alguien propone una ronda. Los menores de 21 son audiencia de contacto, y las personas de 33 a 40, audiencia secundaria (pág. 41).",
-      "pages": [
-        41,
-        46
-      ],
-      "keywords": [
-        "publico objetivo",
-        "target",
-        "a quien",
-        "jovenes",
-        "21 a 32",
-        "amba",
-        "audiencia",
-        "consumidor"
-      ],
-      "topic": "publico"
-    },
-    {
-      "id": "publico-por-que-edades",
-      "question": "¿Por qué de 21 a 32 años?",
-      "answer": "El target se define por decisión de compra: por debajo de los 21, el consumo suele depender de la compra familiar (pág. 40). El rango se centra en la edad promedio de emancipación en Argentina, 27,5 años. El límite de 32 agrupa etapas de vida similares y coincide con las audiencias de Luzu TV (15 a 30) y Olga (25 a 35) (pág. 41). No se segmenta por nivel socioeconómico porque el mate tiene una penetración casi universal.",
-      "pages": [
-        40,
-        41
-      ],
-      "keywords": [
-        "edad",
-        "21",
-        "32",
-        "rango etario",
-        "emancipacion",
-        "27,5",
-        "por que esa edad",
-        "nivel socioeconomico",
-        "segmentacion"
-      ],
-      "topic": "publico"
-    },
-    {
-      "id": "publico-clusters",
-      "question": "¿Qué grupos hay dentro del público?",
-      "answer": "Hay dos clusters con el mismo hábito en distintos momentos de vida (pág. 46–47). “Ceba solo en la facu” (21 a 27 años) son estudiantes avanzados o en su primer trabajo que empiezan a comprar su yerba; con ellos se busca la prueba. “Recién independizado” (28 a 32 años) vive solo, con trabajo estable, y ya elige la yerba de su casa; con ellos se busca la adopción.",
-      "pages": [
-        46,
-        47
-      ],
-      "keywords": [
-        "clusters",
-        "segmentos",
-        "ceba solo en la facu",
-        "recien independizado",
-        "21 a 27",
-        "28 a 32",
-        "grupos",
-        "prueba",
-        "adopcion"
-      ],
-      "topic": "publico"
-    },
-    {
-      "id": "insight-cual",
-      "question": "¿Cuál es el insight de la campaña?",
-      "answer": "“Nadie rechaza un mate cuando se lo ofrecen y todos dicen que sí a la juntada; el problema es que la juntada cada vez ocurre menos. El mate no perdió deseo, perdió ocasiones” (pág. 48). Surge de una contradicción: compartir mate sigue siendo deseado, pero se hace menos por la pérdida de encuentros presenciales. Romance no tiene que convencer de que compartir es bueno, sino devolver la ocasión.",
-      "pages": [
-        48
-      ],
-      "keywords": [
-        "insight",
-        "idea central",
-        "ocasiones",
-        "deseo",
-        "juntada",
-        "nadie rechaza un mate",
-        "verdad del consumidor"
-      ],
-      "topic": "insight"
-    },
-    {
-      "id": "estrategia-tipo",
-      "question": "¿Qué tipo de campaña se propone y por qué?",
-      "answer": "Una campaña integral de posicionamiento con un componente de activación de prueba (pág. 43). Es de posicionamiento porque Romance ya está en góndola, pero el público no la registra y la ve como “una yerba más”; notoriedad y significado se construyen al mismo tiempo (pág. 44). Es integral porque se conoce en un lugar y se elige en otro, y suma prueba porque solo el sabor convierte una asociación en elección.",
-      "pages": [
-        43,
-        44
-      ],
-      "keywords": [
-        "tipo de campana",
-        "posicionamiento",
-        "reconocimiento",
-        "activacion",
-        "prueba",
-        "integral",
-        "estrategia",
-        "por que"
-      ],
-      "topic": "estrategia"
-    },
-    {
-      "id": "estrategia-ofrecer",
-      "question": "¿Por qué “la yerba que se ofrece”? ¿Por qué el gesto de ofrecer?",
-      "answer": "Porque el público ya cree que compartir es bueno: le falta la ocasión y un pequeño empujón (pág. 42). El 40,9% de los consumidores esporádicos tomaría mate si alguien se lo ofreciera (pág. 34), y según la entrevista una invitación simple como “¿tomamos unos mates?” genera encuentro sin demasiada organización (pág. 35). Se pide una conducta pequeña y concreta: pasar de “una yerba más” a “la yerba de ofrecer” (pág. 47).",
-      "pages": [
-        34,
-        35,
-        42,
-        44,
-        47,
-        48
-      ],
-      "keywords": [
-        "ofrecer",
-        "la yerba que se ofrece",
-        "gesto",
-        "concepto",
-        "unos mates",
-        "invitacion",
-        "por que ofrecer",
-        "claim"
-      ],
-      "topic": "estrategia"
-    },
-    {
-      "id": "estrategia-reason-why",
-      "question": "¿Por qué el público le creería a Romance?",
-      "answer": "La tesis propone cinco razones: nombre y packaging que ya comunican el gesto de compartir, trayectoria familiar en Misiones desde 1900, sabor suave y equilibrado, precio accesible y una asociación positiva ya instalada (pág. 48). Las dos primeras hacen creíble el mensaje. Sabor y precio eliminan las dudas “no sé si le va a gustar” y “es un gasto”, y la última confirma que se amplía una asociación existente (pág. 49).",
-      "pages": [
-        48,
-        49
-      ],
-      "keywords": [
-        "reason why",
-        "respaldos",
-        "credibilidad",
-        "por que creer",
-        "sabor",
-        "precio",
-        "packaging",
-        "trayectoria",
-        "argumentos"
-      ],
-      "topic": "estrategia"
-    },
-    {
-      "id": "estrategia-tono",
-      "question": "¿Cuál es el tono de la comunicación?",
-      "answer": "Romance habla como quien ofrece un mate: sin pedir permiso, sin hacer un evento y dando por hecho que el otro va a decir que sí (pág. 49). Es un tono directo y liviano, de vos, en coloquial argentino y con humor de situaciones reconocibles. No juzga a quien toma solo, no explica por qué compartir es bueno y evita la épica y la nostalgia.",
-      "pages": [
-        49
-      ],
-      "keywords": [
-        "tono",
-        "voz",
-        "estilo",
-        "humor",
-        "coloquial",
-        "nostalgia",
-        "mandatorios",
-        "como habla la marca"
-      ],
-      "topic": "estrategia"
-    },
-    {
-      "id": "objetivos-marketing",
-      "question": "¿Cuál es el objetivo de marketing?",
-      "answer": "Aumentar el consumo de Romance cuatro puntos entre personas de 21 a 32 años del AMBA, en un plazo de un año luego del lanzamiento (pág. 44). Se parte del 3,0% de consumo declarado y se proyecta llegar al 7% (pág. 45). Sobre 2,5 millones de personas, serían unos 100.000 consumidores nuevos y cerca de 600 toneladas, un 10% más que lo vendido en 2025.",
-      "pages": [
-        44,
-        45
-      ],
-      "keywords": [
-        "objetivo de marketing",
-        "consumo",
-        "4%",
-        "7%",
-        "3%",
-        "ventas",
-        "meta",
-        "un ano",
-        "consumidores nuevos"
-      ],
-      "topic": "objetivos"
-    },
-    {
-      "id": "objetivos-comunicacion",
-      "question": "¿Cuál es el objetivo de comunicación?",
-      "answer": "Lograr que el 40% del target conozca Romance y la asocie con el concepto de “compartir” en un plazo de tres meses (pág. 45). La base de asociación con “compartir” es 21,1%, y el reconocimiento asistido se proyecta del 15,6% al 30% (pág. 49). La meta de asociación no es más alta porque el contenido sobre mate compartido interesa menos (15,6%) que el de sabor y calidad (58,1%) (pág. 46).",
-      "pages": [
-        45,
-        46,
-        49
-      ],
-      "keywords": [
-        "objetivo de comunicacion",
-        "40%",
-        "30%",
-        "asociacion",
-        "compartir",
-        "reconocimiento",
-        "notoriedad",
-        "tres meses",
-        "kpi"
-      ],
-      "topic": "objetivos"
-    },
-    {
-      "id": "objetivos-medicion",
-      "question": "¿Cómo se van a medir los resultados?",
-      "answer": "Se replica la encuesta del capítulo 4 antes y después de la campaña, con dos encuestas de 400 casos cada una (pág. 53). Las bases se recalcularán sobre el recorte de 21 a 32 años en la medición previa (pág. 45). Cada canal tiene KPI propios: alcance del 60% e interacción superior al 3% en digital, 3 millones de visualizaciones con creadores, 20.000 muestras y +10% de ventas en punto de venta, y canje superior al 20% en medios propios (pág. 50).",
-      "pages": [
-        45,
-        46,
-        50,
-        53
-      ],
-      "keywords": [
-        "medicion",
-        "kpi",
-        "indicadores",
-        "encuesta pre y post",
-        "como se mide",
-        "resultados",
-        "eficacia",
-        "400 casos"
-      ],
-      "topic": "objetivos"
-    },
-    {
-      "id": "canales-por-que-streaming",
-      "question": "¿Por qué streaming como medio principal?",
-      "answer": "Por dos razones (pág. 50). Su audiencia coincide con el target en edad y horario, con picos entre las 10 y las 13, la franja en que el mate acompaña el estudio y el trabajo. Y su dinámica reproduce la ronda: gente conversando alrededor de una mesa con el mate presente (pág. 16). Además, ninguna marca de yerba tenía presencia allí, pese a que 122 marcas de 43 rubros ya invertían (pág. 15, 28).",
-      "pages": [
-        15,
-        16,
-        27,
-        28,
-        29,
-        50
-      ],
-      "keywords": [
-        "streaming",
-        "por que streaming",
-        "luzu",
-        "olga",
-        "medio principal",
-        "ronda",
-        "audiencia",
-        "horario",
-        "vacante"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-luzu-olga",
-      "question": "¿Qué se haría en Luzu TV y Olga? ¿Hay acuerdos firmados?",
-      "answer": "Se proponen diez PNT con la dinámica “¿unos mates?” (seis en Luzu TV y cuatro en Olga), presencia del producto en la mesa de Nadie Dice Nada y Sería Increíble durante doce semanas y cuatro historias o clips en redes de los canales (pág. 52). Son integraciones propuestas: los costos se estimaron con tarifas publicadas por la prensa y el calendario contempla la negociación comercial (pág. 52–53). La tesis no menciona acuerdos firmados.",
-      "pages": [
-        52,
-        53
-      ],
-      "keywords": [
-        "luzu tv",
-        "olga",
-        "nadie dice nada",
-        "seria increible",
-        "pnt",
-        "acuerdos",
-        "contrato",
-        "integraciones",
-        "canje",
-        "confirmado"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-instagram-tiktok",
-      "question": "¿Qué rol cumplen Instagram y TikTok?",
-      "answer": "Instagram sostiene el vínculo, porque es el canal preferido por el 45,9% de la muestra, y TikTok abre el tramo más joven (pág. 50). La pauta digital suma $30.000.000: $18.000.000 en Instagram y $12.000.000 en TikTok, unas 6,5 millones de impresiones para llegar a cerca del 60% del público (pág. 52–53). Romance hoy no tiene cuenta en TikTok (pág. 23).",
-      "pages": [
-        23,
-        50,
-        52,
-        53
-      ],
-      "keywords": [
-        "instagram",
-        "tiktok",
-        "redes sociales",
-        "pauta digital",
-        "impresiones",
-        "cpm",
-        "alcance",
-        "digital"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-creadores",
-      "question": "¿Qué harían los creadores de contenido?",
-      "answer": "Se propone un programa de doce creadores de entre 50.000 y 300.000 seguidores, con un reel y un video de TikTok cada uno, más logística de catas (pág. 53). Su función es la recomendación y el descubrimiento, con un KPI de 3 millones de visualizaciones (pág. 50). Se eligen porque la recomendación (60,5%) pesa más que la publicidad (6,2%). La tesis no nombra creadores específicos.",
-      "pages": [
-        50,
-        53
-      ],
-      "keywords": [
-        "creadores",
-        "influencers",
-        "influencer",
-        "tiktokers",
-        "catas",
-        "recomendacion",
-        "reel",
-        "contenido"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-activaciones",
-      "question": "¿Qué acciones hay en punto de venta y activaciones?",
-      "answer": "Ocho jornadas de degustación en universidades y coworkings, un stand en MATEAR y material de góndola en unos 300 puntos de venta (pág. 53). Los KPI son 20.000 muestras entregadas y +10% de ventas en los comercios cubiertos frente al trimestre previo (pág. 50). Se apoyan en que el 65,5% descubre marcas en el punto de venta.",
-      "pages": [
-        34,
-        50,
-        53
-      ],
-      "keywords": [
-        "activaciones",
-        "punto de venta",
-        "gondola",
-        "degustaciones",
-        "muestras",
-        "matear",
-        "universidades",
-        "coworkings",
-        "pdv"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-web-whatsapp",
-      "question": "¿Para qué sirven la web y WhatsApp?",
-      "answer": "Los medios propios (sitio y WhatsApp) sostienen la promoción de la campaña, con un KPI de tasa de canje superior al 20% (pág. 50). La tesis menciona 10.000 invitaciones con promoción (pág. 45), pero no detalla la mecánica.",
-      "pages": [
-        45,
-        50
-      ],
-      "keywords": [
-        "web",
-        "sitio",
-        "whatsapp",
-        "medios propios",
-        "promocion",
-        "canje",
-        "invitaciones",
-        "continuidad"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "canales-descartados",
-      "question": "¿Por qué no usar televisión o vía pública?",
-      "answer": "Se descartan la vía pública y la televisión lineal porque el target es el segmento que menos las consume (pág. 50). La generación Alfa y los centennials ven 2 h 25 min diarias de televisión, frente a más de 7 horas en la generación silver (pág. 25). Además, la recomendación y la prueba generan más confianza que una publicidad en vía pública (pág. 42).",
-      "pages": [
-        25,
-        26,
-        42,
-        50
-      ],
-      "keywords": [
-        "television",
-        "tv",
-        "via publica",
-        "carteles",
-        "descartados",
-        "medios tradicionales",
-        "por que no"
-      ],
-      "topic": "canales"
-    },
-    {
-      "id": "presupuesto-total",
-      "question": "¿Cuánto costaría la campaña?",
-      "answer": "Se propone un presupuesto total estimado de $150.000.000, a valores de septiembre de 2026 y con un dólar de referencia de $1.530, para abril a junio de 2027 (pág. 50). Equivale a poco más del 0,5% de la venta anual estimada de Romance (unos $27.000 millones) (pág. 51). Las cifras son estimativas y deben ajustarse con cotizaciones reales (pág. 52).",
-      "pages": [
-        50,
-        51,
-        52
-      ],
-      "keywords": [
-        "presupuesto",
-        "costo",
-        "inversion",
-        "cuanto cuesta",
-        "150 millones",
-        "150.000.000",
-        "pesos",
-        "dolar"
-      ],
-      "topic": "presupuesto"
-    },
-    {
-      "id": "presupuesto-distribucion",
-      "question": "¿Cómo se reparte el presupuesto?",
-      "answer": "En seis rubros: streaming en vivo 40% ($60.000.000), pauta digital 20% ($30.000.000), producción 15% ($22.500.000), activaciones y punto de venta 12% ($18.000.000), creadores 10% ($15.000.000) y medición 3% ($4.500.000) (pág. 50). El 75% va a construcción de marca y el 25% a activación, creadores y medición, algo más cargado a marca que el 60/40 de Binet y Field (pág. 52).",
-      "pages": [
-        50,
-        52
-      ],
-      "keywords": [
-        "distribucion",
-        "rubros",
-        "porcentajes",
-        "reparto",
-        "75/25",
-        "binet y field",
-        "items",
-        "desglose"
-      ],
-      "topic": "presupuesto"
-    },
-    {
-      "id": "presupuesto-streaming",
-      "question": "¿Cómo se calculó la inversión en streaming?",
-      "answer": "En 2025, la tarifa bruta de una PNT en Nadie Dice Nada y Sería Increíble rondaba USD 3.000 a 3.100 por aparición, unos $4.700.000 (pág. 52). Diez PNT suman $47.000.000, la presencia del producto en la mesa $8.000.000 y cuatro historias o clips $5.000.000, en total $60.000.000. Las tarifas son de referencia porque los canales no publican tarifarios.",
-      "pages": [
-        52
-      ],
-      "keywords": [
-        "streaming",
-        "tarifas",
-        "pnt",
-        "60 millones",
-        "calculo",
-        "costo luzu",
-        "costo olga",
-        "precio"
-      ],
-      "topic": "presupuesto"
-    },
-    {
-      "id": "presupuesto-otros",
-      "question": "¿Qué cubren producción, activaciones y medición?",
-      "answer": "Producción ($22.500.000) cubre una pieza central, veinte piezas cortas para redes y streaming y el material de punto de venta (pág. 53). Activaciones ($18.000.000) incluye degustaciones ($8.000.000), stand en MATEAR ($5.000.000) y material de góndola ($5.000.000). Medición ($4.500.000) financia dos encuestas de 400 casos. Estos rubros no tienen tarifas públicas y son estimaciones a cotizar.",
-      "pages": [
-        51,
-        53
-      ],
-      "keywords": [
-        "produccion",
-        "activaciones",
-        "medicion",
-        "piezas",
-        "encuestas",
-        "matear",
-        "estimaciones",
-        "cotizar"
-      ],
-      "topic": "presupuesto"
-    },
-    {
-      "id": "calendario-cuando",
-      "question": "¿Cuándo sería la campaña y cuál es el calendario?",
-      "answer": "El brief se realizó en septiembre de 2026 y la idea creativa se aprobaría en diciembre de 2026 (pág. 53). La producción iría de enero a marzo de 2027 y la campaña saldría al aire de abril a junio de 2027, coincidiendo con la temporada fría y el ciclo lectivo (pág. 50, 52). El objetivo de consumo se evalúa a los doce meses del lanzamiento (pág. 44).",
-      "pages": [
-        44,
-        50,
-        52,
-        53
-      ],
-      "keywords": [
-        "calendario",
-        "cuando",
-        "fechas",
-        "2027",
-        "abril",
-        "junio",
-        "cronograma",
-        "lanzamiento",
-        "etapas"
-      ],
-      "topic": "calendario"
-    },
-    {
-      "id": "autoras-quienes",
-      "question": "¿Quiénes hicieron la tesis?",
-      "answer": "Por el equipo de planeamiento: Andrea Gutiérrez, responsable de planificación estratégica y medios, y Agustina Lattanzi, responsable de dirección creativa y comunicación digital (pág. 53). Es un Trabajo Integrador Final de la Licenciatura en Publicidad de UADE (pág. 1).",
-      "pages": [
-        1,
-        53
-      ],
-      "keywords": [
-        "autoras",
-        "quienes",
-        "equipo",
-        "andrea gutierrez",
-        "agustina lattanzi",
-        "roles",
-        "integrantes",
-        "estudiantes"
-      ],
-      "topic": "autoras"
-    },
-    {
-      "id": "general-piezas",
-      "question": "¿Las imágenes del sitio son piezas reales de la campaña?",
-      "answer": "La tesis no incluye piezas creativas: termina en el brief y prevé aprobar la idea creativa en diciembre de 2026 y producir entre enero y marzo de 2027 (pág. 53). Establece como mandatorios el logotipo y el isotipo de las dos manos, sin rediseñar el packaging (pág. 49). Tampoco es una comunicación oficial de la marca.",
-      "pages": [
-        49,
-        53
-      ],
-      "keywords": [
-        "piezas",
-        "creatividad",
-        "imagenes",
-        "bocetos",
-        "anuncios",
-        "spot",
-        "diseno",
-        "oficial",
-        "gerula"
-      ],
-      "topic": "general"
-    },
-    {
-      "id": "metodologia-limitaciones",
-      "question": "¿Qué limitaciones reconoce el trabajo?",
-      "answer": "La muestra es no probabilística y concentrada en jóvenes del AMBA. La comparación pre y post pandemia depende del recuerdo, y la parte cualitativa fue una sola entrevista (pág. 55). No se accedió a datos internos de Gerula S.A., y precios e inversión corresponden a un contexto volátil, por lo que el presupuesto es estimativo.",
-      "pages": [
-        55
-      ],
-      "keywords": [
-        "limitaciones",
-        "debilidades",
-        "riesgos",
-        "sesgos",
-        "datos internos",
-        "presupuesto estimativo",
-        "criticas"
-      ],
-      "topic": "metodologia"
-    },
-    {
-      "id": "general-proximos-pasos",
-      "question": "¿Cuáles son los próximos pasos o líneas futuras?",
-      "answer": "La tesis propone replicar la encuesta con una muestra probabilística nacional y sumar grupos focales (pág. 55). También propone medir notoriedad y asociaciones de Romance antes y después de la campaña, estudiar el streaming en vivo como medio para consumo masivo y abordar otras prácticas gregarias transformadas tras la pandemia.",
-      "pages": [
-        55
-      ],
-      "keywords": [
-        "proximos pasos",
-        "futuro",
-        "lineas futuras",
-        "que sigue",
-        "investigacion futura",
-        "grupos focales",
-        "muestra probabilistica"
-      ],
-      "topic": "general"
-    }
-  ],
-  "notInThesis": [
-    {
-      "topic": "Precios actuales o dónde comprar",
-      "keywords": [
-        "precio actual",
-        "cuanto sale",
-        "cuanto cuesta el paquete",
-        "donde comprar",
-        "donde consigo",
-        "supermercado",
-        "comprar romance",
-        "envio",
-        "envios",
-        "tienda"
-      ]
-    },
-    {
-      "topic": "Acuerdos firmados con medios",
-      "keywords": [
-        "acuerdo firmado",
-        "contrato firmado",
-        "confirmado",
-        "ya firmaron",
-        "patrocinio confirmado",
-        "acuerdo cerrado"
-      ]
-    },
-    {
-      "topic": "Nombres de creadores",
-      "keywords": [
-        "que influencers",
-        "nombres de creadores",
-        "quienes son los influencers",
-        "que creadores",
-        "nombre del influencer"
-      ]
-    },
-    {
-      "topic": "Piezas finales o idea creativa aprobada",
-      "keywords": [
-        "spot final",
-        "guion",
-        "idea creativa aprobada",
-        "comercial de tv",
-        "jingle",
-        "video final"
-      ]
-    },
-    {
-      "topic": "Mecánica de promociones",
-      "keywords": [
-        "descuento",
-        "cupon",
-        "codigo promocional",
-        "condiciones de la promocion",
-        "mecanica",
-        "sorteo"
-      ]
-    },
-    {
-      "topic": "Opinión o aprobación de Gerula",
-      "keywords": [
-        "gerula aprobo",
-        "opina la marca",
-        "aprobacion de la marca",
-        "la empresa acepto",
-        "gerula participo"
-      ]
-    },
-    {
-      "topic": "Datos internos de la empresa",
-      "keywords": [
-        "rentabilidad",
-        "market share interno",
-        "ventas internas",
-        "facturacion real",
-        "ganancias"
-      ]
-    },
-    {
-      "topic": "Resultados reales de la campaña",
-      "keywords": [
-        "resultados reales",
-        "funciono la campana",
-        "se implemento",
-        "ya salio al aire",
-        "cuanto vendio con la campana"
-      ]
-    },
-    {
-      "topic": "Información nutricional",
-      "keywords": [
-        "nutricional",
-        "ingredientes",
-        "calorias",
-        "propiedades",
-        "cafeina",
-        "salud",
-        "beneficios para la salud"
-      ]
-    },
-    {
-      "topic": "Atención al cliente de la marca",
-      "keywords": [
-        "atencion al cliente",
-        "reclamo",
-        "telefono de romance",
-        "contacto comercial",
-        "distribuidor"
-      ]
-    },
-    {
-      "topic": "Nota o evaluación de la tesis",
-      "keywords": [
-        "nota",
-        "calificacion",
-        "tutor",
-        "jurado",
-        "aprobaron la tesis",
-        "defensa fecha"
-      ]
-    },
-    {
-      "topic": "Otras regiones o países",
-      "keywords": [
-        "otros paises",
-        "exportacion",
-        "interior del pais",
-        "cordoba",
-        "uruguay",
-        "brasil",
-        "litoral campana"
-      ]
-    },
-    {
-      "topic": "Cuestionario completo o base de datos",
-      "keywords": [
-        "cuestionario completo",
-        "base de datos",
-        "anexos",
-        "respuestas crudas",
-        "descargar encuesta"
-      ]
-    },
-    {
-      "topic": "Manual de marca",
-      "keywords": [
-        "manual de marca",
-        "brandbook",
-        "guia de estilo"
-      ]
-    }
-  ]
+  {
+   "id": "investigacion-hipotesis",
+   "question": "¿Cuál fue la hipótesis y se confirmó?",
+   "answer": "La hipótesis era que, después de la pandemia, disminuyó el consumo grupal de mate y aumentó el individual como acompañamiento de actividades cotidianas (pág. 5). Los resultados la validan: antes de 2019, el 54,6% tomaba mate siempre o mayormente acompañado; después de 2021, bajó al 36,0%, y el consumo solo pasó del 20,3% al 46,5% (pág. 54). Se confirma en la conducta y se precisa en el significado, porque el valor de compartir se mantiene.",
+   "pages": [
+    5,
+    32,
+    54
+   ],
+   "keywords": [
+    "hipotesis",
+    "pandemia",
+    "covid",
+    "se confirmo",
+    "validacion",
+    "consumo individual",
+    "consumo grupal",
+    "antes y despues"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "metodologia-como",
+   "question": "¿Cómo se hizo la investigación?",
+   "answer": "Se usó un enfoque mixto: una encuesta digital cuantitativa y una entrevista en profundidad cualitativa (pág. 31). La encuesta reunió 403 respuestas válidas entre el 25 de agosto y el 6 de septiembre de 2026. Quienes toman mate al menos una vez por semana (n = 315) respondieron el módulo de hábitos, y los consumidores esporádicos (n = 88), el de barreras y motivadores (pág. 32).",
+   "pages": [
+    31,
+    32
+   ],
+   "keywords": [
+    "metodologia",
+    "encuesta",
+    "entrevista",
+    "enfoque mixto",
+    "como se hizo",
+    "trabajo de campo",
+    "cuantitativa",
+    "cualitativa",
+    "fechas"
+   ],
+   "topic": "metodologia"
+  },
+  {
+   "id": "metodologia-muestra",
+   "question": "¿Quiénes respondieron la encuesta y cómo se eligió la muestra?",
+   "answer": "Fue una muestra no probabilística por conveniencia de 403 personas, difundida en redes sociales y por reenvío entre contactos (pág. 32). El 44,4% tiene entre 16 y 24 años, el 27,3% entre 25 y 34, el 83,4% no supera los 44 y el 79,9% vive en CABA o AMBA. Es una muestra predominantemente joven y urbana.",
+   "pages": [
+    32
+   ],
+   "keywords": [
+    "muestra",
+    "403",
+    "encuestados",
+    "conveniencia",
+    "no probabilistica",
+    "edad",
+    "amba",
+    "caba",
+    "perfil de la muestra",
+    "redes sociales"
+   ],
+   "topic": "metodologia"
+  },
+  {
+   "id": "metodologia-representatividad",
+   "question": "¿Los resultados son representativos de todos los argentinos?",
+   "answer": "No. La tesis describe la muestra como no probabilística, por conveniencia, difundida en redes y concentrada en un público joven y urbano: el 44,4% tiene entre 16 y 24 años y el 79,9% vive en CABA o AMBA (pág. 32). Por eso los resultados describen a las personas encuestadas y no se pueden generalizar al total de consumidores. Esta versión de la tesis no incluye un apartado de limitaciones; si necesitás ese detalle, escribinos a romanceyerba@gmail.com.",
+   "pages": [
+    32
+   ],
+   "keywords": [
+    "representativo",
+    "generalizar",
+    "poblacion",
+    "sesgo",
+    "limitaciones",
+    "muestra",
+    "litoral",
+    "memoria",
+    "validez"
+   ],
+   "topic": "metodologia"
+  },
+  {
+   "id": "metodologia-entrevista",
+   "question": "¿A quién entrevistaron y qué aportó?",
+   "answer": "Entrevistaron a Rosario Estrada, psicóloga clínica de orientación psicoanalítica, el 9 de septiembre de 2026: fueron 30 minutos por videollamada, con guía semiestructurada (pág. 35). Según Estrada, el consumo individual “ya venía gestándose” y la pandemia lo hizo más visible. Elegir tomar solo y valorar el encuentro no se contradicen, y una invitación sencilla como “¿tomamos unos mates?” puede generar encuentro sin exigir organización (pág. 37).",
+   "pages": [
+    35,
+    37
+   ],
+   "keywords": [
+    "entrevista",
+    "psicologa",
+    "rosario estrada",
+    "cualitativa",
+    "especialista",
+    "vinculo",
+    "ritual",
+    "soledad"
+   ],
+   "topic": "metodologia"
+  },
+  {
+   "id": "investigacion-59",
+   "question": "¿Qué significa el 59,7%?",
+   "answer": "Entre quienes toman mate al menos una vez por semana (n = 315), el 59,7% lo toma más veces solo que acompañado (pág. 31–32). El porcentaje no se calcula sobre las 403 personas, sino sobre los consumidores semanales. Además, en la última ocasión de consumo, el 34,3% estaba solo y el 58,4% trabajando o estudiando.",
+   "pages": [
+    31,
+    32
+   ],
+   "keywords": [
+    "59,7",
+    "59.7",
+    "solo",
+    "acompanado",
+    "consumo individual",
+    "consumidores semanales",
+    "315",
+    "habito"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "investigacion-81",
+   "question": "¿Qué significa el 81,6%?",
+   "answer": "El 81,6% considera que compartir mate genera cercanía y confianza (promedio 4,25 en una escala de 1 a 5) (pág. 33). La percepción se mantiene entre quienes toman mate mayormente solos (77,1%). La tesis concluye que el hábito se individualizó, pero el significado social no se perdió (pág. 44).",
+   "pages": [
+    33,
+    44
+   ],
+   "keywords": [
+    "81,6",
+    "81.6",
+    "cercania",
+    "confianza",
+    "compartir",
+    "valor social",
+    "encuentro",
+    "77,1"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "investigacion-69",
+   "question": "¿Qué significa el 69% que no conoce Romance?",
+   "answer": "El 69,0% de los encuestados afirmó no conocer Romance; entre los jóvenes de 16 a 24 años la cifra llega al 81,0% (pág. 34). Solo el 15,6% la reconoció entre catorce marcas y el 3,0% declaró consumirla. La tesis lo interpreta como un problema de notoriedad antes que de imagen.",
+   "pages": [
+    34,
+    38
+   ],
+   "keywords": [
+    "69",
+    "no conoce",
+    "notoriedad",
+    "conocimiento de marca",
+    "reconocimiento",
+    "15,6",
+    "3%",
+    "desconocimiento",
+    "81%"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "investigacion-pandemia",
+   "question": "¿Cambió la forma de tomar mate con la pandemia?",
+   "answer": "Sí, según la encuesta. Antes de 2019, el 54,6% tomaba mate siempre o mayormente acompañado; después de 2021, bajó al 36,0%, y el consumo solo subió del 20,3% al 46,5% (pág. 32). Entre quienes tomaban mate en ambos períodos (n = 221), el 45,2% se volvió más solitario. La pandemia no creó esta modalidad, pero pudo acelerarla.",
+   "pages": [
+    32,
+    37,
+    54
+   ],
+   "keywords": [
+    "pandemia",
+    "covid",
+    "antes de 2019",
+    "despues de 2021",
+    "45,2",
+    "cambio de habito",
+    "solitario",
+    "221"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "investigacion-eleccion",
+   "question": "¿Cómo eligen la yerba los consumidores?",
+   "answer": "Sobre todo por el producto: el sabor (34,2%) y la suavidad (23,3%) son los principales criterios, y el precio representa solo el 5,5% (pág. 33). El 58,3% cambiaría de yerba por un mejor sabor, frente al 6,2% que lo haría por una comunicación con la que se identifique. La recomendación (33,0%) y la posibilidad de probar (17,9%) también ayudan a incorporar marcas.",
+   "pages": [
+    33,
+    38
+   ],
+   "keywords": [
+    "eleccion",
+    "criterios",
+    "sabor",
+    "suavidad",
+    "precio",
+    "cambio de marca",
+    "recomendacion",
+    "probar",
+    "por que eligen"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "investigacion-descubrimiento",
+   "question": "¿Dónde descubren nuevas marcas de yerba?",
+   "answer": "Las principales vías son el punto de venta (65,5%), las recomendaciones (60,5%) y la prueba en casas o juntadas (43,2%) (pág. 35). Instagram es el canal preferido para mantener el vínculo con las marcas (45,9%). Interesa más la información sobre sabor, calidad y rendimiento (58,1%) y las promociones (45,4%) que las historias de mate compartido (15,6%).",
+   "pages": [
+    35
+   ],
+   "keywords": [
+    "descubrimiento",
+    "punto de venta",
+    "gondola",
+    "recomendacion",
+    "instagram",
+    "juntadas",
+    "contenidos",
+    "promociones",
+    "canales preferidos"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "marca-asociaciones",
+   "question": "¿Qué asocia la gente con Romance?",
+   "answer": "Las asociaciones son mayormente positivas y vinculares: “amor o pareja” (66,7%), “cercanía y calidez” (38,0%), “familia” (22,8%) y “compartir” (21,1%) (pág. 34). Se relevaron con una pregunta de respuesta múltiple (pág. 35). La oportunidad es ampliar ese significado de la pareja hacia amigos, familia y compañeros (pág. 38, 41).",
+   "pages": [
+    34,
+    35,
+    38,
+    41
+   ],
+   "keywords": [
+    "asociaciones",
+    "imagen de marca",
+    "amor",
+    "pareja",
+    "compartir",
+    "21,1",
+    "66,7",
+    "que piensan de romance",
+    "percepcion"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "investigacion-esporadicos",
+   "question": "¿Qué pasa con quienes toman mate poco o nada?",
+   "answer": "Entre los consumidores esporádicos o no consumidores (n = 88), lo social cumple un doble papel (pág. 35). Puede ser una barrera, porque el 31,8% no prepara mate si nadie más lo hace, y también un disparador, porque el 40,9% lo tomaría si alguien se lo ofreciera. El encuentro puede no solo acompañar el consumo, sino también iniciarlo.",
+   "pages": [
+    35
+   ],
+   "keywords": [
+    "esporadicos",
+    "no consumidores",
+    "barreras",
+    "motivadores",
+    "ofrecer",
+    "40,9",
+    "31,8",
+    "88"
+   ],
+   "topic": "investigacion"
+  },
+  {
+   "id": "marca-por-que-romance",
+   "question": "¿Por qué Romance?",
+   "answer": "Romance fue la marca asignada para el trabajo (pág. 5). La tesis encuentra que tiene el vínculo en su nombre, su historia y su packaging, con dos manos que sostienen dos mates en las cinco variedades, aunque no lo capitalizó en su comunicación (pág. 25–26, 44). Además, ninguna marca ocupa con códigos actuales el territorio del encuentro en los medios donde sucede hoy (pág. 39–40).",
+   "pages": [
+    5,
+    25,
+    26,
+    39,
+    40,
+    44
+   ],
+   "keywords": [
+    "por que romance",
+    "marca asignada",
+    "eleccion de marca",
+    "oportunidad",
+    "nombre",
+    "packaging",
+    "dos manos",
+    "vinculo"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "marca-historia",
+   "question": "¿Cuál es la historia de Romance?",
+   "answer": "En 1900, la familia Gerula se estableció en San José, Misiones, donde plantó las primeras hectáreas de yerba (pág. 20). A mediados del siglo XX, Miguel José Gerula, nieto del fundador, amplió plantaciones y secaderos. En 1978, la producción adoptó la marca Yerba Mate Romance, que la empresa define como nacida del amor de un hombre por una mujer.",
+   "pages": [
+    20
+   ],
+   "keywords": [
+    "historia",
+    "gerula",
+    "misiones",
+    "san jose",
+    "1900",
+    "1978",
+    "origen",
+    "familia",
+    "fundador"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "marca-producto",
+   "question": "¿Qué productos tiene Romance y cuál se elige para la campaña?",
+   "answer": "El portfolio tiene cinco variedades de yerba, una línea de accesorios y dos marcas secundarias, El Chasqui y Don Carlos (pág. 21). Para la campaña se elige Romance Tradicional en 500 g y 1 kg: es la de mayor rotación, y el formato de 500 g concentra el 55,1% del mercado interno y se ajusta a quienes viven solos (pág. 46). Su beneficio funcional es el rendimiento; el emocional, el gesto de ofrecer.",
+   "pages": [
+    21,
+    46
+   ],
+   "keywords": [
+    "productos",
+    "portfolio",
+    "variedades",
+    "tradicional",
+    "500 g",
+    "1 kg",
+    "el chasqui",
+    "don carlos",
+    "terere",
+    "accesorios"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "marca-mercado",
+   "question": "¿Qué lugar ocupa Romance en el mercado?",
+   "answer": "Romance ocupa el puesto 13 del ranking de volumen, con 5,7 millones de kilos vendidos en 2025 (pág. 15). En el relevamiento del 7 de septiembre de 2026 en la tienda online de Jumbo costaba $4.800 por kilo, un 7,6% por debajo del promedio de la categoría ($5.192) (pág. 23). Tiene escala, pero no liderazgo ni una posición diferencial.",
+   "pages": [
+    15,
+    23,
+    24
+   ],
+   "keywords": [
+    "mercado",
+    "ranking",
+    "puesto 13",
+    "ventas",
+    "5,7 millones",
+    "precio",
+    "participacion",
+    "posicion"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "marca-competidores",
+   "question": "¿Quiénes son los competidores de Romance?",
+   "answer": "En precio y góndola compite con marcas de escala media como Rosamonte, Nobleza Gaucha, Aguantadora, La Tranquera, Piporé, Andresito y Cachamate; en hábito, con los líderes Playadito, Las Marías, CBSé y Amanda. En significado, CBSé y Baldo ocupan territorios de pertenencia, deporte e identidad nacional. De forma indirecta compiten café, té, otras bebidas con cafeína y las bebidas de yerba listas para tomar, como Yací, Overtake y Mathienzo (pág. 23).",
+   "pages": [
+    23
+   ],
+   "keywords": [
+    "competidores",
+    "competencia",
+    "playadito",
+    "cbse",
+    "baldo",
+    "rosamonte",
+    "las marias",
+    "amanda",
+    "nobleza gaucha",
+    "bebidas listas"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "marca-comunicacion-actual",
+   "question": "¿Cómo comunica hoy Romance y cómo lo hace la categoría?",
+   "answer": "Romance concentra su comunicación en su sitio e Instagram, no tiene TikTok propio y no registra presencia sostenida en pauta masiva (pág. 26). Su eslogan es “Tus pasiones. Tu vida. Tu mate.”, y “Ronda Romance” aparece como iniciativa puntual (pág. 25). La categoría comunica el encuentro, el producto o asociaciones como el fútbol, pero ninguna marca analizada estaba en el streaming argentino (pág. 16–18).",
+   "pages": [
+    16,
+    17,
+    18,
+    25,
+    26
+   ],
+   "keywords": [
+    "comunicacion actual",
+    "redes",
+    "instagram",
+    "tiktok",
+    "eslogan",
+    "ronda romance",
+    "categoria",
+    "rutas comunicacionales",
+    "campanas de la competencia"
+   ],
+   "topic": "marca"
+  },
+  {
+   "id": "publico-quien",
+   "question": "¿A quién está dirigida la campaña?",
+   "answer": "A adultos jóvenes de 21 a 32 años del AMBA, sin distinción de nivel socioeconómico, que ya deciden y pagan su propia yerba (pág. 46). Toman mate con frecuencia mientras estudian, trabajan o están frente a una pantalla. Suelen hacerlo solos, pero valoran compartir y aceptan cuando alguien propone una ronda. Los menores de 21 son audiencia de contacto, y las personas de 33 a 40, audiencia secundaria (pág. 42).",
+   "pages": [
+    42,
+    46
+   ],
+   "keywords": [
+    "publico objetivo",
+    "target",
+    "a quien",
+    "jovenes",
+    "21 a 32",
+    "amba",
+    "audiencia",
+    "consumidor"
+   ],
+   "topic": "publico"
+  },
+  {
+   "id": "publico-por-que-edades",
+   "question": "¿Por qué de 21 a 32 años?",
+   "answer": "El target se define por decisión de compra: por debajo de los 21, el consumo suele depender de la compra familiar (pág. 41). El rango se centra en la edad promedio de emancipación en Argentina, 27,5 años. El límite de 32 agrupa etapas de vida similares y coincide con las audiencias de Luzu TV (15 a 30) y Olga (25 a 35) (pág. 42). No se segmenta por nivel socioeconómico porque el mate tiene una penetración casi universal.",
+   "pages": [
+    41,
+    42
+   ],
+   "keywords": [
+    "edad",
+    "21",
+    "32",
+    "rango etario",
+    "emancipacion",
+    "27,5",
+    "por que esa edad",
+    "nivel socioeconomico",
+    "segmentacion"
+   ],
+   "topic": "publico"
+  },
+  {
+   "id": "publico-clusters",
+   "question": "¿Qué grupos hay dentro del público?",
+   "answer": "Hay dos clusters con el mismo hábito en distintos momentos de vida (pág. 47). “Ceba solo en la facu” (21 a 27 años) son estudiantes avanzados o en su primer trabajo que empiezan a comprar su yerba; con ellos se busca la prueba. “Recién independizado” (28 a 32 años) vive solo, con trabajo estable, y ya elige la yerba de su casa; con ellos se busca la adopción.",
+   "pages": [
+    47
+   ],
+   "keywords": [
+    "clusters",
+    "segmentos",
+    "ceba solo en la facu",
+    "recien independizado",
+    "21 a 27",
+    "28 a 32",
+    "grupos",
+    "prueba",
+    "adopcion"
+   ],
+   "topic": "publico"
+  },
+  {
+   "id": "insight-cual",
+   "question": "¿Cuál es el insight de la campaña?",
+   "answer": "“Nadie rechaza un mate cuando se lo ofrecen y todos dicen que sí a la juntada; el problema es que la juntada cada vez ocurre menos. El mate no perdió deseo, perdió ocasiones” (pág. 48). Surge de una contradicción: compartir mate sigue siendo deseado, pero se hace menos por la pérdida de encuentros presenciales. Romance no tiene que convencer de que compartir es bueno, sino devolver la ocasión.",
+   "pages": [
+    48
+   ],
+   "keywords": [
+    "insight",
+    "idea central",
+    "ocasiones",
+    "deseo",
+    "juntada",
+    "nadie rechaza un mate",
+    "verdad del consumidor"
+   ],
+   "topic": "insight"
+  },
+  {
+   "id": "estrategia-tipo",
+   "question": "¿Qué tipo de campaña se propone y por qué?",
+   "answer": "Una campaña integral de posicionamiento con un componente de activación de prueba (pág. 44). Es de posicionamiento porque Romance ya está en góndola, pero el público no la registra y la ve como “una yerba más”; notoriedad y significado se construyen al mismo tiempo (pág. 45). Es integral porque se conoce en un lugar y se elige en otro, y suma prueba porque solo el sabor convierte una asociación en elección.",
+   "pages": [
+    44,
+    45
+   ],
+   "keywords": [
+    "tipo de campana",
+    "posicionamiento",
+    "reconocimiento",
+    "activacion",
+    "prueba",
+    "integral",
+    "estrategia",
+    "por que"
+   ],
+   "topic": "estrategia"
+  },
+  {
+   "id": "estrategia-ofrecer",
+   "question": "¿Por qué “la yerba que se ofrece”? ¿Por qué el gesto de ofrecer?",
+   "answer": "Porque el público ya cree que compartir es bueno: le falta la ocasión y un pequeño empujón (pág. 43). El 40,9% de los consumidores esporádicos tomaría mate si alguien se lo ofreciera (pág. 35), y según la entrevista una invitación simple como “¿tomamos unos mates?” genera encuentro sin demasiada organización (pág. 37). Se pide una conducta pequeña y concreta: pasar de “una yerba más” a “la yerba de ofrecer” (pág. 47).",
+   "pages": [
+    35,
+    37,
+    43,
+    45,
+    47,
+    48
+   ],
+   "keywords": [
+    "ofrecer",
+    "la yerba que se ofrece",
+    "gesto",
+    "concepto",
+    "unos mates",
+    "invitacion",
+    "por que ofrecer",
+    "claim"
+   ],
+   "topic": "estrategia"
+  },
+  {
+   "id": "estrategia-reason-why",
+   "question": "¿Por qué el público le creería a Romance?",
+   "answer": "La tesis propone cinco razones: nombre y packaging que ya comunican el gesto de compartir, trayectoria familiar en Misiones desde 1900, sabor suave y equilibrado, precio accesible y una asociación positiva ya instalada (pág. 48). Las dos primeras hacen creíble el mensaje. Sabor y precio eliminan las dudas “no sé si le va a gustar” y “es un gasto”, y la última confirma que se amplía una asociación existente (pág. 49).",
+   "pages": [
+    48,
+    49
+   ],
+   "keywords": [
+    "reason why",
+    "respaldos",
+    "credibilidad",
+    "por que creer",
+    "sabor",
+    "precio",
+    "packaging",
+    "trayectoria",
+    "argumentos"
+   ],
+   "topic": "estrategia"
+  },
+  {
+   "id": "estrategia-tono",
+   "question": "¿Cuál es el tono de la comunicación?",
+   "answer": "Romance habla como quien ofrece un mate: sin pedir permiso, sin hacer un evento y dando por hecho que el otro va a decir que sí (pág. 49). Es un tono directo y liviano, de vos, en coloquial argentino y con humor de situaciones reconocibles. No juzga a quien toma solo, no explica por qué compartir es bueno y evita la épica y la nostalgia.",
+   "pages": [
+    49
+   ],
+   "keywords": [
+    "tono",
+    "voz",
+    "estilo",
+    "humor",
+    "coloquial",
+    "nostalgia",
+    "mandatorios",
+    "como habla la marca"
+   ],
+   "topic": "estrategia"
+  },
+  {
+   "id": "objetivos-marketing",
+   "question": "¿Cuál es el objetivo de marketing?",
+   "answer": "Aumentar el consumo de Romance cuatro puntos entre personas de 21 a 32 años del AMBA, en un plazo de un año luego del lanzamiento (pág. 45). Se parte del 3,0% de consumo declarado y se proyecta llegar al 7% (pág. 45). Sobre 2,5 millones de personas, serían unos 100.000 consumidores nuevos y cerca de 600 toneladas, un 10% más que lo vendido en 2025.",
+   "pages": [
+    45
+   ],
+   "keywords": [
+    "objetivo de marketing",
+    "consumo",
+    "4%",
+    "7%",
+    "3%",
+    "ventas",
+    "meta",
+    "un ano",
+    "consumidores nuevos"
+   ],
+   "topic": "objetivos"
+  },
+  {
+   "id": "objetivos-comunicacion",
+   "question": "¿Cuál es el objetivo de comunicación?",
+   "answer": "Lograr que el 40% del target conozca Romance y la asocie con el concepto de “compartir” en un plazo de tres meses (pág. 46). La base de asociación con “compartir” es 21,1% y el reconocimiento asistido se proyecta del 15,6% al 30% (pág. 50). La meta de asociación no es más alta porque el contenido sobre mate compartido interesa menos (15,6%) que el de sabor y calidad (58,1%) (pág. 46).",
+   "pages": [
+    46,
+    50
+   ],
+   "keywords": [
+    "objetivo de comunicacion",
+    "40%",
+    "30%",
+    "asociacion",
+    "compartir",
+    "reconocimiento",
+    "notoriedad",
+    "tres meses",
+    "kpi"
+   ],
+   "topic": "objetivos"
+  },
+  {
+   "id": "objetivos-medicion",
+   "question": "¿Cómo se van a medir los resultados?",
+   "answer": "Se replica la encuesta del capítulo 4 antes y después de la campaña, con dos encuestas de 400 casos cada una (Tabla 9, pág. 51). Las bases se recalcularán sobre el recorte de 21 a 32 años en la medición previa (pág. 45). Cada canal tiene KPI propios: alcance del 60% e interacción superior al 3% en digital, 3 millones de visualizaciones con creadores, muestras entregadas y +10% de ventas en punto de venta, y canje superior al 20% en medios propios (pág. 50).",
+   "pages": [
+    45,
+    50,
+    51
+   ],
+   "keywords": [
+    "medicion",
+    "kpi",
+    "indicadores",
+    "encuesta pre y post",
+    "como se mide",
+    "resultados",
+    "eficacia",
+    "400 casos"
+   ],
+   "topic": "objetivos"
+  },
+  {
+   "id": "canales-por-que-streaming",
+   "question": "¿Por qué streaming como medio principal?",
+   "answer": "Por dos razones (pág. 50). Su audiencia coincide con el target en edad y horario, con picos entre las 10 y las 13, la franja en que el mate acompaña el estudio y el trabajo. Y su dinámica reproduce la ronda: gente conversando alrededor de una mesa con el mate presente (pág. 19). Además, ninguna marca de yerba tenía presencia allí, pese a que 122 marcas de 43 rubros ya invertían (pág. 18, 30).",
+   "pages": [
+    18,
+    19,
+    29,
+    30,
+    50
+   ],
+   "keywords": [
+    "streaming",
+    "por que streaming",
+    "luzu",
+    "olga",
+    "medio principal",
+    "ronda",
+    "audiencia",
+    "horario",
+    "vacante"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-luzu-olga",
+   "question": "¿Qué se haría en Luzu TV y Olga? ¿Hay acuerdos firmados?",
+   "answer": "Se proponen diez PNT con la dinámica “¿unos mates?” en Nadie Dice Nada y Sería Increíble, presencia del producto en la mesa durante doce semanas y cuatro historias o clips en redes de los canales (Tabla 9, pág. 51). Son integraciones propuestas: los costos se estimaron con tarifas publicadas por la prensa —una PNT ronda los USD 3.000— y el calendario contempla la negociación comercial (pág. 52). La tesis no menciona acuerdos firmados.",
+   "pages": [
+    51,
+    52
+   ],
+   "keywords": [
+    "luzu tv",
+    "olga",
+    "nadie dice nada",
+    "seria increible",
+    "pnt",
+    "acuerdos",
+    "contrato",
+    "integraciones",
+    "canje",
+    "confirmado"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-instagram-tiktok",
+   "question": "¿Qué rol cumplen Instagram y TikTok?",
+   "answer": "Instagram sostiene el vínculo, porque es el canal preferido por el 45,9% de la muestra, y TikTok abre el tramo más joven (pág. 50). La pauta digital suma $30.000.000: $18.000.000 en Instagram y $12.000.000 en TikTok, unas 6,5 millones de impresiones para llegar a cerca del 60% del público (Tabla 9, pág. 51). Romance hoy no tiene cuenta en TikTok (pág. 26).",
+   "pages": [
+    26,
+    50,
+    51
+   ],
+   "keywords": [
+    "instagram",
+    "tiktok",
+    "redes sociales",
+    "pauta digital",
+    "impresiones",
+    "cpm",
+    "alcance",
+    "digital"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-creadores",
+   "question": "¿Qué harían los creadores de contenido?",
+   "answer": "Se propone un programa de doce creadores, con dos piezas cada uno a un valor promedio de $600.000 por pieza, más logística de catas (Tabla 9, pág. 51). Su función es la recomendación y el descubrimiento, con un KPI de 3 millones de visualizaciones (pág. 50). Se eligen porque la recomendación (60,5%) pesa más que la publicidad (6,2%). La tesis no nombra creadores específicos.",
+   "pages": [
+    50,
+    51
+   ],
+   "keywords": [
+    "creadores",
+    "influencers",
+    "influencer",
+    "tiktokers",
+    "catas",
+    "recomendacion",
+    "reel",
+    "contenido"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-activaciones",
+   "question": "¿Qué acciones hay en punto de venta y activaciones?",
+   "answer": "Ocho jornadas de degustación, un stand en MATEAR y material de góndola en unos 300 puntos de venta (Tabla 9, pág. 51). Los KPI son las muestras entregadas y +10% de ventas en los comercios cubiertos frente al trimestre previo (pág. 50). Se apoyan en que el 65,5% descubre marcas en el punto de venta (pág. 35).",
+   "pages": [
+    35,
+    50,
+    51
+   ],
+   "keywords": [
+    "activaciones",
+    "punto de venta",
+    "gondola",
+    "degustaciones",
+    "muestras",
+    "matear",
+    "universidades",
+    "coworkings",
+    "pdv"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-web-whatsapp",
+   "question": "¿Para qué sirven la web y WhatsApp?",
+   "answer": "Los medios propios (sitio y WhatsApp) sostienen la promoción de la campaña, con un KPI de tasa de canje superior al 20% (pág. 50). La tesis no detalla la mecánica de la promoción.",
+   "pages": [
+    50
+   ],
+   "keywords": [
+    "web",
+    "sitio",
+    "whatsapp",
+    "medios propios",
+    "promocion",
+    "canje",
+    "invitaciones",
+    "continuidad"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "canales-descartados",
+   "question": "¿Por qué no usar televisión o vía pública?",
+   "answer": "Se descartan la vía pública y la televisión lineal porque el target es el segmento que menos las consume (pág. 50). La tesis documenta que el 53% combina televisión lineal y plataformas de video y solo el 32% consume únicamente TV lineal (pág. 27), y que quienes toman mate frente a una pantalla pertenecen a los segmentos que menos televisión lineal consumen (pág. 28). Además, la recomendación y la prueba generan más confianza que una publicidad en vía pública (pág. 43).",
+   "pages": [
+    27,
+    28,
+    43,
+    50
+   ],
+   "keywords": [
+    "television",
+    "tv",
+    "via publica",
+    "carteles",
+    "descartados",
+    "medios tradicionales",
+    "por que no"
+   ],
+   "topic": "canales"
+  },
+  {
+   "id": "presupuesto-total",
+   "question": "¿Cuánto costaría la campaña?",
+   "answer": "Se propone un presupuesto total estimado de $150.000.000, a valores de septiembre de 2026 y con un dólar de referencia de $1.530, para abril a junio de 2027 (pág. 50). Equivale a poco más del 0,5% de la venta anual estimada de Romance (unos $27.000 millones) (pág. 51). Las cifras son estimativas y deben ajustarse con cotizaciones reales (pág. 51).",
+   "pages": [
+    50,
+    51
+   ],
+   "keywords": [
+    "presupuesto",
+    "costo",
+    "inversion",
+    "cuanto cuesta",
+    "150 millones",
+    "150.000.000",
+    "pesos",
+    "dolar"
+   ],
+   "topic": "presupuesto"
+  },
+  {
+   "id": "presupuesto-distribucion",
+   "question": "¿Cómo se reparte el presupuesto?",
+   "answer": "En seis rubros: streaming en vivo 40% ($60.000.000), pauta digital 20% ($30.000.000), producción 15% ($22.500.000), activaciones y punto de venta 12% ($18.000.000), creadores 10% ($15.000.000) y medición 3% ($4.500.000) (pág. 50). El 75% va a construcción de marca y el 25% a activación, creadores y medición, algo más cargado a marca que el 60/40 de Binet y Field (pág. 51).",
+   "pages": [
+    50,
+    51
+   ],
+   "keywords": [
+    "distribucion",
+    "rubros",
+    "porcentajes",
+    "reparto",
+    "75/25",
+    "binet y field",
+    "items",
+    "desglose"
+   ],
+   "topic": "presupuesto"
+  },
+  {
+   "id": "presupuesto-streaming",
+   "question": "¿Cómo se calculó la inversión en streaming?",
+   "answer": "En 2025, la tarifa bruta de una PNT en Nadie Dice Nada y Sería Increíble rondaba USD 3.000 a 3.100 por aparición, unos $4.700.000 (pág. 51). Diez PNT suman $47.000.000, la presencia del producto en la mesa $8.000.000 y cuatro historias o clips $5.000.000, en total $60.000.000. Las tarifas son de referencia porque los canales no publican tarifarios.",
+   "pages": [
+    51,
+    52
+   ],
+   "keywords": [
+    "streaming",
+    "tarifas",
+    "pnt",
+    "60 millones",
+    "calculo",
+    "costo luzu",
+    "costo olga",
+    "precio"
+   ],
+   "topic": "presupuesto"
+  },
+  {
+   "id": "presupuesto-otros",
+   "question": "¿Qué cubren producción, activaciones y medición?",
+   "answer": "Producción ($22.500.000) cubre una pieza central, veinte piezas cortas para redes y streaming y el material de punto de venta. Activaciones ($18.000.000) incluye degustaciones ($8.000.000), stand en MATEAR ($5.000.000) y material de góndola ($5.000.000). Medición ($4.500.000) financia dos encuestas de 400 casos (Tabla 9, pág. 51). Estos rubros no tienen tarifas públicas y son estimaciones a cotizar.",
+   "pages": [
+    51
+   ],
+   "keywords": [
+    "produccion",
+    "activaciones",
+    "medicion",
+    "piezas",
+    "encuestas",
+    "matear",
+    "estimaciones",
+    "cotizar"
+   ],
+   "topic": "presupuesto"
+  },
+  {
+   "id": "calendario-cuando",
+   "question": "¿Cuándo sería la campaña y cuál es el calendario?",
+   "answer": "El brief se realizó en septiembre de 2026 y la idea creativa se aprobaría en diciembre de 2026 (pág. 53). La producción iría de enero a marzo de 2027 y la campaña saldría al aire de abril a junio de 2027, coincidiendo con la temporada fría y el ciclo lectivo (pág. 50, 51). El objetivo de consumo se evalúa a los doce meses del lanzamiento (pág. 45).",
+   "pages": [
+    45,
+    52,
+    53
+   ],
+   "keywords": [
+    "calendario",
+    "cuando",
+    "fechas",
+    "2027",
+    "abril",
+    "junio",
+    "cronograma",
+    "lanzamiento",
+    "etapas"
+   ],
+   "topic": "calendario"
+  },
+  {
+   "id": "autoras-quienes",
+   "question": "¿Quiénes hicieron la tesis?",
+   "answer": "Por el equipo de planeamiento: Andrea Gutiérrez, responsable de planificación estratégica y medios, y Agustina Lattanzi, responsable de dirección creativa y comunicación digital (pág. 53). Es un Trabajo Integrador Final de la Licenciatura en Publicidad de UADE (pág. 5).",
+   "pages": [
+    5,
+    53
+   ],
+   "keywords": [
+    "autoras",
+    "quienes",
+    "equipo",
+    "andrea gutierrez",
+    "agustina lattanzi",
+    "roles",
+    "integrantes",
+    "estudiantes"
+   ],
+   "topic": "autoras"
+  },
+  {
+   "id": "general-piezas",
+   "question": "¿Las imágenes del sitio son piezas reales de la campaña?",
+   "answer": "La tesis no incluye piezas creativas: termina en el brief y prevé aprobar la idea creativa en diciembre de 2026 y producir entre enero y marzo de 2027 (pág. 52). Establece como mandatorios el logotipo y el isotipo de las dos manos, sin rediseñar el packaging (pág. 53). Tampoco es una comunicación oficial de la marca.",
+   "pages": [
+    52,
+    53
+   ],
+   "keywords": [
+    "piezas",
+    "creatividad",
+    "imagenes",
+    "bocetos",
+    "anuncios",
+    "spot",
+    "diseno",
+    "oficial",
+    "gerula"
+   ],
+   "topic": "general"
+  },
+  {
+   "id": "metodologia-limitaciones",
+   "question": "¿Qué limitaciones reconoce el trabajo?",
+   "answer": "Esta versión de la tesis no incluye un apartado de limitaciones. Lo que sí documenta es el alcance del trabajo de campo: la muestra es no probabilística por conveniencia y concentrada en jóvenes del AMBA (pág. 32), y la instancia cualitativa fue una entrevista en profundidad (pág. 36). El presupuesto se presenta como estimativo, con producción, activaciones y medición a cotizar (pág. 51). Para cualquier otra precisión, escribinos a romanceyerba@gmail.com.",
+   "pages": [
+    32,
+    36
+   ],
+   "keywords": [
+    "limitaciones",
+    "debilidades",
+    "riesgos",
+    "sesgos",
+    "datos internos",
+    "presupuesto estimativo",
+    "criticas"
+   ],
+   "topic": "metodologia"
+  }
+ ],
+ "notInThesis": [
+  {
+   "topic": "Precios actuales o dónde comprar",
+   "keywords": [
+    "precio actual",
+    "cuanto sale",
+    "cuanto cuesta el paquete",
+    "donde comprar",
+    "donde consigo",
+    "supermercado",
+    "comprar romance",
+    "envio",
+    "envios",
+    "tienda"
+   ]
+  },
+  {
+   "topic": "Acuerdos firmados con medios",
+   "keywords": [
+    "acuerdo firmado",
+    "contrato firmado",
+    "confirmado",
+    "ya firmaron",
+    "patrocinio confirmado",
+    "acuerdo cerrado"
+   ]
+  },
+  {
+   "topic": "Nombres de creadores",
+   "keywords": [
+    "que influencers",
+    "nombres de creadores",
+    "quienes son los influencers",
+    "que creadores",
+    "nombre del influencer"
+   ]
+  },
+  {
+   "topic": "Piezas finales o idea creativa aprobada",
+   "keywords": [
+    "spot final",
+    "guion",
+    "idea creativa aprobada",
+    "comercial de tv",
+    "jingle",
+    "video final"
+   ]
+  },
+  {
+   "topic": "Mecánica de promociones",
+   "keywords": [
+    "descuento",
+    "cupon",
+    "codigo promocional",
+    "condiciones de la promocion",
+    "mecanica",
+    "sorteo"
+   ]
+  },
+  {
+   "topic": "Opinión o aprobación de Gerula",
+   "keywords": [
+    "gerula aprobo",
+    "opina la marca",
+    "aprobacion de la marca",
+    "la empresa acepto",
+    "gerula participo"
+   ]
+  },
+  {
+   "topic": "Datos internos de la empresa",
+   "keywords": [
+    "rentabilidad",
+    "market share interno",
+    "ventas internas",
+    "facturacion real",
+    "ganancias"
+   ]
+  },
+  {
+   "topic": "Resultados reales de la campaña",
+   "keywords": [
+    "resultados reales",
+    "funciono la campana",
+    "se implemento",
+    "ya salio al aire",
+    "cuanto vendio con la campana"
+   ]
+  },
+  {
+   "topic": "Información nutricional",
+   "keywords": [
+    "nutricional",
+    "ingredientes",
+    "calorias",
+    "propiedades",
+    "cafeina",
+    "salud",
+    "beneficios para la salud"
+   ]
+  },
+  {
+   "topic": "Atención al cliente de la marca",
+   "keywords": [
+    "atencion al cliente",
+    "reclamo",
+    "telefono de romance",
+    "contacto comercial",
+    "distribuidor"
+   ]
+  },
+  {
+   "topic": "Nota o evaluación de la tesis",
+   "keywords": [
+    "nota",
+    "calificacion",
+    "tutor",
+    "jurado",
+    "aprobaron la tesis",
+    "defensa fecha"
+   ]
+  },
+  {
+   "topic": "Otras regiones o países",
+   "keywords": [
+    "otros paises",
+    "exportacion",
+    "interior del pais",
+    "cordoba",
+    "uruguay",
+    "brasil",
+    "litoral campana"
+   ]
+  },
+  {
+   "topic": "Cuestionario completo o base de datos",
+   "keywords": [
+    "cuestionario completo",
+    "base de datos",
+    "anexos",
+    "respuestas crudas",
+    "descargar encuesta"
+   ]
+  },
+  {
+   "topic": "Manual de marca",
+   "keywords": [
+    "manual de marca",
+    "brandbook",
+    "guia de estilo"
+   ]
+  },
+  {
+   "topic": "Próximos pasos o líneas futuras de investigación",
+   "keywords": [
+    "proximos pasos",
+    "lineas futuras",
+    "futuras lineas",
+    "investigacion futura",
+    "que sigue despues",
+    "continuidad de la investigacion"
+   ]
+  }
+ ]
 }

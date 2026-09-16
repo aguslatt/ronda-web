@@ -264,6 +264,76 @@ export function createPack(faces: THREE.Material[]) {
   return shadows(new THREE.Mesh(geometry, faces))
 }
 
+/* ---------- Portarretrato de las autoras ---------- */
+/**
+ * Un portarretrato chico apoyado en la mesa (10,5 × 13,5 cm), con la ilustración de las autoras.
+ * Marco fino con canto biselado, fondo con espesor y pie trasero: se lee como un objeto real.
+ * La foto es mate y con una pizca de emisión propia, para que las caras se vean también con
+ * poca luz y sin que un reflejo las tape.
+ */
+export function createFrame(photo: THREE.Texture) {
+  const group = new THREE.Group()
+  const W = 0.105
+  const H = 0.135
+  const D = 0.011
+  const borde = 0.008
+
+  const marco = new THREE.MeshPhysicalMaterial({ color: 0x2b2723, roughness: 0.42, clearcoat: 0.35, clearcoatRoughness: 0.4, envMapIntensity: 0.5 })
+  const canto = new THREE.MeshPhysicalMaterial({ color: 0xb8a074, metalness: 0.85, roughness: 0.38, envMapIntensity: 0.6 })
+
+  // Fondo con espesor
+  const fondo = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), marco)
+  fondo.position.set(0, H / 2, 0)
+  group.add(shadows(fondo))
+
+  // Marco: cuatro listones finos por delante del fondo
+  const listones = [
+    { w: W, h: borde, x: 0, y: H - borde / 2 },
+    { w: W, h: borde, x: 0, y: borde / 2 },
+    { w: borde, h: H - borde * 2, x: -(W - borde) / 2, y: H / 2 },
+    { w: borde, h: H - borde * 2, x: (W - borde) / 2, y: H / 2 },
+  ]
+  for (const l of listones) {
+    const pieza = new THREE.Mesh(new THREE.BoxGeometry(l.w, l.h, 0.004), canto)
+    pieza.position.set(l.x, l.y, D / 2 + 0.002)
+    group.add(shadows(pieza))
+  }
+
+  // Fotografía: se recorta a la zona de las dos caras y se ajusta al alto del marco
+  const foto = photo.clone()
+  foto.needsUpdate = true
+  foto.colorSpace = THREE.SRGBColorSpace
+  const anchoUtil = W - borde * 2
+  const altoUtil = H - borde * 2
+  // La ilustración es cuadrada; se encuadra en el alto disponible y se centra en las caras
+  const escalaU = 1
+  const escalaV = (anchoUtil / altoUtil) * escalaU
+  foto.repeat.set(escalaU, Math.min(1, escalaV))
+  foto.offset.set(0, Math.max(0, 1 - Math.min(1, escalaV) - 0.06))
+  const lamina = new THREE.MeshStandardMaterial({
+    map: foto,
+    roughness: 0.86,
+    metalness: 0,
+    envMapIntensity: 0.18,
+    emissiveMap: foto,
+    emissive: 0xffffff,
+    emissiveIntensity: 0.2,
+  })
+  const imagen = new THREE.Mesh(new THREE.PlaneGeometry(anchoUtil, altoUtil), lamina)
+  imagen.position.set(0, H / 2, D / 2 + 0.0015)
+  group.add(imagen)
+
+  // Pie trasero: el marco se apoya inclinado, como un portarretrato de mesa
+  const pie = new THREE.Mesh(new THREE.BoxGeometry(0.03, H * 0.62, 0.003), marco)
+  pie.position.set(0, H * 0.3, -D / 2 - 0.012)
+  pie.rotation.x = 0.34
+  group.add(shadows(pie))
+
+  // Inclinación de apoyo
+  group.rotation.x = -0.12
+  return group
+}
+
 /* ---------- Notebook (genérica, sin marca) ---------- */
 export function createLaptop(screen: THREE.Texture) {
   const group = new THREE.Group()

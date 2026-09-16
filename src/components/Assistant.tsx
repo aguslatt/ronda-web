@@ -8,6 +8,15 @@ import './Assistant.css'
 
 type Message = { id: number; from: 'user'; text: string } | { id: number; from: 'ronda'; reply: Reply }
 
+/** Avatar del asistente: la ilustración de las dos autoras, recortada a sus caras. */
+function Avatar({ size }: { size: 'sm' | 'lg' }) {
+  return (
+    <span className={`assistant-avatar assistant-avatar--${size}`}>
+      <Picture name="autoras-duo" alt={size === 'lg' ? copy.avatarAlt : ''} sizes={size === 'lg' ? '56px' : '32px'} />
+    </span>
+  )
+}
+
 function Pages({ item }: { item: KbAnswer }) {
   return (
     <p className="assistant__source">
@@ -129,21 +138,19 @@ export function Assistant() {
         onClick={() => setOpen(true)}
       >
         <span className="assistant-launcher__seal" aria-hidden="true">
-          <Picture name="romance-medallon" alt="" sizes="40px" />
+          <Picture name="autoras-duo" alt="" sizes="40px" />
         </span>
         <span className="assistant-launcher__label">{copy.launcher}</span>
       </button>
 
       <section id="asistente" className={`assistant${open ? ' is-open' : ''}`} role="dialog" aria-modal="false" aria-labelledby="asistente-titulo" hidden={!open}>
         <header className="assistant__head">
-          <span className="assistant__seal" aria-hidden="true">
-            <Picture name="romance-medallon" alt="" sizes="48px" />
-          </span>
+          <Avatar size="lg" />
           <div>
             <h2 id="asistente-titulo" className="assistant__title">
               {copy.name}
             </h2>
-            <p className="assistant__subtitle">{source.label}</p>
+            <p className="assistant__subtitle">{copy.subtitle}</p>
           </div>
           <button
             type="button"
@@ -161,9 +168,12 @@ export function Assistant() {
         </header>
 
         <div ref={listRef} className="assistant__messages" aria-live="polite">
-          <div className="assistant__bubble assistant__bubble--ronda">
-            <p>{copy.intro}</p>
-            <Chips items={suggestions()} onPick={send} />
+          <div className="assistant__turn">
+            <Avatar size="sm" />
+            <div className="assistant__bubble assistant__bubble--ronda">
+              <p>{copy.intro}</p>
+              <Chips items={suggestions()} onPick={send} />
+            </div>
           </div>
 
           {messages.map((message) =>
@@ -172,7 +182,9 @@ export function Assistant() {
                 <p>{message.text}</p>
               </div>
             ) : (
-              <div key={message.id} className="assistant__bubble assistant__bubble--ronda">
+              <div key={message.id} className="assistant__turn">
+                <Avatar size="sm" />
+                <div className="assistant__bubble assistant__bubble--ronda">
                 {message.reply.kind === 'answer' ? (
                   <>
                     <p className="assistant__matched">{message.reply.item.question}</p>
@@ -191,6 +203,7 @@ export function Assistant() {
                     <Chips items={message.reply.related} onPick={send} />
                   </>
                 )}
+                </div>
               </div>
             ),
           )}
@@ -217,7 +230,7 @@ export function Assistant() {
           </button>
         </form>
         <p className="assistant__disclaimer">
-          {copy.disclaimer} Contacto: <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          {source.label}. {copy.disclaimer} Contacto: <a href={`mailto:${contact.email}`}>{contact.email}</a>
         </p>
       </section>
     </>

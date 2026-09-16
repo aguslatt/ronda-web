@@ -116,13 +116,36 @@ materiales y luz de la mesa (`src/film/ConceptFilm.ts`, guion en `src/film/timel
 
 ### Documentos y referencias
 
-- La tesis final está en `public/docs/tesis-ronda.pdf` (56 páginas). Configuración en `documents` dentro de `src/content.ts`.
+- La tesis final está en `public/docs/tesis-ronda.pdf` (64 páginas, 16,1 MB). Configuración en `documents` dentro de `src/content.ts`.
+- **El brief es el apartado 6.3, pág. 45 a 53.** Al cambiar de versión se volvieron a verificar todas las citas contra el
+  texto del PDF (no se aplicó un corrimiento fijo de páginas): cada cifra del sitio y del asistente se buscó en el
+  documento nuevo y la referencia se ajustó a la página donde realmente aparece.
+- El detalle del plan de medios vive en la **Tabla 9 (pág. 51)**: 10 PNT, presencia en mesa doce semanas, cuatro
+  historias, $18.000.000 en Instagram y $12.000.000 en TikTok, ocho degustaciones, stand en MATEAR, 300 puntos de
+  venta, doce creadores con dos piezas y dos encuestas de 400 casos.
 - **Leer la tesis** abre el PDF en otra pestaña y **Descargar** baja el archivo; están en la firma del cierre,
   en “¿Tenés otra pregunta?” y en el pie. El brief es el apartado 6.3 (pág. 44–53).
 - Cada referencia “pág. N” del sitio (hallazgos, canales, preguntas frecuentes, asistente, modo presentación y nota
   de la animación) abre el PDF en esa página. Las cifras citadas se contrastaron con el texto de cada página del PDF.
 - Para reemplazar la tesis, colocar el nuevo PDF con el mismo nombre. Si `documents.thesis.url` es `null`,
   los accesos y enlaces de página no se muestran (las referencias quedan como texto).
+
+### Las autoras en la experiencia
+
+- **Asistente**: se presenta como “Ronda · Asistente de la tesis”, con la aclaración “Respuestas automáticas basadas en
+  nuestra investigación”. La ilustración de las autoras es su avatar (encabezado, cada respuesta y botón de apertura),
+  recortada a la zona de las dos caras (`autoras-duo`, esquina redondeada para no cortarlas). Las respuestas siguen
+  saliendo de la base verificada de la tesis y no se presentan como mensajes de una persona en vivo.
+- **Portarretrato en la mesa** (`createFrame` en `src/scene/objects.ts`): un marco de 10,5 × 13,5 cm con la
+  ilustración, marco fino con canto claro, fondo con espesor, pie trasero y sombra de contacto. Se suma a la mesa
+  cuando empieza a formarse la ronda y queda a la derecha del envase, fuera del camino del mate de la invitación.
+  La lámina es mate y lleva una pizca de emisión propia: las caras se leen sin que un reflejo las tape.
+- **Interacción**: un punto interactivo en HTML sigue al marco en pantalla (la escena proyecta su posición), así funciona
+  con mouse, con el dedo y con el teclado. Al señalarlo, el marco se inclina apenas y aparece “Las autoras de Ronda”.
+  Al activarlo, la cámara se acerca al marco en 0,9 s y se abre la ficha con los nombres, los roles (tesis, pág. 53),
+  la ilustración completa y el contacto. Al cerrar, la cámara vuelve exactamente al encuadre anterior y el foco
+  regresa al control que la abrió. El cierre también ofrece el botón “Conocé a las autoras”.
+- Con movimiento reducido, el acercamiento es un corte y la ficha aparece sin animación.
 
 ### Accesibilidad y rendimiento
 
